@@ -42,6 +42,16 @@ export function FeaturesComponent({navigation}: {navigation: any}) {
                             <Text style={{fontSize: 16, color: "#2c3e50", fontWeight: "bold", paddingTop: 5}}>Cho Thuê</Text>
                         </View>
                     </Col>
+                    <Col>
+                        <View style={{height: variables.width/4, justifyContent: "center", alignItems: "center"}}>
+                            <TouchableOpacity onPress={() => navigation.navigate('ListFood')}>
+                                <View style={{ height: variables.width/7, width: variables.width/7, backgroundColor: "#f1f2f6", borderRadius: variables.width/14, flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+                                    <Ionicons name="fast-food-outline" size={variables.width/10} style={{color: "#ff5868"}}/>
+                                </View>
+                            </TouchableOpacity>
+                            <Text style={{fontSize: 16, color: "#2c3e50", fontWeight: "bold", paddingTop: 5}}>Đặt Đồ Ăn</Text>
+                        </View>
+                    </Col>
                 </Row>
                 <Row style={{ height: variables.width/4}}>
                     <Col>

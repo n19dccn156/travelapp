@@ -7,7 +7,7 @@ import { HotelScreen } from '../features/hotel/pages/hotel-screen';
 import { RentalScreen } from '../features/rental/pages/rental-screen';
 import { ScheduleScreen } from '../features/schedule/pages/schedule-screen';
 import { WeatherScreen } from '../features/weather/pages/weather-screen';
-
+import { FoodNavigation } from '../features/order-food/pages/food-navigation';
 const Stack = createNativeStackNavigator();
 
 export function HomeNavigation() {
@@ -25,6 +25,7 @@ export function HomeNavigation() {
       <Stack.Screen name="Discover" component={DiscoverScreen} options={{headerTitle: "Khám Phá"}}/>
       <Stack.Screen name="Hotel" component={HotelScreen} options={{headerTitle: "Khách Sạn"}}/>
       <Stack.Screen name="Rental" component={RentalScreen} options={{headerTitle: "Cho Thuê"}}/>
+      <Stack.Screen name="ListFood" component={FoodNavigation} options={{headerShown: false}}/>
       <Stack.Screen name="Schedule" component={ScheduleScreen} options={{headerTitle: "Lịch Tàu"}}/>
       <Stack.Screen name="Weather" component={WeatherScreen} options={{headerTitle: "Thời Tiết"}}/>
     </Stack.Navigator>
