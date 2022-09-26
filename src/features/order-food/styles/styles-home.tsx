@@ -5,6 +5,7 @@ type StyleText ={
     adress: TextStyle,
     time_delivery: TextStyle,
     distance: TextStyle,
+    title: TextStyle
 }
 type StyleView = {
     item: ViewStyle,
@@ -18,6 +19,8 @@ const stylesText = StyleSheet.create<StyleText>({
     header:{
         fontSize: 9,
     },
+    title: {},
+
     name_shop:{
         fontSize: 17,
         fontWeight: '900',
@@ -37,8 +40,11 @@ const stylesView= StyleSheet.create<StyleView>({
     item: {
         margin: 7,
         marginRight: 10,
-        flexDirection : "row"  ,
+        flexDirection : "column"  ,
         flex:1,
+        borderColor: 'black',
+        borderStyle:'dashed',
+        overflow: 'hidden',
     },
     item_info: {
         height: '100%',
@@ -53,7 +59,7 @@ const stylesView= StyleSheet.create<StyleView>({
 })
 const stylesImg = StyleSheet.create<StyleImg>({
     avatarShop: {
-        height: 90,
+        height: 120,
         width: 120,
         borderRadius : 12,
     }

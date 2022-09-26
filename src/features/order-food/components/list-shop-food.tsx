@@ -1,17 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {
   FlatList,
-  SafeAreaView,
   Text,
   View,
   Image,
   TouchableOpacity,
-  StatusBar,
 } from 'react-native';
-import {getListShop, itemShopFood} from '../services/getListShop';
+import {getListShop, itemShopFood} from '../services/get-data';
 import {stylesView, stylesImg, stylesText} from '../styles/styles-home';
 import {RenderLongText} from '../services/handler';
-
 export function ListShopFood({navigation}: {navigation: any}) {
   const [listFood, setListFood] = useState([] as any);
   useEffect(() => {
@@ -20,12 +17,13 @@ export function ListShopFood({navigation}: {navigation: any}) {
         setListFood([...data]);
       })
       .catch(err => {
-        console.log('🚀 ~ file: listFood-screen ~ line 4 ~ error', err);
+        console.log('🚀 ~ file: listFood-screen ~ line 17 ~ error', err);
       });
-  });
+  },[]);
   return (
-    <View>
+    <View style={{flex:1.3,paddingTop:20,paddingLeft:20}}>
       <FlatList
+        horizontal={true}
         data={listFood}
         renderItem={({item}:  {item: itemShopFood}) => (
           <TouchableOpacity
@@ -43,11 +41,7 @@ export function ListShopFood({navigation}: {navigation: any}) {
               <Text style={stylesText.name_shop}>
                 {RenderLongText(item.name)}
               </Text>
-              <Text style={stylesText.adress}>
-                {RenderLongText(item.adress)}
-              </Text>
               <View style={stylesView.item_info_delivery}>
-                <Text style={stylesText.time_delivery}>Giao trong 25 phút</Text>
                 <Text style={stylesText.distance}>3 km</Text>
               </View>
             </View>

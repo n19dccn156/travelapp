@@ -1,0 +1,93 @@
+import React, {useEffect, useState} from 'react';
+import {View, Text, Image, StatusBar, TouchableOpacity} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {
+  getInfoDish,
+  getInfoShop,
+  itemDish,
+  itemShopFood,
+} from '../services/get-data';
+import {url} from '../services/url-test-api';
+import {styleIcon} from '../styles/styles-header';
+import {StyleViews} from '../styles/styles-shop-food';
+import {StyleImagesDish, StyleViewDish} from '../styles/styles-dish-detail';
+function DishDetail({navigation, route}: {navigation: any; route: any}) {
+  const [dish, setDish] = useState({} as itemDish);
+  const [shop, setShop] = useState({} as itemShopFood);
+  const id = route.params.id;
+  useEffect(() => {
+    getInfoDish(id)
+      .then(function (res: any): void {
+        setDish({...res});
+        getInfoShop(parseInt(dish.shop))
+          .then(function (res: any): void {
+            setShop({...res});
+          })
+          .catch(err => {
+            console.log('🚀 ~ file: dish-detail-screen ~ line 22 ~ error', err);
+          });
+      })
+      .catch(err => {
+        console.log('🚀 ~ file: dish-detail-screen ~ line 19  ~ error', err);
+      });
+  }, []);
+  return (
+    <View style={StyleViews.container}>
+      <StatusBar
+        animated={true}
+        backgroundColor={'white'}
+        barStyle={'dark-content'}
+        hidden={false}
+      />
+      <View style={{flex: 1}}>
+        <TouchableOpacity
+          style={[
+            styleIcon.icon_close,
+            {
+              zIndex: 2,
+            },
+          ]}
+          onPress={() => {
+            navigation.navigate('HomeOrderFood');
+          }}>
+          <Ionicons
+            name="chevron-back-outline"
+            size={30}
+            style={{color: 'white'}}
+          />
+        </TouchableOpacity>
+
+        <Image
+          source={{uri: `${url}${dish.img}`}}
+          style={[StyleImagesDish.img_dish, {zIndex: 1}]}
+        />
+      </View>
+      <View style={StyleViewDish.info}>
+        <Text>Bún hải sản</Text>
+        <Text>30.000đ</Text>
+        <Text>126 Đường số 2, Tăng Nhơn Phú B, Tp Thủ Đức, TP Hồ Chí Minh</Text>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#ff3e3edb',
+            left: -10,
+            borderRadius: 20,
+            alignItems: 'center',
+            display: 'flex',
+            minHeight: 40,
+          }}>
+          <Text
+            style={{
+              fontSize: 22,
+              textAlign: 'center',
+              color: 'white',
+              fontWeight: '600',
+              top: 5,
+            }}>
+            CHỌN MUA
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={{flex: 1}}></View>
+    </View>
+  );
+}
