@@ -1,25 +1,38 @@
-
 import React, {useEffect, useState} from 'react';
-import {
-  FlatList,
-  SafeAreaView,
-  View,
-  StatusBar,
-} from 'react-native';
-
-import { HeaderComponnent } from '../components/header-component';
-import { ListShopFood } from '../components/list-shop-food';
+import {SafeAreaView, View, StatusBar, Text, ScrollView} from 'react-native';
+import { AllDish } from '../components/all-dishes';
+import {HeaderComponnent} from '../components/header-component';
+import {ListShopFood} from '../components/list-shop-food';
 export function HomeScreen({navigation}: {navigation: any}) {
   return (
     <View>
-       <StatusBar
+      <StatusBar
         animated={true}
         backgroundColor={'white'}
         barStyle={'dark-content'}
-        hidden={false} />
+        hidden={false}
+      />
       <SafeAreaView>
-        <HeaderComponnent navigation={navigation} nameScreen={'Home'}></HeaderComponnent>
-        <ListShopFood navigation={navigation}></ListShopFood>
+        <HeaderComponnent
+          navigation={navigation}
+          nameScreen={'Home'}
+          minHeight={100}></HeaderComponnent>
+        <ScrollView style={{height:'100%', width:'100%', zIndex:1}}>
+          <Text>Nhà hàng nổi bật</Text>
+          <ListShopFood navigation={navigation}></ListShopFood>
+          {/* <View style={{flex:1.2, width:'100%' }}>
+            <Text>Được đánh giá cao</Text>
+            <ListShopFood navigation={navigation}></ListShopFood>
+          </View> */}
+          {/* <View style={{flex:1.2, width:'100%'}}>
+            <Text>Bán chạy</Text>
+            <ListShopFood navigation={navigation}></ListShopFood>
+          </View> */}
+          <View style={{flex:1.2, width:'100%'}}>
+            <Text>Tất cả các món</Text>
+            <AllDish navigation={navigation}></AllDish>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </View>
   );

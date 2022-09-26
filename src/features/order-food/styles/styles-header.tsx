@@ -1,10 +1,27 @@
-import { StyleSheet, TextStyle, ViewStyle, ImageStyle} from "react-native";
-type IconStyle={
-    icon_close: TextStyle,
+import {StyleSheet, TextStyle, ViewStyle, ImageStyle} from 'react-native';
+type iconStyle = {
+  icon_close: TextStyle,
+  icon_cart: TextStyle
 };
-const styleIcon = StyleSheet.create<IconStyle>({
-    icon_close: {
-        marginLeft:10
-    }
+type textStyle = {
+  header: TextStyle;
+};
+const styleIcon = StyleSheet.create<iconStyle>({
+  icon_close: {
+    marginLeft: 10,
+    justifyContent: 'center',
+  },
+  icon_cart:{
+    marginRight: 10,
+    justifyContent: 'center',
+  }
 });
-export {styleIcon};
+const styleText = StyleSheet.create<textStyle>({
+  header: {
+    marginTop: 12,
+    fontWeight:'bold',
+    color: 'red',
+    fontSize:20
+  },
+});
+export {styleIcon,styleText};

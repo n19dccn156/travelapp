@@ -8,14 +8,13 @@ export default () => {
             platform="ios"
             containerStyle={{}}
             inputContainerStyle={{borderRadius: 30, backgroundColor: "#0303031a"}}
-            inputStyle={{}}
+            inputStyle={{padding:0}}
             leftIconContainerStyle={{}}
             rightIconContainerStyle={{}}
             loadingProps={{}}
             onChangeText={newVal => setValue(newVal)}
             placeholder="Bạn muốn ăn gì nào ? "
             cancelButtonTitle="Cancel"
-            // cancelButtonProps={{}}
             onCancel={() => (console.log("Click Cancel"))}
             value={value}
         />
