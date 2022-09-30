@@ -9,19 +9,25 @@ import {
 import {getListShop, itemShopFood} from '../services/get-data';
 import {stylesView, stylesImg, stylesText} from '../styles/styles-home';
 import {RenderLongText} from '../services/handler';
+import LoadComponent from '../../../utility/load-component';
 export function ListShopFood({navigation}: {navigation: any}) {
   const [listFood, setListFood] = useState([] as any);
+  const [loadVisible,setLoadVisible] = useState(true);
   useEffect(() => {
     getListShop()
       .then(function (data: itemShopFood[]): void {
         setListFood([...data]);
+        setInterval(()=>{
+          setLoadVisible(false);
+        },300);
       })
       .catch(err => {
         console.log('🚀 ~ file: listFood-screen ~ line 17 ~ error', err);
-      });
+      })
   },[]);
   return (
     <View style={{flex:1.3,paddingTop:20,paddingLeft:20}}>
+      <LoadComponent visible={loadVisible}></LoadComponent>
       <FlatList
         horizontal={true}
         data={listFood}

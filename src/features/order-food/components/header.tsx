@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchComponent from './search-component';
+import SearchComponent from './search';
 import {View, TouchableOpacity, Image, Text} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {styleIcon, styleText} from '../styles/styles-header';
