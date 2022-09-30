@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {SafeAreaView, View, StatusBar, Text, ScrollView} from 'react-native';
+import LoadComponent from '../../../utility/load-component';
 import { AllDish } from '../components/all-dishes';
-import {HeaderComponnent} from '../components/header-component';
+import {HeaderComponnent} from '../components/header';
 import {ListShopFood} from '../components/list-shop-food';
 export function HomeScreen({navigation}: {navigation: any}) {
   return (
@@ -34,6 +35,7 @@ export function HomeScreen({navigation}: {navigation: any}) {
           </View>
         </ScrollView>
       </SafeAreaView>
+      
     </View>
   );
 }

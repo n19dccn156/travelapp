@@ -11,9 +11,15 @@ import {url} from '../services/url-test-api';
 import {styleIcon} from '../styles/styles-header';
 import {StyleViews} from '../styles/styles-shop-food';
 import {StyleImagesDish, StyleViewDish} from '../styles/styles-dish-detail';
-function DishDetail({navigation, route}: {navigation: any; route: any}) {
+import notifyMessage from '../../../utility/notifyMessage';
+import ModalFood from '../components/modal-food';
+import LoadComponent from '../../../utility/load-component';
+export function DishDetail({navigation, route}: {navigation: any; route: any}) {
   const [dish, setDish] = useState({} as itemDish);
   const [shop, setShop] = useState({} as itemShopFood);
+  const [err, setErr] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [loadVisible, setLoadVisible] = useState(true);
   const id = route.params.id;
   useEffect(() => {
     getInfoDish(id)
@@ -22,15 +28,23 @@ function DishDetail({navigation, route}: {navigation: any; route: any}) {
         getInfoShop(parseInt(dish.shop))
           .then(function (res: any): void {
             setShop({...res});
+            setInterval(() => {
+              setLoadVisible(false);
+            }, 300);
           })
           .catch(err => {
+            setLoadVisible(false);
+            setErr(true);
             console.log('🚀 ~ file: dish-detail-screen ~ line 22 ~ error', err);
           });
       })
       .catch(err => {
+        setLoadVisible(false);
+        setErr(true);
         console.log('🚀 ~ file: dish-detail-screen ~ line 19  ~ error', err);
-      });
+      })
   }, []);
+  err ? notifyMessage(undefined, 'Có lỗi xảy ra') : undefined;
   return (
     <View style={StyleViews.container}>
       <StatusBar
@@ -45,6 +59,7 @@ function DishDetail({navigation, route}: {navigation: any; route: any}) {
             styleIcon.icon_close,
             {
               zIndex: 2,
+              width: 30,
             },
           ]}
           onPress={() => {
@@ -56,7 +71,6 @@ function DishDetail({navigation, route}: {navigation: any; route: any}) {
             style={{color: 'white'}}
           />
         </TouchableOpacity>
-
         <Image
           source={{uri: `${url}${dish.img}`}}
           style={[StyleImagesDish.img_dish, {zIndex: 1}]}
@@ -65,7 +79,7 @@ function DishDetail({navigation, route}: {navigation: any; route: any}) {
       <View style={StyleViewDish.info}>
         <Text>Bún hải sản</Text>
         <Text>30.000đ</Text>
-        <Text>126 Đường số 2, Tăng Nhơn Phú B, Tp Thủ Đức, TP Hồ Chí Minh</Text>
+        <Text>{shop.adress}</Text>
         <TouchableOpacity
           style={{
             backgroundColor: '#ff3e3edb',
@@ -74,6 +88,9 @@ function DishDetail({navigation, route}: {navigation: any; route: any}) {
             alignItems: 'center',
             display: 'flex',
             minHeight: 40,
+          }}
+          onPress={() => {
+            setModalVisible(true);
           }}>
           <Text
             style={{
@@ -87,7 +104,14 @@ function DishDetail({navigation, route}: {navigation: any; route: any}) {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{flex: 1}}></View>
+      <View style={{flex: 1, backgroundColor:'black'}}>
+        <ModalFood
+          visible={modalVisible}
+          callbackClose={() => {
+            setModalVisible(false);
+          }}/>
+      </View>
+      <LoadComponent visible={loadVisible}></LoadComponent>
     </View>
   );
 }
