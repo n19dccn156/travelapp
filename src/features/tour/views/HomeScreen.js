@@ -92,8 +92,18 @@ const HomeScreen = ({ navigation }) => {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
             <View style={style.header}>
-                <Icon name="sort" size={28} color={COLORS.white} />
-                <Icon name="notifications-none" size={28} color={COLORS.white} />
+                <Icon
+                    name="sort"
+                    size={28}
+                    color={COLORS.white}
+                    onPress={() => navigation.getParent('LeftDrawer').openDrawer()}
+                />
+                <Icon
+                    name="notifications-none"
+                    size={28}
+                    color={COLORS.white}
+                    onPress={() => navigation.getParent('RightDrawer').openDrawer()}
+                />
             </View>
             <ScrollView showsHorizontalScrollIndicator={false}>
                 <View style={{ backgroundColor: COLORS.primary, height: 120, paddingHorizontal: 20 }}>
