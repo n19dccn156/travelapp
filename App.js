@@ -426,6 +426,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RightDrawerNavigator from './src/features/tour/navigations/DrawerNavigator';
+import ListScreen from './src/features/tour/views/ListScreen';
 
 const App = () => {
     return (

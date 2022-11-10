@@ -15,6 +15,7 @@ import {
 import COLORS from '../consts/colors';
 import places from '../consts/places';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const { width } = Dimensions.get('screen');
 
@@ -108,16 +109,46 @@ const HomeScreen = ({ navigation }) => {
             <ScrollView showsHorizontalScrollIndicator={false}>
                 <View style={{ backgroundColor: COLORS.primary, height: 120, paddingHorizontal: 20 }}>
                     <View>
-                        <Text style={style.headerTitle}>Kham pha</Text>
-                        <Text style={style.headerTitle}>cac thang canh</Text>
+                        <Text style={style.headerTitle}>Trải nghiệm</Text>
+                        <Text style={style.headerTitle}>dịch vụ tiện ích</Text>
                         <View style={style.inputContainer}>
                             <Icon name="search" size={28} />
-                            <TextInput placeholder="Tim kiem dia diem" style={{ color: COLORS.grey }}></TextInput>
+                            <TextInput placeholder="Tìm kiếm dịch vụ" style={{ color: COLORS.grey }}></TextInput>
                         </View>
                     </View>
                 </View>
                 <ListCategories />
-                <Text style={style.secionTitle}>Cac dia diem</Text>
+                <View style={{ paddingTop: 30, flexDirection: 'row' }}>
+                    <Text
+                        style={{
+                            textAlign: 'left',
+                            fontSize: 24,
+                            paddingLeft: 20,
+                            color: '#2c3e50',
+                            fontWeight: 'bold',
+                        }}
+                    >
+                        Dịch vụ hàng đầu
+                    </Text>
+                    <TouchableOpacity
+                        style={{ flex: 1, marginLeft: 30 }}
+                        onPress={() => navigation.navigate('ListScreen')}
+                    >
+                        <Text
+                            style={{
+                                textAlign: 'right',
+                                fontSize: 20,
+                                fontWeight: 'bold',
+                                color: '#0097e6',
+                            }}
+                        >
+                            Tất cả
+                            <Ionicons name="chevron-forward-outline" size={20} />
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+                {/* <Text style={style.secionTitle}>Các dịch vụ hàng đầu</Text> */}
                 <View>
                     <FlatList
                         contentContainerStyle={{ paddingLeft: 20 }}
@@ -126,7 +157,7 @@ const HomeScreen = ({ navigation }) => {
                         data={places}
                         renderItem={({ item }) => <Card place={item} />}
                     />
-                    <Text style={style.secionTitle}>De xuat</Text>
+                    <Text style={style.secionTitle}>Đề xuất</Text>
                     <FlatList
                         snapToInterval={width - 20}
                         contentContainerStyle={{ paddingLeft: 20, paddingBottom: 20 }}
