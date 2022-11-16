@@ -1,14 +1,8 @@
 import { ImageStyle, StyleSheet, ViewStyle } from "react-native";
 import { Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
-type imageStyles = {
-    img_dish: ImageStyle
-};
-type viewStyles = {
-    info : ViewStyle,
-    relate : ViewStyle
-}
-const StyleImagesDish = StyleSheet.create<imageStyles>({
+
+const StyleImagesDish = StyleSheet.create({
     img_dish: {
         width: windowWidth,
         height:  windowWidth/1.6,   
@@ -16,7 +10,7 @@ const StyleImagesDish = StyleSheet.create<imageStyles>({
     }
 
 });
-const StyleViewDish = StyleSheet.create<viewStyles>({
+const StyleViewDish = StyleSheet.create({
     info:{
         flex:1,
         top:0,

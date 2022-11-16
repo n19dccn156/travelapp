@@ -4,10 +4,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import {
   getInfoDish,
   getInfoShop,
-  itemDish,
-  itemShopFood,
 } from '../services/get-data';
-import {url} from '../services/url-test-api';
+import host from '../services/host-test-api';
 import {styleIcon} from '../styles/styles-header';
 import {StyleViews} from '../styles/styles-shop-food';
 import {StyleImagesDish, StyleViewDish} from '../styles/styles-dish-detail';
@@ -15,8 +13,8 @@ import notifyMessage from '../../../utility/notifyMessage';
 import ModalFood from '../components/modal-food';
 import LoadComponent from '../../../utility/load-component';
 export function DishDetail({navigation, route}: {navigation: any; route: any}) {
-  const [dish, setDish] = useState({} as itemDish);
-  const [shop, setShop] = useState({} as itemShopFood);
+  const [dish, setDish] = useState({} );
+  const [shop, setShop] = useState({});
   const [err, setErr] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [loadVisible, setLoadVisible] = useState(true);
@@ -72,7 +70,7 @@ export function DishDetail({navigation, route}: {navigation: any; route: any}) {
           />
         </TouchableOpacity>
         <Image
-          source={{uri: `${url}${dish.img}`}}
+          source={{uri: `${host}${dish.img}`}}
           style={[StyleImagesDish.img_dish, {zIndex: 1}]}
         />
       </View>
@@ -82,6 +80,7 @@ export function DishDetail({navigation, route}: {navigation: any; route: any}) {
         <Text>{shop.adress}</Text>
         <TouchableOpacity
           style={{
+            marginTop:10,
             backgroundColor: '#ff3e3edb',
             left: -10,
             borderRadius: 20,
@@ -104,14 +103,14 @@ export function DishDetail({navigation, route}: {navigation: any; route: any}) {
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={{flex: 1, backgroundColor:'black'}}>
-        <ModalFood
+      <View style={{flex: 1, backgroundColor:'white'}}>
+      </View>
+      <LoadComponent visible={loadVisible}></LoadComponent>
+      <ModalFood
           visible={modalVisible}
           callbackClose={() => {
             setModalVisible(false);
           }}/>
-      </View>
-      <LoadComponent visible={loadVisible}></LoadComponent>
     </View>
   );
 }

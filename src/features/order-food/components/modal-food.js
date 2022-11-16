@@ -1,65 +1,55 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Text, View,StyleSheet, TouchableOpacity } from "react-native";
-export default function ModalFood(props){
-    const visibleModal = props.visible;
-    return (
-        <Modal
-        animationType="slide"
-        visible={visibleModal}
-        onRequestClose={props.callbackClose}
-        transparent={true}
-      >
-        <View style={styles.centeredView}>
-        <TouchableOpacity style={[styles.button,styles.buttonClose]}onPress={props.callbackClose}><Text>Close</Text></TouchableOpacity>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+import {
+  Modal,
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  KeyboardAvoidingView
+} from "react-native";
+import styles from "../styles/styles-modal-component";
+import Ionicons from "react-native-vector-icons/Ionicons";
+export default function ModalFood(props) {
+  const visibleModal = props.visible;
+  const info = props.info;
+  return (
+    <Modal
+      animationType="slide"
+      visible={visibleModal}
+      onRequestClose={props.callbackClose}
+      transparent={true}
+      onShow={()=>{console.log('show')}}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <View style={styles.header}>
+            <TouchableOpacity
+              style={{ left: -110 }}
+              onPress={props.callbackClose}
+            >
+              <Ionicons name="close" size={35} />
+            </TouchableOpacity>
+            <Text style={styles.modalTitle}>Thêm món</Text>
+          </View>
+          <View style={styles.info}>
+            <Text>hihi</Text>
+          </View>
+          <KeyboardAvoidingView style={styles.note} behavior={"padding"}>
+            <TextInput
+              contextMenuHidden={true}
+              placeholder="Nhập ghi chú cho chủ quán..."
+              underlineColorAndroid={"rgba(0, 0, 0, 0.05)"}
+            />
+          </KeyboardAvoidingView>
+          <View style={styles.options}>
+            <Text>options</Text>
+          </View>
+          <View style={styles.amount}>
+            <Text>amount</Text>
           </View>
         </View>
-      </Modal>
-    )  
+      </View>
+    </Modal>
+  );
 }
-const styles = StyleSheet.create({
-    centeredView: {
-      justifyContent: "flex-end",
-      alignItems:'center',
-      position:'absolute',
-      bottom:10,
-      marginTop:30
-    },
-    modalView: {
-      minWidth:'100%',
-      minHeight:'100%',
-      backgroundColor: "white",
-      borderRadius: 20,
-      padding: 35,
-      alignItems: "center",
-      shadowColor: "#000",
-      shadowOffset: {
-        width: 0,
-        height: 2
-      },
-      shadowOpacity: 0.25,
-      shadowRadius: 4,
-      elevation: 5
-    },
-    button: {
-      borderRadius: 20,
-      padding: 10,
-      elevation: 2
-    },
-    buttonOpen: {
-      backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-      backgroundColor: "#2196F3",
-    },
-    textStyle: {
-      color: "white",
-      fontWeight: "bold",
-      textAlign: "center"
-    },
-    modalText: {
-      marginBottom: 15,
-      textAlign: "center",
-    }
-  });

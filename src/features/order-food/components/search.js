@@ -6,7 +6,7 @@ export default () => {
     return (
         <SearchBar
             platform="ios"
-            containerStyle={{}}
+            containerStyle={{maxHeight:40}}
             inputContainerStyle={{borderRadius: 30, backgroundColor: "#0303031a"}}
             inputStyle={{padding:0}}
             leftIconContainerStyle={{}}

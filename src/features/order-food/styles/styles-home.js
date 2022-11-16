@@ -1,21 +1,5 @@
 import { StyleSheet, TextStyle, ViewStyle, ImageStyle} from "react-native";
-type StyleText ={
-    header: TextStyle,
-    name_shop: TextStyle,
-    adress: TextStyle,
-    time_delivery: TextStyle,
-    distance: TextStyle,
-    title: TextStyle
-}
-type StyleView = {
-    item: ViewStyle,
-    item_info: ViewStyle,
-    item_info_delivery: ViewStyle,
-}
-type StyleImg ={
-    avatarShop : ImageStyle,
-}
-const stylesText = StyleSheet.create<StyleText>({
+const stylesText = StyleSheet.create({
     header:{
         fontSize: 9,
     },
@@ -36,7 +20,7 @@ const stylesText = StyleSheet.create<StyleText>({
       paddingTop:5
     }
 });
-const stylesView= StyleSheet.create<StyleView>({
+const stylesView= StyleSheet.create({
     item: {
         margin: 7,
         marginRight: 10,
@@ -57,7 +41,7 @@ const stylesView= StyleSheet.create<StyleView>({
     }
 
 })
-const stylesImg = StyleSheet.create<StyleImg>({
+const stylesImg = StyleSheet.create({
     avatarShop: {
         height: 120,
         width: 120,

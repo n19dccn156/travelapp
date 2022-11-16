@@ -1,4 +1,4 @@
-function RenderLongText(text: string): string{
+function RenderLongText(text){
   // if(text.length>13) 
   // text= `${text.substring(0,13)} 
   //    ${text.substring(14,text.length)}`;

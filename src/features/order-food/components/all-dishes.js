@@ -10,6 +10,7 @@ import {getAllDishes,itemDish} from '../services/get-data';
 import {stylesView, stylesImg, stylesText} from '../styles/styles-home';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {RenderLongText} from '../services/handler';
+import  host  from '../services/host-test-api';
 export function AllDish({navigation}: {navigation: any}) {
   const [AllDish, setAllDish] = useState([] as any);
   useEffect(() => {
@@ -35,7 +36,7 @@ export function AllDish({navigation}: {navigation: any}) {
             }}>
             <View>
               <Image
-                source={{uri: `http://192.168.1.5:3000${item.img}`}}
+                source={{uri: `${host}${item.img}`}}
                 style={stylesImg.avatarShop}></Image>
             </View>
             <View style={stylesView.item_info}>
