@@ -73,7 +73,7 @@ export function HomeScreen({navigation}: {navigation: any}) {
     return(
         <ScrollView>
         <View style={{backgroundColor: "white"}}>
-            <HeaderComponent uri="" name="Thanh Sang"/>
+            <HeaderComponent uri="" name="Hieu Phan"/>
             <View style={{paddingTop: 10}}>
                 <SearchComponent/>
             </View>
