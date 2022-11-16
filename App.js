@@ -1,26 +1,26 @@
-// import * as React from 'react';
-// import { Button, View } from 'react-native';
-// import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import { HomeNavigation } from './src/navigations/home-navigation';
-// import { LoginScreen } from './src/features/login/login-zalo/login-screen';
+import * as React from 'react';
+import { Button, View } from 'react-native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { HomeNavigation } from './src/navigations/home-navigation';
+import { LoginScreen } from './src/features/login/login-zalo/login-screen';
 
-// const MyTheme = {
-//     ...DefaultTheme,
-//     colors: {
-//         ...DefaultTheme.colors,
-//         primary: '#ffffff',
-//         background: '#ffffff',
-//     },
-// };
+const MyTheme = {
+    ...DefaultTheme,
+    colors: {
+        ...DefaultTheme.colors,
+        primary: '#ffffff',
+        background: '#ffffff',
+    },
+};
 
-// export default function App() {
-//     return (
-//         <NavigationContainer theme={MyTheme}>
-//             <HomeNavigation />
-//         </NavigationContainer>
-//     );
-// }
+export default function App() {
+    return (
+        <NavigationContainer theme={MyTheme}>
+            <HomeNavigation />
+        </NavigationContainer>
+    );
+}
 
 //* */
 
@@ -423,16 +423,16 @@
 //     );
 // };
 
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import RightDrawerNavigator from './src/features/tour/navigations/DrawerNavigator';
-import ListScreen from './src/features/tour/views/ListScreen';
+// import React from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
+// import RightDrawerNavigator from './src/features/tour/navigations/DrawerNavigator';
+// import ListScreen from './src/features/tour/views/ListScreen';
 
-const App = () => {
-    return (
-        <NavigationContainer>
-            <RightDrawerNavigator />
-        </NavigationContainer>
-    );
-};
-export default App;
+// const App = () => {
+//     return (
+//         <NavigationContainer>
+//             <RightDrawerNavigator />
+//         </NavigationContainer>
+//     );
+// };
+// export default App;
