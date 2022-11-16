@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Image, StatusBar, TouchableOpacity} from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {url} from '../services/url-test-api';
+import host from '../services/host-test-api';
 import {styleIcon} from '../styles/styles-header';
 import {StyleImages, StyleViews} from '../styles/styles-shop-food';
-export function ShopDetail({navigation, route}: {navigation: any; route: any}) {
+export function ShopDetail({navigation, route}) {
   const id = route.params.id;
   return (
     <View style={StyleViews.container}>
@@ -32,7 +32,7 @@ export function ShopDetail({navigation, route}: {navigation: any; route: any}) {
         />
       </TouchableOpacity>
       <Image
-        source={{uri: `${url}/public/avatar-res-2.jpeg`}}
+        source={{uri: `${host}/public/avatar-res-2.jpeg`}}
         resizeMode="contain"
         style={StyleImages.img_avatar}
       />
