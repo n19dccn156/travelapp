@@ -34,11 +34,8 @@
     "react-native-fbsdk-next": "^10.1.0",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-image-zoom-viewer": "^3.0.1",
-<<<<<<< HEAD
     "react-native-modal": "^13.0.1",
     "react-native-pager-view": "^6.0.2",
-=======
->>>>>>> 130e2bd6d877a0249cb8809614bbffa164957b86
     "react-native-paper": "^4.12.5",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "^3.17.0",
