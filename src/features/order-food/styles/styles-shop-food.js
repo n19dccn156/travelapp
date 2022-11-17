@@ -1,13 +1,7 @@
 import { ImageStyle, StyleSheet, ViewStyle } from "react-native"
 import { Dimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
-type imageStyles = {
-    img_avatar: ImageStyle
-};
-type viewStyles ={
-    container: ViewStyle
-}
-const StyleImages = StyleSheet.create<imageStyles>({
+const StyleImages = StyleSheet.create({
     img_avatar: {
         width: windowWidth,
         height:  windowWidth/1.6,
@@ -17,7 +11,7 @@ const StyleImages = StyleSheet.create<imageStyles>({
         top:-10
     }
 });
-const StyleViews = StyleSheet.create<viewStyles>({
+const StyleViews = StyleSheet.create({
     container: {
         top: 0,
         left:0,

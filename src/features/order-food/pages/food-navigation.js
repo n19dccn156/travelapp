@@ -1,6 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 
-import { HomeScreen } from "../pages/home-screen";
+import { HomeScreen } from "./home-screen";
 import * as React from "react";
 import { ShopDetail } from "./shop-food-screen";
 import { DishDetail } from "./dish-detail-screen";
