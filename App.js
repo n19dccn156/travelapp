@@ -427,12 +427,130 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import RightDrawerNavigator from './src/features/tour/navigations/DrawerNavigator';
 import ListScreen from './src/features/tour/views/ListScreen';
+import ModalOrder from './src/features/tour/views/ModalOrder';
+import OrderScreen from './src/features/tour/views/OrderScreen';
+import MyComponent from './src/features/tour/views/MyComponent';
+
+const AppContext = React.createContext(null);
+const useAppContext = () => {
+    return React.useContext(AppContext);
+};
 
 const App = () => {
     return (
         <NavigationContainer>
             <RightDrawerNavigator />
         </NavigationContainer>
+
+        // <ModalOrder />
+        // <OrderScreen />
     );
 };
 export default App;
+
+// import * as React from 'react';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import SearchScreen from './src/features/tour/views/SearchScreen';
+// import OrderScreen from './src/features/tour/views/OrderScreen';
+// import HomeScreen from './src/features/tour/views/HomeScreen';
+
+// const Stack = createNativeStackNavigator();
+
+// // create app context
+
+// const AppContext = React.createContext(null);
+
+// export const useAppContext = () => {
+//     return React.useContext(AppContext);
+// };
+
+// function App() {
+//     const [products, setProducts] = React.useState([]);
+
+//     const addProductToCard = (product) => {
+//         // check product
+//         const existedProduct = products.find((item) => item.id === product.id);
+//         if (existedProduct) {
+//             setProducts([
+//                 ...products.filter((item) => item.id !== product.id),
+//                 { ...existedProduct, quantity: (existedProduct.quantity || 0) + 1 },
+//             ]);
+//         } else {
+//             setProducts([...products, { ...product, quantity: 1 }]);
+//         }
+//     };
+
+//     const removeProduct = (product) => {
+//         const existedProduct = products.find((item) => item.id === product.id);
+//         if (existedProduct && existedProduct.quantity === 1) {
+//             return setProducts([...products.filter((item) => item.id !== product.id)]);
+//         }
+//         if (existedProduct) {
+//             setProducts([
+//                 ...products.filter((item) => item.id !== product.id),
+//                 { ...existedProduct, quantity: (existedProduct.quantity || 0) - 1 },
+//             ]);
+//         }
+//     };
+
+//     return (
+//         <AppContext.Provider
+//             value={{
+//                 products: products.sort((p1, p2) => p1.name.localeCompare(p2.name)),
+//                 addProductToCard,
+//                 removeProduct,
+//             }}
+//         >
+//             <NavigationContainer>
+//                 <Stack.Navigator screenOptions={{ headerShown: false }}>
+//                     <Stack.Screen name="Order" component={OrderScreen} />
+//                     <Stack.Screen name="Home" component={HomeScreen} />
+//                     <Stack.Screen name="Search" component={SearchScreen} />
+//                 </Stack.Navigator>
+//             </NavigationContainer>
+//         </AppContext.Provider>
+//     );
+// }
+
+// export default App;
+
+// import React, { Component } from 'react';
+// import DatePicker from 'react-native-datepicker';
+
+// export default class MyDatePicker extends Component {
+//     constructor(props) {
+//         super(props);
+//         this.state = { date: '2016-05-15' };
+//     }
+
+//         return (
+//             <DatePicker
+//                 style={{ width: 200 }}
+//                 date={this.state.date}
+//                 mode="date"
+//                 placeholder="select date"
+//                 format="YYYY-MM-DD"
+//                 minDate="2016-05-01"
+//                 maxDate="2016-06-01"
+//                 confirmBtnText="Confirm"
+//                 cancelBtnText="Cancel"
+//                 customStyles={{
+//                     dateIcon: {
+//                         position: 'absolute',
+//                         left: 0,
+//                         top: 4,
+//                         marginLeft: 0,
+//                     },
+//                     dateInput: {
+//                         marginLeft: 36,
+//                     },
+//                     // ... You can check the source to find the other keys.
+//                 }}
+//                 onDateChange={(date) => {
+//                     this.setState({ date: date });
+//                 }}
+//             />
+//         );
+
+// }
