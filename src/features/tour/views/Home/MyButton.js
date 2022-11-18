@@ -3,7 +3,7 @@ import { Text, View } from 'react-native-animatable';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import COLORS from '../../consts/colors';
 
-function MyButton({ categories }) {
+function MyButton({ navigation, categories }) {
     return (
         <TouchableOpacity
             style={{
@@ -15,7 +15,7 @@ function MyButton({ categories }) {
             }}
             activeOpacity={0.8}
             key={categories.id}
-            onPress={() => navigation.navigate('DetailsScreen', categories)}
+            onPress={() => navigation.navigate('ServiceScreen')}
         >
             <View
                 style={{

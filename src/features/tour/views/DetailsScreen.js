@@ -1,7 +1,8 @@
-import React from 'react';
-import { ImageBackground, SafeAreaView, StatusBar, StyleSheet, View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { ImageBackground, SafeAreaView, StatusBar, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
+import ModalOrder from './ModalOrder';
 
 const DetailsScreen = ({ navigation, route }) => {
     const place = route.params;
@@ -66,9 +67,12 @@ const DetailsScreen = ({ navigation, route }) => {
                         /chuyen
                     </Text>
                 </View>
-                <View style={style.bookNowBtn}>
-                    <Text style={{ color: COLORS.primary, fontSize: 16, fontWeight: 'bold' }}>Dat ngay</Text>
-                </View>
+
+                <TouchableOpacity onPress={() => navigation.navigate('OrderScreen')}>
+                    <View style={style.bookNowBtn}>
+                        <Text style={{ color: COLORS.primary, fontSize: 16, fontWeight: 'bold' }}>Dat ngay</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );
