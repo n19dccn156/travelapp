@@ -18,7 +18,7 @@ export function FeaturesComponent({ navigation }: { navigation: any }) {
                             <View
                                 style={{ height: variables.width / 4, justifyContent: 'center', alignItems: 'center' }}
                             >
-                                <TouchableOpacity onPress={() => navigation.navigate('Tour')}>
+                                <TouchableOpacity onPress={() => navigation.navigate('Service')}>
                                     <View
                                         style={{
                                             height: variables.width / 7,
@@ -43,7 +43,7 @@ export function FeaturesComponent({ navigation }: { navigation: any }) {
                                     </View>
                                 </TouchableOpacity>
                                 <Text style={{ fontSize: 16, color: '#2c3e50', fontWeight: 'bold', paddingTop: 5 }}>
-                                    Du Lịch
+                                    Dịch vụ
                                 </Text>
                             </View>
                         </Col>
