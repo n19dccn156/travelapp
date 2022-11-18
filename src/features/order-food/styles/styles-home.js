@@ -44,7 +44,7 @@ const stylesView= StyleSheet.create({
 const stylesImg = StyleSheet.create({
     avatarShop: {
         height: 120,
-        width: 120,
+        width: 214,
         borderRadius : 12,
     }
 })

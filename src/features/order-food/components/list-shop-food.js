@@ -29,12 +29,13 @@ export function ListShopFood({navigation}) {
             style={stylesView.item}
             key={item.id}
             onPress={() => {
-              navigation.navigate("ShopDetail", { id: item.id });
+              navigation.navigate("ShopDetail", { item: item });
             }}
           >
             <View>
               <Image
-                source={{ uri: `${item.avatar}` }}
+              source={{uri:'https://cdn.tgdd.vn/2021/05/CookProduct/Banh-Mi-Bo-Nuong-Sa-(Vietnamese-Beef-Banh-Mi)-6-5-screenshot-1200x676.jpg'}}
+                //source={{ uri: `${item.avatar}` }}
                 style={stylesImg.avatarShop}
               />
             </View>
