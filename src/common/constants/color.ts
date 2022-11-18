@@ -1,7 +1,13 @@
 import { ScreenWidth } from '@rneui/themed/dist/config';
 
 export const colors = {
-    primary: '#ff5868',
-    secondary: '#95a5a6',
     accent: '',
+    white: '#FFF',
+    dark: '#000',
+    primary: '#04555c',
+    secondarry: '#e1e8e9',
+    light: '#f9f9f9',
+    grey: '#dddedd',
+    oranbge: '#f5a623',
+    red: 'red',
 };
