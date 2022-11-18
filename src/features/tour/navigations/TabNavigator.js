@@ -51,9 +51,13 @@ const BottomTabNavigator = () => {
                     let iconName;
 
                     if (route.name === 'Home') {
-                        iconName = focused ? 'ios-information-circle' : 'ios-information-circle-outline';
-                    } else if (route.name === 'Settings') {
-                        iconName = focused ? 'ios-list-box' : 'ios-list';
+                        iconName = focused ? 'home' : 'home-outline';
+                    } else if (route.name === 'Booking') {
+                        iconName = focused ? 'ios-browsers' : 'ios-browsers-outline';
+                    } else if (route.name === 'Favorit') {
+                        iconName = focused ? 'ios-bookmarks' : 'ios-bookmarks-outline';
+                    } else if (route.name === 'Shedule') {
+                        iconName = focused ? 'calendar' : 'calendar-outline';
                     }
 
                     // You can return any component that you like here!
@@ -65,7 +69,9 @@ const BottomTabNavigator = () => {
             })}
         >
             <Tab.Screen name="Home" component={MainStackNavigator} />
-            <Tab.Screen name="Contact" component={ContactStackNavigator} />
+            <Tab.Screen name="Booking" component={ContactStackNavigator} />
+            <Tab.Screen name="Favorit" component={ContactStackNavigator} />
+            <Tab.Screen name="Shedule" component={ContactStackNavigator} />
         </Tab.Navigator>
     );
 };
