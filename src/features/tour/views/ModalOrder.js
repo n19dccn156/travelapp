@@ -30,8 +30,8 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, Button } fr
 import DatePicker from 'react-native-date-picker';
 import Moment from 'moment';
 
-const ModalOrder = () => {
-    const [modalVisible, setModalVisible] = useState(false);
+const ModalOrder = ({ visible }) => {
+    const [modalVisible, setModalVisible] = useState(visible);
     const [number, onChangeNumber] = React.useState(null);
     const [note, onChangeNote] = React.useState(null);
     const [date, setDate] = useState(new Date());

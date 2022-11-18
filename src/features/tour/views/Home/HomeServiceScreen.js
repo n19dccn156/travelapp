@@ -36,11 +36,15 @@ const HomeServiceScreen = ({ navigation }) => {
                         <Text style={style.headerTitle}>Trải nghiệm</Text>
                         <Text style={style.headerTitle}>dịch vụ tiện ích</Text>
                         <View style={style.inputContainer}>
-                            <View style={{ flexDirection: 'row' }}>
-                                <Icon style={{ marginTop: 10 }} name="search" size={28} />
-                                <TextInput placeholder="Tìm kiếm dịch vụ" style={{ color: COLORS.grey }}></TextInput>
-                            </View>
-                            <AntDesign name="filter" size={28} />
+                            <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')}>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Icon style={{ marginTop: 5 }} name="search" size={28} />
+                                        <Text style={{ color: COLORS.grey, marginTop: 10 }}>Tìm kiếm dịch vụ</Text>
+                                    </View>
+                                    <AntDesign style={{ marginLeft: 100, marginTop: 5 }} name="filter" size={28} />
+                                </View>
+                            </TouchableOpacity>
                         </View>
                     </View>
                 </View>
@@ -56,7 +60,7 @@ const HomeServiceScreen = ({ navigation }) => {
                     >
                         Các dịch vụ
                     </Text>
-                    <TouchableOpacity style={{ flex: 1 }} onPress={() => navigation.navigate('ListScreen')}>
+                    <TouchableOpacity style={{ flex: 1 }} onPress={() => navigation.navigate('AllServices')}>
                         <Text
                             style={{
                                 textAlign: 'right',
@@ -71,7 +75,7 @@ const HomeServiceScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <ListCategories />
+                    <ListCategories navigation={navigation} />
                 </View>
 
                 <View style={{ paddingTop: 30, flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -84,9 +88,9 @@ const HomeServiceScreen = ({ navigation }) => {
                             fontWeight: 'bold',
                         }}
                     >
-                        Dịch vụ phổ biến
+                        Dịch vụ phổ biến nhất
                     </Text>
-                    <TouchableOpacity style={{ flex: 1 }} onPress={() => navigation.navigate('ListScreen')}>
+                    <TouchableOpacity style={{ flex: 1 }} onPress={() => navigation.navigate('ListMostService')}>
                         <Text
                             style={{
                                 textAlign: 'right',
@@ -106,7 +110,7 @@ const HomeServiceScreen = ({ navigation }) => {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         data={places}
-                        renderItem={({ item }) => <MyButton categories={item} />}
+                        renderItem={({ item }) => <MyButton navigation={navigation} categories={item} />}
                     />
                 </View>
                 <View>
