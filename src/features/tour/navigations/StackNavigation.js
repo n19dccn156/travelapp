@@ -1,8 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import AboutScreen from '../views/AboutScreen';
 import ContactScreen from '../views/ContactScreen';
-import HomeScreen from '../views/HomeScreen';
+import HomeServiceScreen from '../views/Home/HomeServiceScreen';
 import DetailsScreen from '../views/DetailsScreen';
 import ListScreen from '../views/ListScreen';
 
@@ -19,7 +18,7 @@ const screenOptionStyle = {
 const MainStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="HomeScreen" component={HomeServiceScreen} />
             <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
             <Stack.Screen name="ListScreen" component={ListScreen} />
         </Stack.Navigator>

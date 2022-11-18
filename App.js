@@ -1,9 +1,6 @@
 import * as React from 'react';
-import { Button, View } from 'react-native';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeNavigation } from './src/navigations/home-navigation';
-import { LoginScreen } from './src/features/login/login-zalo/login-screen';
 
 const MyTheme = {
     ...DefaultTheme,
