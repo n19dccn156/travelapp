@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
-import { HomeNavigation } from './src/navigations/home-navigation';
+import {HomeNavigation } from './src/navigations/home-navigation';
 
 const MyTheme = {
     ...DefaultTheme,

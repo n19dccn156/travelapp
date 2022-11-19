@@ -17,7 +17,7 @@ const styleText = StyleSheet.create({
   header: {
     marginTop: 12,
     fontWeight:'bold',
-    color: 'red',
+    color: COLORS.primary,
     fontSize:20
   },
 });

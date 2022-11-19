@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FlatList, Text, View, Image, TouchableOpacity } from "react-native";
 import { getListShop, itemShopFood } from "../services/get-data";
 import { stylesView, stylesImg, stylesText } from "../styles/styles-home";
-import { RenderLongText } from "../services/handler";
+import { RenderLongText } from "../../../utility/handler";
 import LoadComponent from "../../../utility/load-component";
 import host from "../services/host-test-api";
 export function ListShopFood({navigation}) {
@@ -29,7 +29,7 @@ export function ListShopFood({navigation}) {
             style={stylesView.item}
             key={item.id}
             onPress={() => {
-              navigation.navigate("ShopDetail", { item: item });
+              navigation.navigate("ShopFoodScreen", { item: item });
             }}
           >
             <View>
