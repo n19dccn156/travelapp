@@ -9,8 +9,9 @@ import { View } from 'react-native-animatable';
 import { Text } from 'react-native-paper';
 import style from '../../style/Home/style';
 import { Icon } from 'react-native-elements';
+import { TouchableOpacity } from 'react-native';
 
-function ListCategories() {
+function ListCategories({ navigation }) {
     const categoryIcons = [
         <Icon name="tour" size={25} color={COLORS.primary} />,
         <Icon name="car-rental" size={25} color={COLORS.primary} />,
@@ -27,12 +28,15 @@ function ListCategories() {
         <View>
             <View style={style.categoryContainer}>
                 {categoryIcons.map((icon, index) => (
-                    <View key={index}>
-                        <View style={style.iconContainer}>{icon}</View>
-                        <Text>Thuê</Text>
-                    </View>
+                    <TouchableOpacity key={index} onPress={() => navigation.navigate('ServiceScreen')}>
+                        <View>
+                            <View style={style.iconContainer}>{icon}</View>
+                            <Text>Thuê</Text>
+                        </View>
+                    </TouchableOpacity>
                 ))}
             </View>
+
             <View style={style.categoryContainer}>
                 {categoryIcons2.map((icon, index) => (
                     <View key={index}>
