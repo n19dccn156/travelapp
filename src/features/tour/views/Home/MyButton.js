@@ -1,9 +1,9 @@
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import { Text, View } from 'react-native-animatable';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import COLORS from '../../consts/colors';
 
-function MyButton({ navigation, categories }) {
+function MyButton({ navigation, route }) {
     return (
         <TouchableOpacity
             style={{
@@ -14,8 +14,9 @@ function MyButton({ navigation, categories }) {
                 padding: 5,
             }}
             activeOpacity={0.8}
-            key={categories.id}
-            onPress={() => navigation.navigate('ServiceScreen')}
+            key={route.categories.id}
+            // onPress={() => navigation.navigate('ServiceScreen')}
+            onPress={() => route.getServiceOfType(route.categories.id)}
         >
             <View
                 style={{
@@ -27,7 +28,7 @@ function MyButton({ navigation, categories }) {
                     size: '14',
                 }}
             >
-                <Text style={{ color: COLORS.white }}>{categories.name}</Text>
+                <Text style={{ color: COLORS.white }}>{route.categories.name}</Text>
             </View>
         </TouchableOpacity>
     );

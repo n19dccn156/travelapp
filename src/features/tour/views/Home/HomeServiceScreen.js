@@ -1,5 +1,5 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StatusBar, View, Text, ScrollView, TextInput, Image, FlatList } from 'react-native';
 import COLORS from '../../consts/colors';
 import places from '../../consts/places';
@@ -10,8 +10,60 @@ import ListCategories from './ListCategories';
 import style from '../../style/Home/style';
 import MyButton from './MyButton';
 import MyCard from './MyCard';
+import { getAllCaterogy, getServiceOfCaterogy } from '../../services/getData';
+import ListButtonCategory from './ListButtonCategory';
+import ListServiceForType from './ListServiceForType';
 
 const HomeServiceScreen = ({ navigation }) => {
+    // const [serviceType, setServiceType] = useState('');
+
+    //load list category
+    const [listCategory, setListCategory] = useState([]);
+
+    //load list service for type
+    const [listServiceForType, setlistServiceForType] = useState([]);
+    const getServiceOfType = (type) => {
+        getServiceOfCaterogy(type)
+            .then(function (res) {
+                setlistServiceForType([...res.data.content]);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+            });
+    };
+    useEffect(() => {
+        getAllCaterogy()
+            .then(function (res) {
+                setListCategory([...res.data]);
+
+                // setServiceType(res.data[0].id);
+                // getServiceOfType(res.data[0].id);
+                getServiceOfCaterogy(res.data[0].id)
+                    .then(function (res) {
+                        setlistServiceForType([...res.data.content]);
+                    })
+                    .catch((err) => {
+                        console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+                    });
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
+            });
+    }, []);
+
+    // //load list service for type
+    // const [listServiceForType, setlistServiceForType] = useState([]);
+
+    // useEffect(() => {
+    //     getServiceOfCaterogy(serviceType)
+    //         .then(function (res) {
+    //             setlistServiceForType([...res.data.content]);
+    //         })
+    //         .catch((err) => {
+    //             console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+    //         });
+    // }, []);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -60,7 +112,10 @@ const HomeServiceScreen = ({ navigation }) => {
                     >
                         Các dịch vụ
                     </Text>
-                    <TouchableOpacity style={{ flex: 1 }} onPress={() => navigation.navigate('AllServices')}>
+                    <TouchableOpacity
+                        style={{ flex: 1 }}
+                        onPress={() => navigation.navigate('AllServices', listCategory)}
+                    >
                         <Text
                             style={{
                                 textAlign: 'right',
@@ -75,7 +130,7 @@ const HomeServiceScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
                 <View>
-                    <ListCategories navigation={navigation} />
+                    <ListCategories navigation={navigation} route={{ listCategory: listCategory }} />
                 </View>
 
                 <View style={{ paddingTop: 30, flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -90,7 +145,10 @@ const HomeServiceScreen = ({ navigation }) => {
                     >
                         Dịch vụ phổ biến nhất
                     </Text>
-                    <TouchableOpacity style={{ flex: 1 }} onPress={() => navigation.navigate('ListMostService')}>
+                    <TouchableOpacity
+                        style={{ flex: 1 }}
+                        onPress={() => navigation.navigate('ListMostService', listCategory)}
+                    >
                         <Text
                             style={{
                                 textAlign: 'right',
@@ -104,24 +162,13 @@ const HomeServiceScreen = ({ navigation }) => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ justifyContent: 'center' }}>
-                    <FlatList
-                        contentContainerStyle={{ margin: 10 }}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        data={places}
-                        renderItem={({ item }) => <MyButton navigation={navigation} categories={item} />}
-                    />
-                </View>
-                <View>
-                    <FlatList
-                        contentContainerStyle={{ paddingLeft: 20 }}
-                        vertical
-                        showsVerticalScrollIndicator={false}
-                        data={places}
-                        renderItem={({ item }) => <MyCard place={item} navigation={navigation} />}
-                    />
-                </View>
+                {/* list category for all type */}
+                <ListButtonCategory
+                    navigation={navigation}
+                    route={{ listCategory: listCategory, getServiceOfType: getServiceOfType }}
+                />
+                {/* list service of type */}
+                <ListServiceForType navigation={navigation} route={{ listServiceForType: listServiceForType }} />
             </ScrollView>
         </SafeAreaView>
     );
