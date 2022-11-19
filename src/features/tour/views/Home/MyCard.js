@@ -1,12 +1,12 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native-animatable';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import COLORS from '../../consts/colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import style from '../../style/Home/style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import { TouchableOpacity } from 'react-native';
 
-function MyCard({ navigation, place }) {
+function MyCard({ navigation, service }) {
     return (
         <TouchableOpacity
             style={{
@@ -17,29 +17,28 @@ function MyCard({ navigation, place }) {
                 padding: 10,
             }}
             activeOpacity={0.8}
-            key={place.id}
-            onPress={() => navigation.navigate('DetailsScreen', place)}
+            key={service.id}
+            onPress={() => navigation.navigate('DetailsScreen', service)}
         >
-            <Image style={style.myCardImage} source={place.image} />
+            <Image style={style.myCardImage} source={{ uri: `${service.avatar}` }} />
 
             <View style={{ flexDirection: 'column' }}>
                 <View
                     style={{
                         flex: 1,
-
                         flexDirection: 'row',
                     }}
                 >
                     <View style={{ flexDirection: 'row' }}>
                         <Icon name="place" size={20} color={COLORS.white} />
-                        <Text style={{ marginLeft: 5, color: COLORS.white }}>{place.location}</Text>
+                        <Text style={{ marginLeft: 5, color: COLORS.white }}>{service.idTypeService}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginLeft: 50 }}>
                         <AntDesign name="hearto" size={20} color={COLORS.white} />
                     </View>
                 </View>
                 <Text style={{ color: COLORS.white, fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>
-                    {place.name}
+                    {service.name}
                 </Text>
                 <View
                     style={{
@@ -50,10 +49,10 @@ function MyCard({ navigation, place }) {
                 >
                     <View style={{ flexDirection: 'row' }}>
                         <Icon name="star" size={20} color={COLORS.white} />
-                        <Text style={{ marginLeft: 5, color: COLORS.white }}>5.0</Text>
+                        <Text style={{ marginLeft: 5, color: COLORS.white }}>{service.star}</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ marginLeft: 5, color: COLORS.white }}>| 2001 đánh giá</Text>
+                        <Text style={{ marginLeft: 5, color: COLORS.white }}>| {service.numberRating} đánh giá</Text>
                     </View>
                 </View>
             </View>
