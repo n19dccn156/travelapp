@@ -7,12 +7,12 @@ import {
 } from '../services/get-data';
 import host from '../services/host-test-api';
 import {styleIcon} from '../styles/styles-header';
-import {StyleViews} from '../styles/styles-shop-food';
-import {StyleImagesDish, StyleViewDish} from '../styles/styles-dish-detail';
+import {StyleViews} from '../styles/styleShop/styles-shop-food';
+import {StyleImagesDish, StyleViewDish} from '../styles/styleDish/styles-dish-detail';
 import notifyMessage from '../../../utility/notifyMessage';
 import ModalFood from '../components/modal-food';
 import LoadComponent from '../../../utility/load-component';
-export function DishDetail({navigation, route}: {navigation: any; route: any}) {
+export function DishScreen({navigation, route}: {navigation: any; route: any}) {
   const [dish, setDish] = useState({} );
   const [shop, setShop] = useState({});
   const [err, setErr] = useState(false);

@@ -9,10 +9,10 @@ import {
 import {getAllDishes,itemDish} from '../services/get-data';
 import {stylesView, stylesImg, stylesText} from '../styles/styles-home';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {RenderLongText} from '../services/handler';
+import {RenderLongText} from '../../../utility/handler';
 import  host  from '../services/host-test-api';
-export function AllDish({navigation}: {navigation: any}) {
-  const [AllDish, setAllDish] = useState([] as any);
+export function AllDish({navigation}) {
+  const [AllDish, setAllDish] = useState([]);
   useEffect(() => {
     getAllDishes()
       .then(function (data: itemDish[]): void {

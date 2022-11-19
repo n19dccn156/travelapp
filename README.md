@@ -1,2 +1,2 @@
 # travelapp
-Đồ án môn PTTK-HTTT
+Đồ án môn PTTK-HTTT. 
