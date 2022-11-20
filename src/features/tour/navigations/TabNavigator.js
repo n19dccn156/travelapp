@@ -36,14 +36,18 @@
 //     );
 // }
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ContactStackNavigator, MainStackNavigator } from './StackNavigation';
+import { BookingStackNavigator, ContactStackNavigator, MainStackNavigator } from './StackNavigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import TopTabNavigation from './TopTabNavigation';
+import BookingScreen from '../views/Booking/BookingScreen';
+import { getAllCaterogy, getServiceOfCaterogy } from '../services/getData';
+import ProfileSceen from '../views/manage/ProfileSceen';
 
 const Tab = createBottomTabNavigator();
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator = ({ navigation, route }) => {
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -69,8 +73,8 @@ const BottomTabNavigator = () => {
             })}
         >
             <Tab.Screen name="Home" component={MainStackNavigator} />
-            <Tab.Screen name="Booking" component={ContactStackNavigator} />
-            <Tab.Screen name="Favorit" component={ContactStackNavigator} />
+            <Tab.Screen name="Booking" component={BookingStackNavigator} />
+            <Tab.Screen name="Favorit" component={ProfileSceen} />
             <Tab.Screen name="Shedule" component={ContactStackNavigator} />
         </Tab.Navigator>
     );

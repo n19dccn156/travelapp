@@ -9,6 +9,11 @@ import SearchScreen from '../views/SearchScreen';
 import AllServices from '../views/AllServices';
 import ServiceScreen from '../views/ServiceScreen';
 import OrderScreen from '../views/OrderScreen';
+import BookingScreen from '../views/Booking/BookingScreen';
+import ProfileSceen from '../views/manage/ProfileSceen';
+import EditProfileScreen from '../views/manage/EditProfileScreen';
+import ListTypeScreen from '../views/manage/ListTypeScreen';
+import AddTypeServiceScreen from '../views/manage/AddTypeServiceScreen';
 
 const Stack = createStackNavigator();
 
@@ -20,7 +25,7 @@ const screenOptionStyle = {
     headerBackTitle: 'Back',
 };
 
-const MainStackNavigator = () => {
+const MainStackNavigator = ({ navigation, route }) => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="HomeScreen" component={HomeServiceScreen} />
@@ -28,9 +33,14 @@ const MainStackNavigator = () => {
             <Stack.Screen name="ListScreen" component={ListScreen} />
             <Stack.Screen name="ListMostService" component={ListMostService} />
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
+
             <Stack.Screen name="AllServices" component={AllServices} />
             <Stack.Screen name="ServiceScreen" component={ServiceScreen} />
             <Stack.Screen name="OrderScreen" component={OrderScreen} />
+            <Stack.Screen name="ProfileSceen" component={ProfileSceen} />
+            <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+            <Stack.Screen name="ListTypeScreen" component={ListTypeScreen} />
+            <Stack.Screen name="AddTypeServiceScreen" component={AddTypeServiceScreen} />
         </Stack.Navigator>
     );
 };
@@ -38,9 +48,16 @@ const MainStackNavigator = () => {
 const ContactStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Contact" component={ContactScreen} />
+            <Stack.Screen name="Booking" component={BookingScreen} />
+        </Stack.Navigator>
+    );
+};
+const BookingStackNavigator = () => {
+    return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Booking" component={BookingScreen} />
         </Stack.Navigator>
     );
 };
 
-export { MainStackNavigator, ContactStackNavigator };
+export { MainStackNavigator, ContactStackNavigator, BookingStackNavigator };

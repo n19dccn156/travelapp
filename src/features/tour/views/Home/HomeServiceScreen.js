@@ -2,19 +2,16 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StatusBar, View, Text, ScrollView, TextInput, Image, FlatList } from 'react-native';
 import COLORS from '../../consts/colors';
-import places from '../../consts/places';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ListCategories from './ListCategories';
 import style from '../../style/Home/style';
-import MyButton from './MyButton';
-import MyCard from './MyCard';
 import { getAllCaterogy, getServiceOfCaterogy } from '../../services/getData';
 import ListButtonCategory from './ListButtonCategory';
 import ListServiceForType from './ListServiceForType';
 
-const HomeServiceScreen = ({ navigation }) => {
+const HomeServiceScreen = ({ navigation, route }) => {
     // const [serviceType, setServiceType] = useState('');
 
     //load list category
