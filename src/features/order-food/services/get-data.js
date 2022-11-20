@@ -10,6 +10,16 @@ const getListShop = async () => {
     return {};
   }
 };
+async function getDishByIdShop(id){
+  try {
+    const response = await fetch(`${host}/api/v1/dishs/idfood/${id}`);
+    console.log('call')
+    return response.json();
+  } catch (error) {
+    console.log('🚀 ~ file: getListShop ~ line 4 ~ error', error);
+    return {};
+  }
+}
 const getAllDishes = async () => {
   try {
     const response = await fetch(`${host}/`);
@@ -37,5 +47,5 @@ const getInfoShop = async (id) => {
     console.log('🚀 ~ file: getListShop ~ line 16 ~ error', error);
   }
 };
-export {getListShop, getAllDishes,getInfoDish,getInfoShop};
+export {getListShop, getAllDishes,getInfoDish,getInfoShop,getDishByIdShop};
 

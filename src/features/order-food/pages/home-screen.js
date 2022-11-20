@@ -3,8 +3,10 @@ import { SafeAreaView, View, StatusBar, Text, ScrollView } from "react-native";
 import LoadComponent from "../../../utility/load-component";
 import { HeaderComponnent } from "../components/header";
 import { ListShopFood } from "../components/list-shop-food";
+import { ShopFoodScreen } from "./shop-food-screen";
 
 export function HomeScreen({navigation} ) {
+
   return (
     <View>
       <StatusBar

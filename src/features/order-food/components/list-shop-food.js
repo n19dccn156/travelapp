@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FlatList, Text, View, Image, TouchableOpacity } from "react-native";
 import { getListShop, itemShopFood } from "../services/get-data";
 import { stylesView, stylesImg, stylesText } from "../styles/styles-home";
-import { RenderLongText } from "../services/handler";
+import { RenderLongText } from "../../../utility/handler";
 import LoadComponent from "../../../utility/load-component";
 import host from "../services/host-test-api";
 export function ListShopFood({navigation}) {
@@ -29,12 +29,13 @@ export function ListShopFood({navigation}) {
             style={stylesView.item}
             key={item.id}
             onPress={() => {
-              navigation.navigate("ShopDetail", { id: item.id });
+              navigation.navigate("ShopFoodScreen", { item: item });
             }}
           >
             <View>
               <Image
-                source={{ uri: `${item.avatar}` }}
+              source={{uri:'https://cdn.tgdd.vn/2021/05/CookProduct/Banh-Mi-Bo-Nuong-Sa-(Vietnamese-Beef-Banh-Mi)-6-5-screenshot-1200x676.jpg'}}
+                //source={{ uri: `${item.avatar}` }}
                 style={stylesImg.avatarShop}
               />
             </View>

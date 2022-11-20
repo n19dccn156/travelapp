@@ -15,12 +15,17 @@ const StyleViews = StyleSheet.create({
     container: {
         top: 0,
         left:0,
-        right:0,
+        right:5,
         margin: 0,
         height:'100%',
         width: '100%',
         flexDirection: 'column',
-        justifyContent:'flex-start'
+        justifyContent:'flex-start',
+        flex:1,
+    },
+    header:{
+        flexDirection: 'row',
+        height:240
     }
 })
 export {StyleImages,StyleViews};
