@@ -35,7 +35,7 @@ function RightDrawerContent() {
     );
 }
 
-const LeftDrawerNavigator = () => {
+const LeftDrawerNavigator = ({ navigation, route }) => {
     return (
         <LeftDrawer.Navigator
             useLegacyImplementation
@@ -48,7 +48,7 @@ const LeftDrawerNavigator = () => {
     );
 };
 
-const RightDrawerNavigator = () => {
+const RightDrawerNavigator = ({ navigation, route }) => {
     return (
         <RightDrawer.Navigator
             useLegacyImplementation
