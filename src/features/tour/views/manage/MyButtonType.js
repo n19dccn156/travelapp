@@ -17,8 +17,14 @@ function MyButtonType({ navigation, route }) {
             }}
             activeOpacity={0.8}
             key={route.categories.id}
-            // onPress={() => navigation.navigate('ServiceScreen')}
-            onPress={() => route.getServiceOfType(route.categories.id)}
+            onPress={() =>
+                navigation.navigate('EditTypeScreen', {
+                    categories: route.categories,
+                    setListCategory: route.setListCategory,
+                    listCategory: route.listCategory,
+                })
+            }
+            // onPress={() => route.getServiceOfType(route.categories.id)}
         >
             <View
                 style={{

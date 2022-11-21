@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, SafeAreaView, StatusBar, TouchableOpacity, View, Alert, Modal, StyleSheet } from 'react-native';
+import { Image, SafeAreaView, StatusBar, TouchableOpacity, View, Alert, StyleSheet, Modal } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
@@ -10,6 +10,7 @@ import ListType from './ListType';
 import { TextInput } from 'react-native-gesture-handler';
 
 function ListTypeScreen({ navigation, route }) {
+    console.log('route', route);
     const [modalVisible, setModalVisible] = useState(false);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -20,7 +21,7 @@ function ListTypeScreen({ navigation, route }) {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-                    onPress={() => navigation.navigate('HomeScreen')}
+                    onPress={() => navigation.navigate('ProfileSceen')}
                 />
                 <Text style={style.headerTitle}>Quản lý loại dịch vụ</Text>
                 <View style={{ marginTop: 10 }}>
@@ -36,21 +37,21 @@ function ListTypeScreen({ navigation, route }) {
             <View>
                 <ListType
                     navigation={navigation}
-                    route={{ listCategory: route.params.listCategory, getServiceOfType: route.params.getServiceOfType }}
+                    route={{
+                        listCategory: route.params.listCategory,
+                        getServiceOfType: route.params.getServiceOfType,
+                        setListCategory: route.params.setListCategory,
+                        setlistServiceForType: route.params.setlistServiceForType,
+                    }}
                 />
                 {/* modal them loai */}
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
-                        setModalVisible(true);
-                    }}
-                >
+                <Modal animationType="slide" transparent={true} visible={modalVisible}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
                             <View>
+                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10, fontSize: 18 }}>
+                                    Thêm loại dịch vụ
+                                </Text>
                                 <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>
                                     Tên loại dịch vụ
                                 </Text>
@@ -109,7 +110,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 22,
-        // backgroundColor: COLORS.grey,
+        backgroundColor: COLORS.dark,
+        opacity: 0.9,
     },
     modalView: {
         margin: 20,
@@ -122,7 +124,7 @@ const styles = StyleSheet.create({
             width: 0,
             height: 2,
         },
-        shadowOpacity: 1,
+        shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
     },
