@@ -20,7 +20,12 @@ function ListType({ navigation, route }) {
                 renderItem={({ item }) => (
                     <MyButtonType
                         navigation={navigation}
-                        route={{ categories: item, getServiceOfType: route.getServiceOfType }}
+                        route={{
+                            categories: item,
+                            getServiceOfType: route.getServiceOfType,
+                            setListCategory: route.setListCategory,
+                            listCategory: route.listCategory,
+                        }}
                     />
                 )}
             />

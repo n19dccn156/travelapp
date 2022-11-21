@@ -95,6 +95,7 @@ function ProfileSceen({ navigation }) {
                     navigation.navigate('ListTypeScreen', {
                         listCategory: listCategory,
                         getServiceOfType: getServiceOfType,
+                        setListCategory: setListCategory,
                     })
                 }
             >
@@ -108,6 +109,39 @@ function ProfileSceen({ navigation }) {
                     }}
                 >
                     <Text>Quản lý loại dịch vụ</Text>
+                    <AntDesign name="right" size={20} />
+                </View>
+            </TouchableOpacity>
+            {/* Quan ly dich vu */}
+            <TouchableOpacity
+                style={{
+                    backgroundColor: COLORS.grey,
+                    margin: 5,
+                    borderRadius: 10,
+                    flexDirection: 'row',
+                    padding: 10,
+                }}
+                activeOpacity={0.8}
+                onPress={() =>
+                    navigation.navigate('ListServiceScreen', {
+                        listCategory: listCategory,
+                        getServiceOfType: getServiceOfType,
+                        setListCategory: setListCategory,
+                        listServiceForType: listServiceForType,
+                        setlistServiceForType: setlistServiceForType,
+                    })
+                }
+            >
+                <View
+                    style={{
+                        color: COLORS.grey,
+                        backgroundColor: COLORS.grey,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        flex: 1,
+                    }}
+                >
+                    <Text>Quản lý dịch vụ</Text>
                     <AntDesign name="right" size={20} />
                 </View>
             </TouchableOpacity>

@@ -10,34 +10,6 @@ const getListServices = async () => {
         return {};
     }
 };
-const getAllServices = async () => {
-    try {
-        const response = await fetch(`${host}/`);
-
-        return response.json();
-    } catch (error) {
-        console.log(`${host}/get-all-dish`);
-        console.log('🚀 ~ file: getListShop ~ line 16 ~ error', error);
-        return {};
-    }
-};
-const getInfoService = async (id) => {
-    try {
-        const response = await fetch(`${host}/get-dish?id=${id}`);
-        return response.json();
-    } catch (error) {
-        console.log('🚀 ~ file: getListShop ~ line 16 ~ error', error);
-    }
-};
-const getInfoCaterogi = async (id) => {
-    try {
-        const response = await fetch(`${host}/get-shop?id=${id}`);
-        return response.json();
-    } catch (error) {
-        console.log('🚀 ~ file: getListShop ~ line 16 ~ error', error);
-    }
-};
-
 const getAllCaterogy = async () => {
     try {
         const response = await fetch(`${host}/api/v1/typeservices`);

@@ -38,7 +38,12 @@
 
 import React, { useEffect, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { BookingStackNavigator, ContactStackNavigator, MainStackNavigator } from './StackNavigation';
+import {
+    BookingStackNavigator,
+    ContactStackNavigator,
+    MainStackNavigator,
+    ManageStackNavigator,
+} from './StackNavigation';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import TopTabNavigation from './TopTabNavigation';
 import BookingScreen from '../views/Booking/BookingScreen';
@@ -58,7 +63,7 @@ const BottomTabNavigator = ({ navigation, route }) => {
                         iconName = focused ? 'home' : 'home-outline';
                     } else if (route.name === 'Booking') {
                         iconName = focused ? 'ios-browsers' : 'ios-browsers-outline';
-                    } else if (route.name === 'Favorit') {
+                    } else if (route.name === 'Manage') {
                         iconName = focused ? 'ios-bookmarks' : 'ios-bookmarks-outline';
                     } else if (route.name === 'Shedule') {
                         iconName = focused ? 'calendar' : 'calendar-outline';
@@ -74,7 +79,7 @@ const BottomTabNavigator = ({ navigation, route }) => {
         >
             <Tab.Screen name="Home" component={MainStackNavigator} />
             <Tab.Screen name="Booking" component={BookingStackNavigator} />
-            <Tab.Screen name="Favorit" component={ProfileSceen} />
+            <Tab.Screen name="Manage" component={ManageStackNavigator} />
             <Tab.Screen name="Shedule" component={ContactStackNavigator} />
         </Tab.Navigator>
     );
