@@ -7,7 +7,7 @@ import COLORS from '../consts/colors';
 import style from '../style/Home/style';
 import ListCategories from './Home/ListCategories';
 
-function AllServices({ navigation }) {
+function AllServices({ navigation, route }) {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -22,7 +22,7 @@ function AllServices({ navigation }) {
                 <Text style={style.headerTitle}>Tất cả dịch vụ</Text>
             </View>
             <ScrollView showsHorizontalScrollIndicator={false}>
-                <ListCategories />
+                <ListCategories navigation={navigation} route={{ listCategory: route.params }} />
             </ScrollView>
         </SafeAreaView>
     );

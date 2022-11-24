@@ -1,14 +1,30 @@
-import React from 'react';
-import { FlatList, SafeAreaView, ScrollView, StatusBar, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, ScrollView, StatusBar, View } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
 import COLORS from '../consts/colors';
-import places from '../consts/places';
+import { getServiceOfCaterogy } from '../services/getData';
 import style from '../style/Home/style';
-import MyButton from './Home/MyButton';
-import MyCard from './Home/MyCard';
+import ListButtonCategory from './Home/ListButtonCategory';
+import ListServiceForType from './Home/ListServiceForType';
 
-function ListMostService({ navigation }) {
+function ListMostService({ navigation, route }) {
+    const listCategory = route.params;
+    //load list service for type
+    const [listServiceForType, setlistServiceForType] = useState([]);
+
+    const getServiceOfType = (type) => {
+        getServiceOfCaterogy(type)
+            .then(function (res) {
+                setlistServiceForType([...res.data.content]);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+            });
+    };
+    useEffect(() => {
+        getServiceOfType(listCategory[0].id);
+    }, []);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -28,26 +44,14 @@ function ListMostService({ navigation }) {
                     onPress={() => navigation.navigate('SearchScreen')}
                 />
             </View>
-
             <ScrollView>
-                <View style={{ justifyContent: 'center' }}>
-                    <FlatList
-                        contentContainerStyle={{ margin: 10 }}
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        data={places}
-                        renderItem={({ item }) => <MyButton categories={item} />}
-                    />
-                </View>
-                <View>
-                    <FlatList
-                        contentContainerStyle={{ paddingLeft: 20 }}
-                        vertical
-                        showsVerticalScrollIndicator={false}
-                        data={places}
-                        renderItem={({ item }) => <MyCard place={item} navigation={navigation} />}
-                    />
-                </View>
+                {/* list category for all type */}
+                <ListButtonCategory
+                    navigation={navigation}
+                    route={{ listCategory: listCategory, getServiceOfType: getServiceOfType }}
+                />
+                {/* list service of type */}
+                <ListServiceForType navigation={navigation} route={{ listServiceForType: listServiceForType }} />
             </ScrollView>
         </SafeAreaView>
     );

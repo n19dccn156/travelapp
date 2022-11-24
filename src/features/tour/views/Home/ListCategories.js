@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -8,10 +8,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { View } from 'react-native-animatable';
 import { Text } from 'react-native-paper';
 import style from '../../style/Home/style';
-import { Icon } from 'react-native-elements';
+// import { Icon } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native';
+import { getAllCaterogy } from '../../services/getData';
+import { FlatList } from 'react-native-gesture-handler';
+import Icon from '../../icon/Icons';
 
-function ListCategories({ navigation }) {
+function ListCategories({ navigation, route }) {
     const categoryIcons = [
         <Icon name="tour" size={25} color={COLORS.primary} />,
         <Icon name="car-rental" size={25} color={COLORS.primary} />,
@@ -26,16 +29,33 @@ function ListCategories({ navigation }) {
     ];
     return (
         <View>
-            <View style={style.categoryContainer}>
-                {categoryIcons.map((icon, index) => (
-                    <TouchableOpacity key={index} onPress={() => navigation.navigate('ServiceScreen')}>
+            {/* <View style={style.categoryContainer}>
+                {listCategory.map((id, name) => (
+                    <TouchableOpacity key={id} onPress={() => navigation.navigate('ServiceScreen')}>
                         <View>
-                            <View style={style.iconContainer}>{icon}</View>
-                            <Text>Thuê</Text>
+                            <View style={style.iconContainer}>{}</View>
+                            <Text>{name}</Text>
                         </View>
                     </TouchableOpacity>
                 ))}
-            </View>
+            </View> */}
+            <FlatList
+                horizontal={true}
+                data={route.listCategory}
+                renderItem={({ item, index }) => (
+                    <TouchableOpacity
+                        key={item.id}
+                        onPress={() => {
+                            navigation.navigate('ServiceScreen');
+                        }}
+                    >
+                        <View style={style.iconContainer}>{/* <Image source={{ uri: `${item.avatar}` }} /> */}</View>
+                        <View>
+                            <Text>{item.name}</Text>
+                        </View>
+                    </TouchableOpacity>
+                )}
+            />
 
             <View style={style.categoryContainer}>
                 {categoryIcons2.map((icon, index) => (

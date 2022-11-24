@@ -5,14 +5,15 @@ import COLORS from '../consts/colors';
 import ModalOrder from './ModalOrder';
 
 const DetailsScreen = ({ navigation, route }) => {
-    const place = route.params;
+    const service = route.params;
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent backgroundColor="rgba(0,0,0,0)" />
-            <ImageBackground style={{ flex: 0.7 }} source={place.image}>
+            <ImageBackground style={{ flex: 0.7 }} source={{ uri: `${service.avatar}` }}>
                 <View style={style.header}>
-                    <Icon name="arrow-back-ios" size={28} color={COLORS.white} onPress={navigation.goBack} />
-                    <Icon name="more-vert" size={28} color={COLORS.white} />
+                    <Icon name="arrow-back-ios" size={28} color={COLORS.primary} onPress={navigation.goBack} />
+                    <Icon name="more-vert" size={28} color={COLORS.primary} />
                 </View>
                 <View style={style.imageDetailes}>
                     <Text
@@ -21,14 +22,14 @@ const DetailsScreen = ({ navigation, route }) => {
                             fontSize: 30,
                             fontWeight: 'bold',
                             marginBottom: 20,
-                            color: COLORS.white,
+                            color: COLORS.primary,
                         }}
                     >
-                        {place.name}
+                        {service.name}
                     </Text>
                     <View style={{ flexDirection: 'row' }}>
                         <Icon name="star" size={30} color={COLORS.oranbge} />
-                        <Text style={{ color: COLORS.white, fontWeight: 'bold', fontSize: 20 }}>5.0</Text>
+                        <Text style={{ color: COLORS.primary, fontWeight: 'bold', fontSize: 20 }}>{service.star}</Text>
                     </View>
                 </View>
             </ImageBackground>
@@ -39,11 +40,11 @@ const DetailsScreen = ({ navigation, route }) => {
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
                     <Icon name="place" size={28} color={COLORS.primary} />
                     <Text style={{ marginLeft: 5, fontSize: 20, fontWeight: 'bold', color: COLORS.primary }}>
-                        {place.location}
+                        {service.idTypeService}
                     </Text>
                 </View>
-                <Text style={{ marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>Ve chuyen di</Text>
-                <Text style={{ marginTop: 20, lineHeight: 22 }}>{place.details}</Text>
+                <Text style={{ marginTop: 20, fontWeight: 'bold', fontSize: 20 }}>Chi tiết dịch vụ</Text>
+                <Text style={{ marginTop: 20, lineHeight: 22 }}>{service.description}</Text>
             </View>
             <View style={style.footer}>
                 <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
@@ -54,7 +55,7 @@ const DetailsScreen = ({ navigation, route }) => {
                             color: COLORS.white,
                         }}
                     >
-                        500.000VND
+                        {service.price} VND
                     </Text>
                     <Text
                         style={{
@@ -64,13 +65,13 @@ const DetailsScreen = ({ navigation, route }) => {
                             marginLeft: 2,
                         }}
                     >
-                        /chuyen
+                        {service.unit}
                     </Text>
                 </View>
 
                 <TouchableOpacity onPress={() => navigation.navigate('OrderScreen')}>
                     <View style={style.bookNowBtn}>
-                        <Text style={{ color: COLORS.primary, fontSize: 16, fontWeight: 'bold' }}>Dat ngay</Text>
+                        <Text style={{ color: COLORS.primary, fontSize: 16, fontWeight: 'bold' }}>Đặt ngay</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -81,7 +82,7 @@ const DetailsScreen = ({ navigation, route }) => {
 const style = StyleSheet.create({
     bookNowBtn: {
         height: 50,
-        width: 150,
+        width: 100,
         backgroundColor: COLORS.white,
         borderRadius: 10,
         justifyContent: 'center',

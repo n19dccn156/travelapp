@@ -2,21 +2,29 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Text, View } from 'react-native-animatable';
 import COLORS from '../../consts/colors';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-function MyButton({ navigation, route }) {
+function MyButtonType({ navigation, route }) {
     return (
         <TouchableOpacity
             style={{
                 backgroundColor: COLORS.primary,
                 margin: 5,
-                borderRadius: 20,
+                borderRadius: 15,
                 flexDirection: 'row',
                 padding: 5,
+                flex: 1,
             }}
             activeOpacity={0.8}
             key={route.categories.id}
-            // onPress={() => navigation.navigate('ServiceScreen')}
-            onPress={() => route.getServiceOfType(route.categories.id)}
+            onPress={() =>
+                navigation.navigate('EditTypeScreen', {
+                    categories: route.categories,
+                    setListCategory: route.setListCategory,
+                    listCategory: route.listCategory,
+                })
+            }
+            // onPress={() => route.getServiceOfType(route.categories.id)}
         >
             <View
                 style={{
@@ -26,12 +34,16 @@ function MyButton({ navigation, route }) {
                     backgroundColor: COLORS.primary,
                     maxHeight: 40,
                     size: '14',
+                    flex: 1,
+                    justifyContent: 'space-between',
+                    flexDirection: 'row',
                 }}
             >
                 <Text style={{ color: COLORS.white }}>{route.categories.name}</Text>
+                <AntDesign name="right" size={20} color={COLORS.white} />
             </View>
         </TouchableOpacity>
     );
 }
 
-export default MyButton;
+export default MyButtonType;
