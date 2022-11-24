@@ -10,8 +10,7 @@ import {getAllDishes,itemDish} from '../services/get-data';
 import {stylesView, stylesImg, stylesText} from '../styles/styles-home';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {RenderLongText} from '../../../utility/handler';
-import  host  from '../services/host-test-api';
-export function AllDish({navigation}) {
+export function ListDish({navigation}) {
   const [AllDish, setAllDish] = useState([]);
   useEffect(() => {
     getAllDishes()

@@ -17,6 +17,7 @@ import { InfoShop } from "../components/ShopFood/info-shop";
 import { MenuShop } from "../components/ShopFood/menu-shop";
 var host = variables.host;
 export function ShopFoodScreen({ navigation, route }) {
+  
   return (
     <SafeAreaView style={StyleViews.container}>
       <ScrollView style={{ backgroundColor: "white", flexGrow: 2 }}>
@@ -30,6 +31,7 @@ export function ShopFoodScreen({ navigation, route }) {
         <InfoShop data={route.params.item}></InfoShop>
         <MenuShop id={route.params.item.id}></MenuShop>
       </ScrollView>
+      
     </SafeAreaView>
   );
 }

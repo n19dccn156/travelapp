@@ -5,18 +5,21 @@ import { stylesView, stylesImg, stylesText } from "../../styles/styles-home";
 import { stylesItem } from "../../styles/styleShop/item-dish";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { RenderLongText } from "../../../../utility/handler";
-import host from "../../services/host-test-api";
 import { getDishByIdShop } from "../../services/get-data";
-
+import ModalFood from "../modal-food";
 export function MenuShop({ id }) {
   const [Dish, setDish] = useState([]);
+  const [visibleModal, setVisibleModal] = useState(false);
   function RenderData() {
     return Dish.map(item => {
       return (
         <TouchableOpacity
           style={stylesItem.item}
-          key={`${item.id}food`}
-          onPress={() => {}}
+          key={`${item.id}`}
+          onPress={() => {
+            setVisibleModal(!visibleModal);
+            
+          }}
         >
           <View>
             <Image
@@ -25,7 +28,11 @@ export function MenuShop({ id }) {
                 uri:
                   "https://cdn.tgdd.vn/2021/05/CookProduct/Banh-Mi-Bo-Nuong-Sa-(Vietnamese-Beef-Banh-Mi)-6-5-screenshot-1200x676.jpg"
               }}
-              style={stylesImg.avatarShop}
+              style={{
+                height: 100,
+                width: 178,
+                borderRadius: 12
+              }}
             />
           </View>
           <View style={stylesView.item_info}>
@@ -53,6 +60,12 @@ export function MenuShop({ id }) {
       <View style={{}}>
         {RenderData()}
       </View>
+      <ModalFood
+        visible={visibleModal}
+        callbackClose={() => {
+          setVisibleModal(false);
+        }}
+      />
     </View>
   );
 }
