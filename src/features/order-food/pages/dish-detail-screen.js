@@ -5,7 +5,6 @@ import {
   getInfoDish,
   getInfoShop,
 } from '../services/get-data';
-import host from '../services/host-test-api';
 import {styleIcon} from '../styles/styles-header';
 import {StyleViews} from '../styles/styleShop/styles-shop-food';
 import {StyleImagesDish, StyleViewDish} from '../styles/styleDish/styles-dish-detail';

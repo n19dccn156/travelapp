@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
     },
     amount:{
       flex:3,
-      zIndex:-1
+      zIndex:-1,
+      flexDirection:"row"
     },
     textStyle: {
       color: "white",
@@ -57,6 +58,12 @@ const styles = StyleSheet.create({
       fontSize:18,
       textAlign: "center",
       color:'black',
+    },
+    quantity:{
+
+    },
+    buttonbuy:{
+      
     }
   });
 export default styles;

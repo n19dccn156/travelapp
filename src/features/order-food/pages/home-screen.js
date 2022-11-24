@@ -4,7 +4,7 @@ import LoadComponent from "../../../utility/load-component";
 import { HeaderComponnent } from "../components/header";
 import { ListShopFood } from "../components/list-shop-food";
 import { ShopFoodScreen } from "./shop-food-screen";
-
+import { ListDish } from "../components/all-dishes";
 export function HomeScreen({navigation} ) {
 
   return (
@@ -30,6 +30,14 @@ export function HomeScreen({navigation} ) {
               <Text>Nhà hàng nổi bật</Text>
               <Text style={{right:10}}>Nhà hàng nổi bật</Text>
             </View>
+            <ListShopFood navigation={navigation} />
+          </View>
+          <View style={{ flex: 1.2, width: "100%" }}>
+            <Text>Được đánh giá cao</Text>
+            <ListShopFood navigation={navigation} />
+          </View>
+          <View style={{ flex: 1.2, width: "100%" }}>
+            <Text>Được đánh giá cao</Text>
             <ListShopFood navigation={navigation} />
           </View>
           <View style={{ flex: 1.2, width: "100%" }}>
