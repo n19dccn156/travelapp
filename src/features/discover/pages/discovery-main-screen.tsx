@@ -9,12 +9,12 @@ type objCheckin = {
     name: string
 };
 
-export function WeatherScreen({navigation}: {navigation: any}) {
+export function DiscoverScreen({navigation}: {navigation: any}) {
 
     return(
         <View>
-            {/* <Button title="Click Tour" onPress={() => navigation.navigate('Tour')}/> */}
-            <Ionicons name="cloudy-outline" size={30}/>
+            <Button title="Go to Discovery Detail" onPress={() => navigation.navigate('DiscoveryDetailScreen')}/>
+            {/* <Ionicons name="cloudy-outline" size={30}/> */}
         </View>
     );
 }

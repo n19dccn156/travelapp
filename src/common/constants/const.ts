@@ -1,4 +1,14 @@
-import { ScreenWidth, ScreenHeight } from "@rneui/themed/dist/config"
+import { ScreenHeight, ScreenWidth } from '@rneui/themed/dist/config';
+
+export const height = ScreenHeight;
+export const width = ScreenWidth;
+// iphone 13 size
+const heightStandard = 844;
+const widthStandard = 390
+
+export const widthScale = (size: number) => width / widthStandard * size;
+export const heightScale = (size: number) => height / heightStandard * size;
+export const sizeScale = (size: number) => size + (widthScale(size) - size)*0.9; 
 
 export const variables = {
     width: ScreenWidth,
