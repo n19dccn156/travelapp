@@ -1,13 +1,21 @@
 import * as React from "react";
 import { SearchBar } from "@rneui/base";
-
+import { StyleSheet } from "react-native";
+const style = StyleSheet.create({
+    container: {
+            height: 50,
+            width: '97%',
+            borderRadius:14,
+            flexDirection: 'row',
+            alignItems: 'center',
+    }
+})
 export default () => {
     const [value, setValue] = React.useState("");
     return (
         <SearchBar
             platform="ios"
-            containerStyle={{maxHeight:40}}
-            inputContainerStyle={{borderRadius: 30, backgroundColor: "#0303031a"}}
+            inputContainerStyle={[{backgroundColor: "#0303031a"},style.container]}
             inputStyle={{padding:0}}
             leftIconContainerStyle={{}}
             rightIconContainerStyle={{}}

@@ -9,7 +9,11 @@ const widthStandard = 390
 export const widthScale = (size: number) => width / widthStandard * size;
 export const heightScale = (size: number) => height / heightStandard * size;
 export const sizeScale = (size: number) => size + (widthScale(size) - size)*0.9; 
-
+export const textSize ={
+    normal: sizeScale(16),
+    title: sizeScale(24),
+    small: sizeScale(14)
+}
 export const variables = {
     width: ScreenWidth,
     height: ScreenHeight,
