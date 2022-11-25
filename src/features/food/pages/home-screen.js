@@ -5,13 +5,8 @@ import LoadComponent from "../../../utility/load-component";
 import { HeaderComponnent } from "../components/header";
 import { ListShopFood } from "../components/list-shop-food";
 import { ShopFoodScreen } from "./shop-food-screen";
-<<<<<<< HEAD:src/features/food/pages/home-screen.js
 
 export function FoodScreen({navigation}) {
-=======
-import { ListDish } from "../components/all-dishes";
-export function HomeScreen({navigation} ) {
->>>>>>> f548ff02feb9a57f6f55f6204f9ea74ed1bc415c:src/features/order-food/pages/home-screen.js
 
   return (
     <View>
