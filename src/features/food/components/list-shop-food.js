@@ -4,7 +4,6 @@ import { getListShop, itemShopFood } from "../services/get-data";
 import { stylesView, stylesImg, stylesText } from "../styles/styles-home";
 import { RenderLongText } from "../../../utility/handler";
 import LoadComponent from "../../../utility/load-component";
-import host from "../services/host-test-api";
 export function ListShopFood({navigation}) {
   const [listFood, setListFood] = useState([]);
   const [loadVisible, setLoadVisible] = useState(true);

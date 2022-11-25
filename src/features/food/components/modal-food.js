@@ -10,16 +10,17 @@ import {
 } from "react-native";
 import styles from "../styles/styles-modal-component";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { ScrollView } from "react-native-gesture-handler";
 export default function ModalFood(props) {
   const visibleModal = props.visible;
   const info = props.info;
+  console.log(info)
   return (
     <Modal
       animationType="slide"
       visible={visibleModal}
       onRequestClose={props.callbackClose}
       transparent={true}
-      onShow={()=>{console.log('show')}}
     >
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
@@ -43,10 +44,24 @@ export default function ModalFood(props) {
             />
           </KeyboardAvoidingView>
           <View style={styles.options}>
-            <Text>options</Text>
+            <ScrollView>
+            <Text style={{fontSize:40}}>options</Text>
+            <Text style={{fontSize:40}}>options</Text>
+            <Text style={{fontSize:40}}>options</Text>
+            <Text style={{fontSize:40}}>options</Text>
+            <Text style={{fontSize:40}}>options</Text>
+            <Text style={{fontSize:40}}>options</Text> 
+            </ScrollView>
           </View>
           <View style={styles.amount}>
-            <Text>amount</Text>
+            <View style={styles.quantity}>
+            <Text>-</Text>
+            <Text>5</Text>
+            <Text>+</Text>
+            </View>
+            <View style={styles.buttonbuy}>
+           <TouchableOpacity><Text>Chọn mua</Text></TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>

@@ -5,19 +5,32 @@ import { stylesView, stylesImg, stylesText } from "../../styles/styles-home";
 import { stylesItem } from "../../styles/styleShop/item-dish";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { RenderLongText } from "../../../../utility/handler";
-import host from "../../services/host-test-api";
 import { getDishByIdShop } from "../../services/get-data";
+<<<<<<< HEAD:src/features/food/components/ShopFood/menu-shop.js
 
 export function MenuShop({navigation, id}) {
+=======
+import ModalFood from "../modal-food";
+export function MenuShop({ id }) {
+>>>>>>> f548ff02feb9a57f6f55f6204f9ea74ed1bc415c:src/features/order-food/components/ShopFood/menu-shop.js
   const [Dish, setDish] = useState([]);
+  const [visibleModal, setVisibleModal] = useState(false);
   function RenderData() {
     return Dish.map(item => {
       return (
         <TouchableOpacity
           style={stylesItem.item}
+<<<<<<< HEAD:src/features/food/components/ShopFood/menu-shop.js
           key={`${item.id}food`}
           onPress={ () => navigation.navigate('DishScreen',  { item: item })}
           // onPress={() => navigation.navigate('DishScreen', { item: item.id })}
+=======
+          key={`${item.id}`}
+          onPress={() => {
+            setVisibleModal(!visibleModal);
+            
+          }}
+>>>>>>> f548ff02feb9a57f6f55f6204f9ea74ed1bc415c:src/features/order-food/components/ShopFood/menu-shop.js
         >
           <View>
             <Image
@@ -26,7 +39,11 @@ export function MenuShop({navigation, id}) {
                 uri:
                   "https://cdn.tgdd.vn/2021/05/CookProduct/Banh-Mi-Bo-Nuong-Sa-(Vietnamese-Beef-Banh-Mi)-6-5-screenshot-1200x676.jpg"
               }}
-              style={stylesImg.avatarShop}
+              style={{
+                height: 100,
+                width: 178,
+                borderRadius: 12
+              }}
             />
           </View>
           <View style={stylesView.item_info}>
@@ -54,6 +71,12 @@ export function MenuShop({navigation, id}) {
       <View style={{}}>
         {RenderData()}
       </View>
+      <ModalFood
+        visible={visibleModal}
+        callbackClose={() => {
+          setVisibleModal(false);
+        }}
+      />
     </View>
   );
 }
