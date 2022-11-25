@@ -2,14 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Image, Modal, TouchableOpacity, Alert, Pressable, StyleSheet, Button } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-type objCheckin = {
-    address: string,
-    id: number
-    imgUrl: string,
-    name: string
-};
-
-export function WeatherScreen({navigation}: {navigation: any}) {
+export function ProfileScreen() {
 
     return(
         <View>

@@ -10,9 +10,9 @@ import {
     TouchableOpacity,
     FlatList,
     Dimensions,
-    BottomFlatList
 } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
+import { HeaderComponent } from '../../../common/components/header-components';
 import COLORS from '../const/colors';
 import hotels from '../const/hotels';
 import style from '../const/styles';
@@ -52,22 +52,23 @@ const HotelScreen = ({navigation})=> {
             <FlatList
                         data ={hotels}
                         contentContainerStyle ={{paddingLeft: 20, paddingVertical:30}}
-                        showHorizontalScrollIndicator = {false}
+                        // showHorizontalScrollIndicator = {false}
                         renderItem={({item, index}) => <Card hotel={item} index = {index}/>} />
         )
     };
     return (
         <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
             <StatusBar barStyle={'light-content'} />
-            <View style={style.header} >
+            {/* <HeaderComponent numberNotifi={"3"} name="Sang" navigation={navigation}/> */}
+            {/* <View style={style.header} >
                 <View style = {{flexDirection: 'row'}}>
                     <Text style = {{marginLeft:25,fontSize: 30, fontWeight: 'bold', color: COLORS.white}}>
                         Khách sạn Phú Quốc
                     </Text>
                 </View>
                 <Icon name = "hotel" size = {35} color = {COLORS.white}/>
-            </View>
-            <ScrollView showsVerticalScrollIndicator= {false}>
+            </View> */}
+            {/* <ScrollView showsVerticalScrollIndicator= {false}> */}
                 <View style= {style.searchInputContainer}>
                     <Icon name = "search" size = {25} style={{marginLeft: 10}}/>
                     <TextInput placeholder='Nhập tên khách sạn cần tìm' style ={{fontSize: 15, paddingLeft: 5}}/>
@@ -77,12 +78,12 @@ const HotelScreen = ({navigation})=> {
                     <FlatList
                         data ={hotels}
                         contentContainerStyle ={{paddingLeft: 20, paddingVertical:30}}
-                        showHorizontalScrollIndicator = {false}
+                        // showHorizontalScrollIndicator = {false}
                         renderItem={({item, index}) => <Card hotel={item} index = {index}/>}
                         ListFooterComponent = {<BottomFlatList/>}
                     />
                 </View>
-            </ScrollView>
+            {/* </ScrollView> */}
         </SafeAreaView>
 
 
