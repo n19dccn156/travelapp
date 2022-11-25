@@ -19,6 +19,8 @@ import { MainNavigation } from './src/navigations/main-navigation';
 //     );
 // }
 
+//const store = createStore(allReducers);
+//store.subscribe(() => console.log(store.getState()))
 const MyTheme = {
     ...DefaultTheme,
     colors: {

@@ -45,6 +45,8 @@
         "react-native-swipeable": "^0.6.0",
         "react-native-tab-view": "^3.3.0",
         "react-native-vector-icons": "^9.2.0",
+        "react-redux": "^8.0.5",
+        "redux": "^4.2.0",
         "string-hash-64": "^1.0.3"
     },
     "devDependencies": {
