@@ -16,7 +16,9 @@ function MyButton({ navigation, route }) {
             activeOpacity={0.8}
             key={route.categories.id}
             // onPress={() => navigation.navigate('ServiceScreen')}
-            onPress={() => route.getServiceOfType(route.categories.id)}
+            onPress={() => {
+                route.getServiceOfType(route.categories.id);
+            }}
         >
             <View
                 style={{

@@ -46,6 +46,11 @@ function ListTypeScreen({ navigation, route }) {
             });
     };
 
+    // useEffect(() => {
+    //     Alert.alert('Thông báo!', 'UseEffect', [{ text: 'Đóng' }]);
+    //     getAllCaterogyAgain();
+    // }, []);
+
     return (
         <ScrollView>
             <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
