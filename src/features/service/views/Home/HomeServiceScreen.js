@@ -34,32 +34,12 @@ const HomeServiceScreen = ({ navigation, route }) => {
                 setListCategory([...res.data]);
 
                 // setServiceType(res.data[0].id);
-                // getServiceOfType(res.data[0].id);
-                getServiceOfCaterogy(res.data[0].id)
-                    .then(function (res) {
-                        setlistServiceForType([...res.data.content]);
-                    })
-                    .catch((err) => {
-                        console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
-                    });
+                getServiceOfType(res.data[0].id);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
             });
     }, []);
-
-    // //load list service for type
-    // const [listServiceForType, setlistServiceForType] = useState([]);
-
-    // useEffect(() => {
-    //     getServiceOfCaterogy(serviceType)
-    //         .then(function (res) {
-    //             setlistServiceForType([...res.data.content]);
-    //         })
-    //         .catch((err) => {
-    //             console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
-    //         });
-    // }, []);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -67,16 +47,19 @@ const HomeServiceScreen = ({ navigation, route }) => {
 
             <View style={style.header}>
                 <Icon
-                    name="sort"
+                    name="arrow-back"
                     size={28}
                     color={COLORS.white}
-                    onPress={() => navigation.getParent('LeftDrawer').openDrawer()}
+
+                    // onPress={() => navigation.getParent('LeftDrawer').openDrawer()}
                 />
-                <Icon
-                    name="notifications-none"
+                <AntDesign
+                    name="bars"
                     size={28}
                     color={COLORS.white}
-                    onPress={() => navigation.getParent('RightDrawer').openDrawer()}
+                    ProfileSceen
+                    onPress={() => navigation.navigate('ManageStackNavigator')}
+                    // onPress={() => navigation.getParent('RightDrawer').openDrawer()}
                 />
             </View>
             <ScrollView showsHorizontalScrollIndicator={false}>

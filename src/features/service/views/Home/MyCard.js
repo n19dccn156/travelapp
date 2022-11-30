@@ -7,6 +7,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity } from 'react-native';
 
 function MyCard({ navigation, service }) {
+    
     return (
         <TouchableOpacity
             style={{

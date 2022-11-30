@@ -4,6 +4,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import MyCard from './MyCard';
 
 function ListServiceForType({ navigation, route }) {
+    
     return (
         <View>
             <FlatList

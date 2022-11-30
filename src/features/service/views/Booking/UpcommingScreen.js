@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import places from '../../consts/places';
 import MyCard from '../Home/MyCard';
-import MyComponent from '../MyComponent';
+
 
 function UpcommingScreen({ navigation, route }) {
     return (
