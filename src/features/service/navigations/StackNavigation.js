@@ -14,6 +14,7 @@ import EditProfileScreen from '../views/manage/EditProfileScreen';
 import ListTypeScreen from '../views/manage/ListTypeScreen';
 import EditTypeScreen from '../views/manage/EditTypeScreen';
 import ListServiceScreen from '../views/manage/ListServiceScreen';
+import EditService from '../views/manage/EditService';
 
 const Stack = createStackNavigator();
 
@@ -64,6 +65,7 @@ const ManageStackNavigator = () => {
             <Stack.Screen name="ListTypeScreen" component={ListTypeScreen} />
             <Stack.Screen name="EditTypeScreen" component={EditTypeScreen} />
             <Stack.Screen name="ListServiceScreen" component={ListServiceScreen} />
+            <Stack.Screen name="EditService" component={EditService} />
         </Stack.Navigator>
     );
 };
