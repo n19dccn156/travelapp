@@ -10,69 +10,37 @@ import { getAllCaterogy } from '../../services/getData';
 
 function EditService({ navigation, route }) {
     console.log('route', route);
-    // const categories = route.params.categories;
-    // const [typeService, setTypeService] = useState(categories);
-    // const [text, setText] = useState(typeService.name);
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState('');
+    const checkData = () => {
+        if (name.trim() == '' || description.trim() == '' || price.trim() == '') {
+            Alert.alert('Thông báo!', 'Không được để trống trường nào!', [
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ]);
+            return;
+        }
+    };
+    const updateService = () => {
+        checkData();
+        const service = route.params;
+        updateTypeServiceById(service, name, description, price)
+            .then(function (res) {
+                console.log('res', res);
+                if (res.status == 'success') {
+                    // setTypeService(res.data);
+                    // // setText(res.data.name);
+                    // getAllCaterogyAgain();
+                }
 
-    // const updateTypeService = (id, name) => {
-    //     updateTypeServiceById(id, name)
-    //         .then(function (res) {
-    //             console.log('res', res);
-    //             if (res.status == 'success') {
-    //                 setTypeService(res.data);
-
-    //                 // setText(res.data.name);
-    //                 getAllCaterogyAgain();
-    //             }
-
-    //             Alert.alert('Thông báo!', res.message, [
-    //                 { text: 'Đóng', onPress: () => console.log('typeService1', typeService) },
-    //             ]);
-    //         })
-    //         .catch((err) => {
-    //             console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
-    //         });
-    // };
-
-    // // const getAllCaterogyAgain = () => {
-    // //     getAllCaterogy()
-    // //         .then(function (res) {
-    // //             route.params.setListCategory([...res.data]);
-
-    // //             console.log('route.params.listCategory', route.params.listCategory);
-    // //         })
-    // //         .catch((err) => {
-    // //             console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
-    // //         });
-    // // };
-    // const getAllCaterogyAgain = () => {
-    //     getAllCaterogy()
-    //         .then(function (res) {
-    //             route.params.setListCategory([...res.data]);
-    //         })
-    //         .catch((err) => {
-    //             console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
-    //         });
-    // };
-
-    // const checkData = () => {
-    //     if (!text.trim()) {
-    //         Alert.alert('Thông báo!', 'Không được để trống tên loại dịch vụ!', [
-    //             { text: 'OK', onPress: () => console.log('OK Pressed') },
-    //         ]);
-    //         return;
-    //     }
-    // };
-    // const confirmDelete = () => {
-    //     Alert.alert('Cảnh báo!', 'Bạn có chắc chắn muốn xóa dịch vụ này không!', [
-    //         {
-    //             text: 'Không',
-    //             onPress: () => console.log('Cancel Pressed'),
-    //             style: 'cancel',
-    //         },
-    //         { text: ' Chắc', onPress: () => console.log('OK Pressed') },
-    //     ]);
-    // };
+                Alert.alert('Thông báo!', res.message, [
+                    { text: 'Đóng', onPress: () => console.log('typeService1', typeService) },
+                ]);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+            });
+    };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -96,27 +64,30 @@ function EditService({ navigation, route }) {
                 />
             </View>
             <View>
-                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Tên dịch vụ</Text>
+                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Tên dịch vụ (*)</Text>
                 <TextInput
                     placeholder="Nhập tên dịch vụ vào đây"
                     defaultValue={route.params.name}
                     style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
+                    onChangeText={(newName) => setName(newName)}
                 />
             </View>
             <View>
-                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Mô tả</Text>
+                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Mô tả (*)</Text>
                 <TextInput
                     placeholder="Nhập mô tả dịch vụ vào đây"
                     style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
                     defaultValue={route.params.description}
+                    onChangeText={(newDescription) => setDescription(newDescription)}
                 />
             </View>
             <View>
-                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Giá</Text>
+                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Giá (VNĐ)(*)</Text>
                 <TextInput
-                    placeholder="Nhập tên loại dịch vụ vào đây"
+                    placeholder="Nhập giá dịch vụ vào đây"
                     style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
-                    defaultValue={route.params.price}
+                    defaultValue={route.params.price + ''}
+                    onChangeText={(newPrice) => setPrice(newPrice)}
                 />
             </View>
 
@@ -132,9 +103,9 @@ function EditService({ navigation, route }) {
                         width: 100,
                     }}
                     activeOpacity={0.8}
-                    // onPress={() => setModalNotiVisible(true)}
-                    // onPress={() => updateTypeService(,text)}
-                    onPress={() => {}}
+                    onPress={() => {
+                        updateService();
+                    }}
                 >
                     <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Cập nhật</Text>
                 </TouchableOpacity>

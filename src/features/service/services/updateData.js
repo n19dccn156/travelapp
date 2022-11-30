@@ -28,4 +28,37 @@ const addTypeService = async (id, name) => {
         console.log('updateTypeService ~ error', error);
     }
 };
-export { updateTypeServiceById, addTypeService };
+
+const updateServiceById = async (service, name, description, price) => {
+    try {
+        const response = await fetch(`${host}/api/v1/services/${service.id}`, {
+            method: 'PATCH',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                activity: true,
+                avatar: service.avatar,
+                description: description,
+                id: service.id,
+                idMembership: service.idMembership,
+                idTypeService: service.idTypeService,
+                name: name,
+                number: service.number,
+                numberRating: service.numberRating,
+                phone: service.phone,
+                pictures: service.pictures,
+                price: price,
+                star: service.star,
+                unit: service.unit,
+            }),
+        });
+
+        return response.json();
+    } catch (error) {
+        console.log('updateTypeService ~ error', error);
+    }
+};
+
+export { updateTypeServiceById, addTypeService, updateServiceById };
