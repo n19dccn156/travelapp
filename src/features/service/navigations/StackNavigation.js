@@ -36,6 +36,8 @@ const MainStackNavigator = ({ navigation, route }) => {
             <Stack.Screen name="AllServices" component={AllServices} />
             <Stack.Screen name="ServiceScreen" component={ServiceScreen} />
             <Stack.Screen name="OrderScreen" component={OrderScreen} />
+
+            <Stack.Screen name="ManageStackNavigator" component={ManageStackNavigator} />
         </Stack.Navigator>
     );
 };
