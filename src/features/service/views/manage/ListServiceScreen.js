@@ -51,87 +51,92 @@ function ListServiceScreen({ navigation, route }) {
                     />
                 </View>
             </View>
-            <ScrollView>
-                {/* list category for all type */}
-                <ListButtonCategory
-                    navigation={navigation}
-                    route={{ listCategory: listCategory, getServiceOfType: getServiceOfType }}
-                />
-                {/* list service of type */}
-                <ListService navigation={navigation} route={{ listServiceForType: listServiceForType }} />
+            {/* <ScrollView> */}
+            {/* list category for all type */}
+            <ListButtonCategory
+                navigation={navigation}
+                route={{
+                    listCategory: listCategory,
+                    getServiceOfType: getServiceOfType,
+                    serviceType: route.params.serviceType,
+                    setServiceType: route.params.setServiceType,
+                }}
+            />
+            {/* list service of type */}
+            <ListService navigation={navigation} route={{ listServiceForType: listServiceForType }} />
 
-                {/* modal them loai */}
-                <Modal animationType="slide" transparent={true} visible={modalVisible}>
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <View>
-                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10, fontSize: 18 }}>
-                                    Thêm loại dịch vụ
-                                </Text>
-                            </View>
-                            <View>
-                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Tên dịch vụ</Text>
-                                <TextInput
-                                    placeholder="Nhập mã loại dịch vụ vào đây"
-                                    style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
-                                />
-                            </View>
-                            <View>
-                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Mô tả</Text>
-                                <TextInput
-                                    placeholder="Nhập mã loại dịch vụ vào đây"
-                                    style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
-                                />
-                            </View>
-                            <View>
-                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Giá</Text>
-                                <TextInput
-                                    placeholder="Nhập mã loại dịch vụ vào đây"
-                                    style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
-                                />
-                            </View>
-                            <View>
-                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Hình minh họa</Text>
-                                <TextInput
-                                    placeholder="Nhập mã loại dịch vụ vào đây"
-                                    style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
-                                />
-                            </View>
+            {/* modal them loai */}
+            <Modal animationType="slide" transparent={true} visible={modalVisible}>
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <View>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10, fontSize: 18 }}>
+                                Thêm loại dịch vụ
+                            </Text>
+                        </View>
+                        <View>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Tên dịch vụ</Text>
+                            <TextInput
+                                placeholder="Nhập mã loại dịch vụ vào đây"
+                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                            />
+                        </View>
+                        <View>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Mô tả</Text>
+                            <TextInput
+                                placeholder="Nhập mã loại dịch vụ vào đây"
+                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                            />
+                        </View>
+                        <View>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Giá</Text>
+                            <TextInput
+                                placeholder="Nhập mã loại dịch vụ vào đây"
+                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                            />
+                        </View>
+                        <View>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Hình minh họa</Text>
+                            <TextInput
+                                placeholder="Nhập mã loại dịch vụ vào đây"
+                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                            />
+                        </View>
 
-                            <View style={{ flexDirection: 'row' }}>
-                                <TouchableOpacity
-                                    style={{
-                                        backgroundColor: COLORS.primary,
-                                        margin: 20,
-                                        borderRadius: 15,
-                                        flexDirection: 'row',
-                                        padding: 10,
-                                        justifyContent: 'center',
-                                    }}
-                                    activeOpacity={0.8}
-                                    onPress={() => addType(id, name)}
-                                >
-                                    <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Lưu</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={{
-                                        backgroundColor: COLORS.primary,
-                                        margin: 20,
-                                        borderRadius: 15,
-                                        flexDirection: 'row',
-                                        padding: 10,
-                                        justifyContent: 'center',
-                                    }}
-                                    activeOpacity={0.8}
-                                    onPress={() => setModalVisible(!modalVisible)}
-                                >
-                                    <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Hủy</Text>
-                                </TouchableOpacity>
-                            </View>
+                        <View style={{ flexDirection: 'row' }}>
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: COLORS.primary,
+                                    margin: 20,
+                                    borderRadius: 15,
+                                    flexDirection: 'row',
+                                    padding: 10,
+                                    justifyContent: 'center',
+                                }}
+                                activeOpacity={0.8}
+                                onPress={() => addType(id, name)}
+                            >
+                                <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Lưu</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: COLORS.primary,
+                                    margin: 20,
+                                    borderRadius: 15,
+                                    flexDirection: 'row',
+                                    padding: 10,
+                                    justifyContent: 'center',
+                                }}
+                                activeOpacity={0.8}
+                                onPress={() => setModalVisible(!modalVisible)}
+                            >
+                                <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Hủy</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                </Modal>
-            </ScrollView>
+                </View>
+            </Modal>
+            {/* </ScrollView> */}
         </SafeAreaView>
     );
 }

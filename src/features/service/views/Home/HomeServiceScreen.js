@@ -10,9 +10,10 @@ import style from '../../style/Home/style';
 import { getAllCaterogy, getServiceOfCaterogy } from '../../services/getData';
 import ListButtonCategory from './ListButtonCategory';
 import ListServiceForType from './ListServiceForType';
+import MyCard from './MyCard';
 
 const HomeServiceScreen = ({ navigation, route }) => {
-    // const [serviceType, setServiceType] = useState('');
+    const [serviceType, setServiceType] = useState('');
 
     //load list category
     const [listCategory, setListCategory] = useState([]);
@@ -25,6 +26,7 @@ const HomeServiceScreen = ({ navigation, route }) => {
                 setlistServiceForType([...res.data.content]);
             })
             .catch((err) => {
+                setlistServiceForType([]);
                 console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
             });
     };
@@ -35,6 +37,7 @@ const HomeServiceScreen = ({ navigation, route }) => {
 
                 // setServiceType(res.data[0].id);
                 getServiceOfType(res.data[0].id);
+                setServiceType(res.data[0].id);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
@@ -62,7 +65,7 @@ const HomeServiceScreen = ({ navigation, route }) => {
                     // onPress={() => navigation.getParent('RightDrawer').openDrawer()}
                 />
             </View>
-            <ScrollView showsHorizontalScrollIndicator={false}>
+            <ScrollView showsHorizontalScrollIndicator={true}>
                 <View style={{ backgroundColor: COLORS.primary, height: 120, paddingHorizontal: 20 }}>
                     <View>
                         <Text style={style.headerTitle}>Trải nghiệm</Text>
@@ -145,10 +148,20 @@ const HomeServiceScreen = ({ navigation, route }) => {
                 {/* list category for all type */}
                 <ListButtonCategory
                     navigation={navigation}
-                    route={{ listCategory: listCategory, getServiceOfType: getServiceOfType }}
+                    route={{
+                        listCategory: listCategory,
+                        getServiceOfType: getServiceOfType,
+                        serviceType: serviceType,
+                        setServiceType: setServiceType,
+                    }}
                 />
                 {/* list service of type */}
-                <ListServiceForType navigation={navigation} route={{ listServiceForType: listServiceForType }} />
+                {/* <ListServiceForType navigation={navigation} route={{ listServiceForType: listServiceForType }} /> */}
+                <View>
+                    {listServiceForType.map((item) => (
+                        <MyCard key={item.id} service={item} navigation={navigation} />
+                    ))}
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
