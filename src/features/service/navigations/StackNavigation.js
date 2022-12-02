@@ -7,7 +7,7 @@ import ListMostService from '../views/ListMostService';
 import SearchScreen from '../views/SearchScreen';
 import AllServices from '../views/AllServices';
 import ServiceScreen from '../views/ServiceScreen';
-import OrderScreen from '../views/OrderScreen';
+import OrderScreen from '../views/Order/OrderScreen';
 import BookingScreen from '../views/Booking/BookingScreen';
 import ProfileSceen from '../views/manage/ProfileSceen';
 import EditProfileScreen from '../views/manage/EditProfileScreen';

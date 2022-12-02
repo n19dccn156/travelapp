@@ -8,6 +8,8 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { getAllCaterogy, getServiceOfCaterogy } from '../../services/getData';
 
 function ProfileSceen({ navigation }) {
+    const [serviceType, setServiceType] = useState('');
+
     //load list category
     const [listCategory, setListCategory] = useState([]);
 
@@ -27,7 +29,7 @@ function ProfileSceen({ navigation }) {
             .then(function (res) {
                 setListCategory([...res.data]);
 
-                // setServiceType(res.data[0].id);
+                setServiceType(res.data[0].id);
                 // getServiceOfType(res.data[0].id);
                 getServiceOfCaterogy(res.data[0].id)
                     .then(function (res) {
@@ -129,6 +131,8 @@ function ProfileSceen({ navigation }) {
                         setListCategory: setListCategory,
                         listServiceForType: listServiceForType,
                         setlistServiceForType: setlistServiceForType,
+                        serviceType: serviceType,
+                        setServiceType: setServiceType,
                     })
                 }
             >

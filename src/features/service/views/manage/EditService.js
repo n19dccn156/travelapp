@@ -5,14 +5,14 @@ import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
 import style from '../../style/Home/style';
 import { TextInput } from 'react-native-gesture-handler';
-import { updateTypeServiceById } from '../../services/updateData';
+import { updateServiceById, updateTypeServiceById } from '../../services/updateData';
 import { getAllCaterogy } from '../../services/getData';
 
 function EditService({ navigation, route }) {
     console.log('route', route);
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [price, setPrice] = useState('');
+    const [name, setName] = useState(route.params.name);
+    const [description, setDescription] = useState(route.params.description);
+    const [price, setPrice] = useState(route.params.price + '');
     const checkData = () => {
         if (name.trim() == '' || description.trim() == '' || price.trim() == '') {
             Alert.alert('Thông báo!', 'Không được để trống trường nào!', [
@@ -24,7 +24,7 @@ function EditService({ navigation, route }) {
     const updateService = () => {
         checkData();
         const service = route.params;
-        updateTypeServiceById(service, name, description, price)
+        updateServiceById(service, name, description, price)
             .then(function (res) {
                 console.log('res', res);
                 if (res.status == 'success') {
@@ -33,9 +33,7 @@ function EditService({ navigation, route }) {
                     // getAllCaterogyAgain();
                 }
 
-                Alert.alert('Thông báo!', res.message, [
-                    { text: 'Đóng', onPress: () => console.log('typeService1', typeService) },
-                ]);
+                Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
