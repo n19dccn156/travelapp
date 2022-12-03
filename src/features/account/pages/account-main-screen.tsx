@@ -42,7 +42,7 @@ export function AccountScreen({navigation} : {navigation: any}) {
         setTimeout(() => {
             setModalVisible(modalVisible)
             navigation.navigate(site);
-        }, 1000);
+        },10);
     }
 
     const list = [
@@ -65,6 +65,15 @@ export function AccountScreen({navigation} : {navigation: any}) {
             // color: colors.indigo,
             navigation: 'Login',
             accept: true,
+          },
+          {
+            name: 'Về chúng tôi',
+            sizeName: 22,
+            icon: 'information-circle',
+            sizeIcon: 50,
+            //  color: colors.indigo,
+            navigation: 'DevelopScreen',
+            accept: false,
           },
     ];
 

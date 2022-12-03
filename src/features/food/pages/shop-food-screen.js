@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { variables } from "../../../common/constants/const";
-import { styleIcon } from "../styles/styles-header";
+import { styleIcon } from "../styles/styleHome/styles-header";
 import { StyleImages, StyleViews } from "../styles/styleShop/styles-shop-food";
 import { HeaderShopFood } from "../components/ShopFood/header-shop_food";
 import { InfoShop } from "../components/ShopFood/info-shop";
@@ -18,7 +18,6 @@ import { MenuShop } from "../components/ShopFood/menu-shop";
 import { colors } from "../../../common/constants/colors";
 var host = variables.host;
 export function ShopFoodScreen({ navigation, route }) {
-  
   return (
     <SafeAreaView style={StyleViews.container}>
       <ScrollView style={{ backgroundColor: "white", flexGrow: 2 }}>
@@ -28,11 +27,10 @@ export function ShopFoodScreen({ navigation, route }) {
           barStyle={"light-content"}
           hidden={false}
         />
-        <HeaderShopFood navigation={navigation}/>
+        <HeaderShopFood data={route.params.item}/>
         <InfoShop data={route.params.item}></InfoShop>
-        <MenuShop id={route.params.item.id}></MenuShop>
+        <MenuShop id={route.params.item.id}  navigation={navigation}></MenuShop>
       </ScrollView>
-      
     </SafeAreaView>
   );
 }

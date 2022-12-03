@@ -7,14 +7,14 @@ const stylesText = StyleSheet.create({
 
     name_shop:{
         fontSize: 17,
-        fontWeight: '900',
         color: 'black',
+        textTransform:'capitalize'
     },
     time_delivery:{
         fontWeight: 'bold'
     },
     distance:{
-        marginLeft: 10
+        right:0
     },
     adress: {
       paddingTop:5
@@ -22,30 +22,35 @@ const stylesText = StyleSheet.create({
 });
 const stylesView= StyleSheet.create({
     item: {
-        margin: 7,
         marginRight: 10,
-        flexDirection : "column"  ,
+        flexDirection : "row"  ,
         flex:1,
-        borderColor: 'black',
-        borderStyle:'dashed',
         overflow: 'hidden',
+        borderBottomWidth:0.5,
+        borderStyle:  'solid',
+        borderBottomColor: "rgba(0,0,0,0.2)",
     },
-    item_info: {
-        height: '100%',
+    item_content: {
+        height: '80%',
         margin: 7,
         borderRadius : 4 ,
+        justifyContent:'space-between'
     },
-    item_info_delivery:
-    {    paddingTop:10,
-        flexDirection: 'row',
+    item_rate:{
+
+    },
+    item_info:
+    {   paddingLeft:10,
+        flexDirection: 'column',
     }
 
 })
 const stylesImg = StyleSheet.create({
     avatarShop: {
-        height: 120,
-        width: 214,
+        height: 90,
+        width: 90,
         borderRadius : 12,
+        margin:10
     }
 })
 export {stylesText,stylesView,stylesImg};

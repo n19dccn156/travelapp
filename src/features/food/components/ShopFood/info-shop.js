@@ -6,9 +6,8 @@ import {
   StyleText
 } from "../../styles/styleShop/styles-info-shop";
 export function InfoShop({data}) {
-  console.log(data)
   return (
-    <View style={{}}>
+    <View>
       {/* Mô tả */}
       <View style={style_info.header}>
         <Text style={StyleText.name}>{data.name}</Text>
