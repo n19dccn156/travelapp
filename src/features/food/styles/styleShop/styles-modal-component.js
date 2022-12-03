@@ -31,6 +31,8 @@ const styles = StyleSheet.create({
     },
     info:{
       flex:2,
+      flexDirection:'row',
+      margin:10
     },
     note:{
       flex:1.5,
@@ -46,13 +48,20 @@ const styles = StyleSheet.create({
     amount:{
       flex:3,
       zIndex:-1,
-      flexDirection:"row"
+      flexDirection:"row",
+      justifyContent:'space-between',
+      bottom:-90,
+      paddingHorizontal:10,
     },
     textStyle: {
       color: "white",
       fontWeight: "bold",
       textAlign: "center"
     },
+    textInfo:{
+      fontSize:18
+    }
+    ,
     modalTitle: {
       fontWeight:'700',
       fontSize:18,
@@ -60,10 +69,24 @@ const styles = StyleSheet.create({
       color:'black',
     },
     quantity:{
-
+         flexDirection:'row',
+         top:6.5
+    },
+    buttonquantity:{
+      width:40,
+      justifyContent:"center",
+      borderRadius:0,
+      height:40,
+      borderWidth:1,
+      borderColor:'rgba(0,0,0,0.2)',
+      borderRadius:5
     },
     buttonbuy:{
-      
+      height:50,
+      width:200,
+      backgroundColor:"#e53232",
+      justifyContent:"center",
+      borderRadius:10
     }
   });
 export default styles;

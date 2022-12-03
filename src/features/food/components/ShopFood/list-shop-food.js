@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Text, View, Image, TouchableOpacity } from "react-native";
-import { getListShop, itemShopFood } from "../services/get-data";
-import { stylesView, stylesImg, stylesText } from "../styles/styles-home";
-import { RenderLongText } from "../../../utility/handler";
-import LoadComponent from "../../../utility/load-component";
-export function ListShopFood({navigation}) {
+import { getListShop, itemShopFood } from "../../services/get-data";
+import { stylesView, stylesImg, stylesText } from "../../styles/styleHome/styles-home";
+import { RenderLongText } from "../../../../utility/handler";
+import LoadComponent from "../../../../utility/load-component";
+import Ionicons from "react-native-vector-icons/Ionicons";
+export function ListShopFood({ navigation }) {
   const [listFood, setListFood] = useState([]);
   const [loadVisible, setLoadVisible] = useState(true);
   useEffect(() => {
@@ -18,12 +19,11 @@ export function ListShopFood({navigation}) {
       });
   }, []);
   return (
-    <View style={{ flex: 1.3, paddingTop: 20, paddingLeft: 20 }}>
+    <View style={{ flex: 1.3, paddingTop: 20, }}>
       <LoadComponent visible={loadVisible} />
       <FlatList
-        horizontal={true}
         data={listFood}
-        renderItem={({item,index}) =>
+        renderItem={({ item, index }) =>
           <TouchableOpacity
             style={stylesView.item}
             key={item.id}
@@ -33,17 +33,21 @@ export function ListShopFood({navigation}) {
           >
             <View>
               <Image
-              source={{uri:'https://cdn.tgdd.vn/2021/05/CookProduct/Banh-Mi-Bo-Nuong-Sa-(Vietnamese-Beef-Banh-Mi)-6-5-screenshot-1200x676.jpg'}}
-                //source={{ uri: `${item.avatar}` }}
+                source={{ uri: `${item.avatar}` }}
                 style={stylesImg.avatarShop}
               />
             </View>
-            <View style={stylesView.item_info}>
+            <View style={stylesView.item_content}>
               <Text style={stylesText.name_shop}>
                 {item.name}
               </Text>
-              <View style={stylesView.item_info_delivery}>
-                <Text style={stylesText.distance}>3 km</Text>
+              <View style={stylesView.item_info}>
+                <View style={{flexDirection:'row'}}>
+                <Ionicons name="star" size={15} color={'#f9e800f7'} />
+                <Text style={{marginRight:2}}>4.1</Text>
+                <Text style={{marginRight:2}}>(100+)</Text>
+                </View>
+                <Text style={stylesText.distance}> 3 km</Text>
               </View>
             </View>
           </TouchableOpacity>}

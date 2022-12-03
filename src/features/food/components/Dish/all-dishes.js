@@ -6,10 +6,11 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {getAllDishes,itemDish} from '../services/get-data';
-import {stylesView, stylesImg, stylesText} from '../styles/styles-home';
+import {getAllDishes,itemDish} from '../../services/get-data';
+import {stylesView, stylesImg, stylesText} from '../../styles/styleHome/styles-home';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {RenderLongText} from '../../../utility/handler';
+import {RenderLongText} from '../../../../utility/handler';
+
 export function ListDish({navigation}) {
   const [AllDish, setAllDish] = useState([]);
   useEffect(() => {
@@ -26,7 +27,7 @@ export function ListDish({navigation}) {
       <FlatList
         horizontal={true}
         data={AllDish}
-        renderItem={({item}:  {item: itemDish}) => (
+        renderItem={(item) => (
           <TouchableOpacity
             style={stylesView.item}
             key={`${item.id}food`}

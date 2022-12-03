@@ -13,6 +13,6 @@ const StyleOption = StyleSheet.create({
     text:{
         fontSize:textSize.normal,
         fontWeight:'600'
-    }
+    },
 });
 export default StyleOption;

@@ -1,5 +1,5 @@
 import {StyleSheet, TextStyle, ViewStyle, ImageStyle} from 'react-native';
-import COLORS from '../../service/consts/colors';
+import COLORS from '../../../service/consts/colors';
 const styleIcon = StyleSheet.create({
   icon_close: {
     marginLeft: 10,

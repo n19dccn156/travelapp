@@ -1,10 +1,13 @@
+import { Avatar, Icon, ListItem } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Image, Modal, TouchableOpacity, Alert, Pressable, StyleSheet, Button } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { colors } from "../constants/colors";
-import { sizeScale, width } from "../constants/const";
+import { colors } from "../../../common/constants/colors";
+import { sizeScale,width } from "../../../common/constants/const";
 
-export function FooterComponent() {
+export function DevelopInfoScreen({navigation} : {navigation: any}) {
+
+
 
     return(
         <View style={{paddingTop: 50}}>

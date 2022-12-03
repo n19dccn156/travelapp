@@ -13,7 +13,7 @@ export function FoodStackNavigator(){
         <FoodStack.Navigator>
             <FoodStack.Screen name='HomeOrderFood' component={FoodScreen} options={{headerTitle: "Đặt món", headerTintColor: colors.white, headerTitleAlign: "center", headerStyle: {backgroundColor: colors.primary}}}/>
             <FoodStack.Screen name='ShopFoodScreen' component={ShopFoodScreen} options={{headerTitle: "Cửa hàng", headerTintColor: colors.white, headerTitleAlign: "center", headerStyle: {backgroundColor: colors.primary}}}/>
-            <FoodStack.Screen name='DishScreen' component={DishScreen} options={{headerTitle: "Cửa hàng", headerTintColor: colors.white, headerTitleAlign: "center", headerStyle: {backgroundColor: colors.primary}}}/>
+            <FoodStack.Screen name='DishScreen' component={DishScreen} options={{headerTitle: "Món ăn", headerTintColor: colors.white, headerTitleAlign: "center", headerStyle: {backgroundColor: colors.primary}}}/>
         </FoodStack.Navigator>
     )
 }

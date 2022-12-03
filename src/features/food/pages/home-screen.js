@@ -2,15 +2,19 @@ import React, { useEffect, useState } from "react";
 import { SafeAreaView, View, StatusBar, Text, ScrollView } from "react-native";
 import { colors } from "../../../common/constants/colors";
 import LoadComponent from "../../../utility/load-component";
-import { HeaderComponnent } from "../components/header";
-import { ListShopFood } from "../components/list-shop-food";
+import { HeaderComponnent } from "../components/Home/header";
+import { ListShopFood } from "../components/ShopFood/list-shop-food";
 import { ShopFoodScreen } from "./shop-food-screen";
-import { ListDish } from "../components/all-dishes";
+import { ListDish } from "../components/Dish/all-dishes";
 import { TestScreen } from "./test-redux";
-export function FoodScreen({navigation} ) {
+import ModalOrder from "../components/Dish/modal-oder";
+export function FoodScreen({ navigation }) {
   return (
     <View>
-      <StatusBar
+      <ModalOrder  
+        visible={true}
+      />
+      {/* <StatusBar
         animated={true}
         backgroundColor={colors.primary}
         barStyle={"light-content"}
@@ -20,21 +24,15 @@ export function FoodScreen({navigation} ) {
         <HeaderComponnent
           navigation={navigation}
           nameScreen={"Home"}
-          minHeight={100}
+          minHeight={150}
         />
-        {/* <ScrollView style={{ height: "100%", width: "100%", zIndex: 1 }}>
-          <SafeAreaView>
-            <StatusBar />
-          </SafeAreaView>
-          <View>
-            <View style={{display:'flex', flexDirection:'row', width:'100%',justifyContent:'space-between'}}>
-              <Text>Nhà hàng nổi bật</Text>
-              <Text style={{right:10}}>Nhà hàng nổi bật</Text>
-            </View>
-            <ListShopFood navigation={navigation} />
-          </View>
-        </ScrollView>  */}
-      </SafeAreaView>
+        <SafeAreaView>
+          <StatusBar />
+        </SafeAreaView>
+        <View style={{height:'89%'}}>
+          <ListShopFood navigation={navigation} />
+        </View>
+      </SafeAreaView> */}
     </View>
   );
 }

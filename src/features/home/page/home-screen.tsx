@@ -158,8 +158,6 @@ export function HomeScreen({navigation}: {navigation: any}) {
                 })}
                 {/* <ImgClick data={listTopCheckin}/> */}
             </ScrollView>
-            <FooterComponent/>
-
             <Modal animationType="slide" visible={modalVisible} transparent={true} onRequestClose={() => {Alert.alert("Modal has been closed."); setModalVisible(!modalVisible);}}>
                 <ImageViewer imageUrls={listImgs} index={index} style={{height: variables.width, paddingStart: 0, paddingEnd: 0}}/>
                 <View style={styles.modalView}>
