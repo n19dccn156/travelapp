@@ -6,6 +6,7 @@ import MyButton from '../Home/MyButton';
 import MyButtonType from './MyButtonType';
 
 function ListType({ navigation, route }) {
+    console.log('route ListType', route);
     return (
         <View style={{ justifyContent: 'center' }}>
             <FlatList

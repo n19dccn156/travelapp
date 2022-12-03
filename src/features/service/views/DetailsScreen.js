@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ImageBackground, SafeAreaView, StatusBar, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../consts/colors';
-import ModalOrder from './ModalOrder';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const DetailsScreen = ({ navigation, route }) => {
     const service = route.params;
@@ -38,7 +38,7 @@ const DetailsScreen = ({ navigation, route }) => {
                     <Icon name="favorite" color={COLORS.red} size={30} />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                    <Icon name="place" size={28} color={COLORS.primary} />
+                    <AntDesign name="tag" size={20} color={COLORS.primary} />
                     <Text style={{ marginLeft: 5, fontSize: 20, fontWeight: 'bold', color: COLORS.primary }}>
                         {service.idTypeService}
                     </Text>
@@ -69,7 +69,7 @@ const DetailsScreen = ({ navigation, route }) => {
                     </Text>
                 </View>
 
-                <TouchableOpacity onPress={() => navigation.navigate('OrderScreen')}>
+                <TouchableOpacity onPress={() => navigation.navigate('OrderScreen', service)}>
                     <View style={style.bookNowBtn}>
                         <Text style={{ color: COLORS.primary, fontSize: 16, fontWeight: 'bold' }}>Đặt ngay</Text>
                     </View>

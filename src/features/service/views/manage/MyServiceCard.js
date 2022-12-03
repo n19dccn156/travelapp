@@ -6,7 +6,8 @@ import style from '../../style/Home/style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity } from 'react-native';
 
-function MyCard({ navigation, service }) {
+function MyServiceCard({ navigation, route }) {
+    const service = route.service;
     return (
         <TouchableOpacity
             style={{
@@ -18,7 +19,7 @@ function MyCard({ navigation, service }) {
             }}
             activeOpacity={0.8}
             key={service.id}
-            onPress={() => navigation.navigate('DetailsScreen', service)}
+            onPress={() => navigation.navigate('EditService', { service: service, listCategory: route.listCategory })}
         >
             <Image style={style.myCardImage} source={{ uri: `${service.avatar}` }} />
 
@@ -30,7 +31,7 @@ function MyCard({ navigation, service }) {
                     }}
                 >
                     <View style={{ flexDirection: 'row' }}>
-                        <AntDesign name="tag" size={20} color={COLORS.white} />
+                        <Icon name="place" size={20} color={COLORS.white} />
                         <Text style={{ marginLeft: 5, color: COLORS.white }}>{service.idTypeService}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginLeft: 50 }}>
@@ -60,4 +61,4 @@ function MyCard({ navigation, service }) {
     );
 }
 
-export default MyCard;
+export default MyServiceCard;
