@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StatusBar, View, Modal, StyleSheet, TouchableOpacity } from 'react-native';
+import { SafeAreaView, ScrollView, StatusBar, View, Modal, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
@@ -11,10 +11,15 @@ import ListService from './ListService';
 import { getServiceOfCaterogy } from '../../services/getData';
 function ListServiceScreen({ navigation, route }) {
     console.log('route ListServiceScreen', route);
+
+    const [name, setName] = useState('');
+    const [price, setPrice] = useState('');
+    const [number, setNumber] = useState('');
+    const [phone, setPhone] = useState('');
+    const [description, setDescription] = useState('');
+
     const listCategory = route.params.listCategory;
-    // const listServiceForType = route.params.listServiceForType;
-    // const setlistServiceForType = route.params.setlistServiceForType;
-    // const getServiceOfType = route.params.getServiceOfType;
+
     const [modalVisible, setModalVisible] = useState(false);
     const [serviceType, setServiceType] = useState(listCategory[0].id);
     //load list service for type
@@ -33,6 +38,47 @@ function ListServiceScreen({ navigation, route }) {
     useEffect(() => {
         getServiceOfType(listCategory[0].id);
     }, []);
+
+    const checkData = () => {
+        if (name.trim() == '') {
+            Alert.alert('Thông báo!', 'Không được để trống tên dịch vụ!', [
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ]);
+            return;
+        }
+        if (price.trim() == '') {
+            Alert.alert('Thông báo!', 'Không được để trống giá dịch vụ!', [
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ]);
+            return;
+        }
+        if (number.trim() == '') {
+            Alert.alert('Thông báo!', 'Không được để trống số lượng!', [
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ]);
+            return;
+        }
+        if (phone.trim() == '') {
+            Alert.alert('Thông báo!', 'Không được để trống số điện thoại!', [
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ]);
+            return;
+        }
+
+        if (phone.trim().length != 10 || phone.trim()[0] != '0') {
+            Alert.alert('Thông báo!', 'Số điện thoại không hợp lệ! ', [
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ]);
+            return;
+        }
+        if (description.trim() == '') {
+            Alert.alert('Thông báo!', 'Không được để trống mô tả dịch vụ!', [
+                { text: 'OK', onPress: () => console.log('OK Pressed') },
+            ]);
+            return;
+        }
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -78,35 +124,58 @@ function ListServiceScreen({ navigation, route }) {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10, fontSize: 18 }}>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 8, fontSize: 18 }}>
                                 Thêm loại dịch vụ
                             </Text>
                         </View>
                         <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Tên dịch vụ</Text>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Tên dịch vụ(*)</Text>
                             <TextInput
-                                placeholder="Nhập mã loại dịch vụ vào đây"
+                                placeholder="Nhập tên dịch vụ vào đây"
                                 style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                                onChangeText={(newText) => setName(newText)}
+                            />
+                        </View>
+
+                        <View>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Giá(*)</Text>
+                            <TextInput
+                                placeholder="Nhập giá dịch vụ vào đây"
+                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                                onChangeText={(newText) => setPrice(newText)}
+                                keyboardType="numeric"
                             />
                         </View>
                         <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Mô tả</Text>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Số lượng(*)</Text>
                             <TextInput
-                                placeholder="Nhập mã loại dịch vụ vào đây"
+                                placeholder="Nhập số lượng vào đây"
                                 style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                                keyboardType="numeric"
+                                onChangeText={(newText) => setNumber(newText)}
                             />
                         </View>
                         <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Giá</Text>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Số điện thoại(*)</Text>
                             <TextInput
-                                placeholder="Nhập mã loại dịch vụ vào đây"
+                                placeholder="Nhập số điện thoại vào đây"
                                 style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                                keyboardType="numeric"
+                                onChangeText={(newText) => setPhone(newText)}
                             />
                         </View>
                         <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Hình minh họa</Text>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Mô tả(*)</Text>
                             <TextInput
-                                placeholder="Nhập mã loại dịch vụ vào đây"
+                                placeholder="Nhập mô tả dịch vụ vào đây"
+                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                                onChangeText={(newText) => setDescription(newText)}
+                            />
+                        </View>
+                        <View>
+                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Hình minh họa(*)</Text>
+                            <TextInput
+                                placeholder="Chọn hình minh họa"
                                 style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
                             />
                         </View>
@@ -122,7 +191,7 @@ function ListServiceScreen({ navigation, route }) {
                                     justifyContent: 'center',
                                 }}
                                 activeOpacity={0.8}
-                                onPress={() => addType(id, name)}
+                                onPress={() => checkData()}
                             >
                                 <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Lưu</Text>
                             </TouchableOpacity>
@@ -158,10 +227,10 @@ const styles = StyleSheet.create({
         opacity: 0.9,
     },
     modalView: {
-        margin: 20,
+        margin: 10,
         backgroundColor: 'white',
         borderRadius: 20,
-        padding: 35,
+        padding: 10,
         // alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {

@@ -49,7 +49,9 @@ function EditService({ navigation, route }) {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-                    onPress={() => navigation.navigate('ListServiceScreen', { listCategory: route.listCategory })}
+                    onPress={() =>
+                        navigation.navigate('ListServiceScreen', { listCategory: route.params.listCategory })
+                    }
                 />
                 <Text style={style.headerTitle}>Cập nhật dịch vụ</Text>
             </View>
