@@ -11,7 +11,12 @@ function ListService({ navigation, route }) {
                 vertical
                 showsVerticalScrollIndicator={false}
                 data={route.listServiceForType}
-                renderItem={({ item }) => <MyServiceCard service={item} navigation={navigation} />}
+                renderItem={({ item }) => (
+                    <MyServiceCard
+                        route={{ service: item, listCategory: route.listCategory }}
+                        navigation={navigation}
+                    />
+                )}
             />
         </View>
     );

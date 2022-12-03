@@ -4,15 +4,16 @@ import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
 import style from '../../style/Home/style';
-import { TextInput } from 'react-native-gesture-handler';
+import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { updateServiceById, updateTypeServiceById } from '../../services/updateData';
 import { getAllCaterogy } from '../../services/getData';
 
 function EditService({ navigation, route }) {
-    console.log('route', route);
-    const [name, setName] = useState(route.params.name);
-    const [description, setDescription] = useState(route.params.description);
-    const [price, setPrice] = useState(route.params.price + '');
+    console.log('route EditService', route);
+    const service = route.params.service;
+    const [name, setName] = useState(service.name);
+    const [description, setDescription] = useState(service.description);
+    const [price, setPrice] = useState(service.price + '');
     const checkData = () => {
         if (name.trim() == '' || description.trim() == '' || price.trim() == '') {
             Alert.alert('Thông báo!', 'Không được để trống trường nào!', [
@@ -23,7 +24,7 @@ function EditService({ navigation, route }) {
     };
     const updateService = () => {
         checkData();
-        const service = route.params;
+
         updateServiceById(service, name, description, price)
             .then(function (res) {
                 console.log('res', res);
@@ -48,81 +49,84 @@ function EditService({ navigation, route }) {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-                    onPress={() => navigation.navigate('ListServiceScreen')}
+                    onPress={() => navigation.navigate('ListServiceScreen', { listCategory: route.listCategory })}
                 />
                 <Text style={style.headerTitle}>Cập nhật dịch vụ</Text>
             </View>
-            <View>
-                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Loại dịch vụ</Text>
-                <TextInput
-                    placeholder="Nhập mã loại dịch vụ vào đây"
-                    defaultValue={route.params.idTypeService}
-                    style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
-                    editable={false}
-                />
-            </View>
-            <View>
-                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Tên dịch vụ (*)</Text>
-                <TextInput
-                    placeholder="Nhập tên dịch vụ vào đây"
-                    defaultValue={route.params.name}
-                    style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
-                    onChangeText={(newName) => setName(newName)}
-                />
-            </View>
-            <View>
-                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Mô tả (*)</Text>
-                <TextInput
-                    placeholder="Nhập mô tả dịch vụ vào đây"
-                    style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
-                    defaultValue={route.params.description}
-                    onChangeText={(newDescription) => setDescription(newDescription)}
-                />
-            </View>
-            <View>
-                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Giá (VNĐ)(*)</Text>
-                <TextInput
-                    placeholder="Nhập giá dịch vụ vào đây"
-                    style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
-                    defaultValue={route.params.price + ''}
-                    onChangeText={(newPrice) => setPrice(newPrice)}
-                />
-            </View>
+            <ScrollView>
+                <View>
+                    <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Loại dịch vụ</Text>
+                    <TextInput
+                        placeholder="Nhập mã loại dịch vụ vào đây"
+                        defaultValue={service.idTypeService}
+                        style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
+                        editable={false}
+                    />
+                </View>
+                <View>
+                    <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Tên dịch vụ (*)</Text>
+                    <TextInput
+                        placeholder="Nhập tên dịch vụ vào đây"
+                        defaultValue={service.name}
+                        style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
+                        onChangeText={(newName) => setName(newName)}
+                    />
+                </View>
+                <View>
+                    <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Mô tả (*)</Text>
+                    <TextInput
+                        placeholder="Nhập mô tả dịch vụ vào đây"
+                        style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
+                        defaultValue={service.description}
+                        onChangeText={(newDescription) => setDescription(newDescription)}
+                    />
+                </View>
+                <View>
+                    <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Giá (VNĐ)(*)</Text>
+                    <TextInput
+                        placeholder="Nhập giá dịch vụ vào đây"
+                        style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
+                        defaultValue={service.price + ''}
+                        onChangeText={(newPrice) => setPrice(newPrice)}
+                        keyboardType={'numeric'}
+                    />
+                </View>
 
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <TouchableOpacity
-                    style={{
-                        backgroundColor: COLORS.primary,
-                        margin: 20,
-                        borderRadius: 15,
-                        flexDirection: 'row',
-                        padding: 10,
-                        justifyContent: 'center',
-                        width: 100,
-                    }}
-                    activeOpacity={0.8}
-                    onPress={() => {
-                        updateService();
-                    }}
-                >
-                    <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Cập nhật</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={{
-                        backgroundColor: COLORS.primary,
-                        margin: 20,
-                        borderRadius: 15,
-                        flexDirection: 'row',
-                        padding: 10,
-                        justifyContent: 'center',
-                        width: 100,
-                    }}
-                    activeOpacity={0.8}
-                    onPress={() => {}}
-                >
-                    <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Xóa</Text>
-                </TouchableOpacity>
-            </View>
+                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: COLORS.primary,
+                            margin: 20,
+                            borderRadius: 15,
+                            flexDirection: 'row',
+                            padding: 10,
+                            justifyContent: 'center',
+                            width: 100,
+                        }}
+                        activeOpacity={0.8}
+                        onPress={() => {
+                            updateService();
+                        }}
+                    >
+                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Cập nhật</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: COLORS.primary,
+                            margin: 20,
+                            borderRadius: 15,
+                            flexDirection: 'row',
+                            padding: 10,
+                            justifyContent: 'center',
+                            width: 100,
+                        }}
+                        activeOpacity={0.8}
+                        onPress={() => {}}
+                    >
+                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Xóa</Text>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     );
 }

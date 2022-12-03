@@ -10,26 +10,29 @@ import { TextInput } from 'react-native-gesture-handler';
 import ListService from './ListService';
 import { getServiceOfCaterogy } from '../../services/getData';
 function ListServiceScreen({ navigation, route }) {
+    console.log('route ListServiceScreen', route);
     const listCategory = route.params.listCategory;
-    const listServiceForType = route.params.listServiceForType;
-    const setlistServiceForType = route.params.setlistServiceForType;
-    const getServiceOfType = route.params.getServiceOfType;
+    // const listServiceForType = route.params.listServiceForType;
+    // const setlistServiceForType = route.params.setlistServiceForType;
+    // const getServiceOfType = route.params.getServiceOfType;
     const [modalVisible, setModalVisible] = useState(false);
-    // //load list service for type
-    // const [listServiceForType, setlistServiceForType] = useState(route.params.listServiceForType);
+    const [serviceType, setServiceType] = useState(listCategory[0].id);
+    //load list service for type
+    const [listServiceForType, setlistServiceForType] = useState([]);
 
-    // const getServiceOfType = (type) => {
-    //     getServiceOfCaterogy(type)
-    //         .then(function (res) {
-    //             setlistServiceForType([...res.data.content]);
-    //         })
-    //         .catch((err) => {
-    //             console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
-    //         });
-    // };
-    // useEffect(() => {
-    //     getServiceOfType(listCategory[0].id);
-    // }, []);
+    const getServiceOfType = (type) => {
+        getServiceOfCaterogy(type)
+            .then(function (res) {
+                setlistServiceForType([...res.data.content]);
+            })
+            .catch((err) => {
+                setlistServiceForType([]);
+                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+            });
+    };
+    useEffect(() => {
+        getServiceOfType(listCategory[0].id);
+    }, []);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -58,12 +61,17 @@ function ListServiceScreen({ navigation, route }) {
                 route={{
                     listCategory: listCategory,
                     getServiceOfType: getServiceOfType,
-                    serviceType: route.params.serviceType,
-                    setServiceType: route.params.setServiceType,
+                    // serviceType: route.params.serviceType,
+                    // setServiceType: route.params.setServiceType,
+                    serviceType: serviceType,
+                    setServiceType: setServiceType,
                 }}
             />
             {/* list service of type */}
-            <ListService navigation={navigation} route={{ listServiceForType: listServiceForType }} />
+            <ListService
+                navigation={navigation}
+                route={{ listServiceForType: listServiceForType, listCategory: listCategory }}
+            />
 
             {/* modal them loai */}
             <Modal animationType="slide" transparent={true} visible={modalVisible}>

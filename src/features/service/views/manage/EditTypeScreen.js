@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, View, Modal, Alert } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
@@ -34,17 +34,6 @@ function EditTypeScreen({ navigation, route }) {
             });
     };
 
-    // const getAllCaterogyAgain = () => {
-    //     getAllCaterogy()
-    //         .then(function (res) {
-    //             route.params.setListCategory([...res.data]);
-
-    //             console.log('route.params.listCategory', route.params.listCategory);
-    //         })
-    //         .catch((err) => {
-    //             console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
-    //         });
-    // };
     const getAllCaterogyAgain = () => {
         getAllCaterogy()
             .then(function (res) {

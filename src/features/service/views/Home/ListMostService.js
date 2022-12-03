@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StatusBar, View } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
-import COLORS from '../consts/colors';
-import { getServiceOfCaterogy } from '../services/getData';
-import style from '../style/Home/style';
-import ListButtonCategory from './Home/ListButtonCategory';
-import ListServiceForType from './Home/ListServiceForType';
+import COLORS from '../../consts/colors';
+import style from '../../style/Home/style';
+import { getServiceOfCaterogy } from '../../services/getData';
+import ListButtonCategory from './ListButtonCategory';
+import ListServiceForType from './ListServiceForType';
 
 function ListMostService({ navigation, route }) {
+    const [serviceType, setServiceType] = useState('');
+
     const listCategory = route.params;
     //load list service for type
     const [listServiceForType, setlistServiceForType] = useState([]);
@@ -24,6 +26,7 @@ function ListMostService({ navigation, route }) {
     };
     useEffect(() => {
         getServiceOfType(listCategory[0].id);
+        setServiceType(listCategory[0].id);
     }, []);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -44,15 +47,20 @@ function ListMostService({ navigation, route }) {
                     onPress={() => navigation.navigate('SearchScreen')}
                 />
             </View>
-            <ScrollView>
-                {/* list category for all type */}
-                <ListButtonCategory
-                    navigation={navigation}
-                    route={{ listCategory: listCategory, getServiceOfType: getServiceOfType }}
-                />
-                {/* list service of type */}
-                <ListServiceForType navigation={navigation} route={{ listServiceForType: listServiceForType }} />
-            </ScrollView>
+            {/* <ScrollView> */}
+            {/* list category for all type */}
+            <ListButtonCategory
+                navigation={navigation}
+                route={{
+                    listCategory: listCategory,
+                    getServiceOfType: getServiceOfType,
+                    serviceType: serviceType,
+                    setServiceType: setServiceType,
+                }}
+            />
+            {/* list service of type */}
+            <ListServiceForType navigation={navigation} route={{ listServiceForType: listServiceForType }} />
+            {/* </ScrollView> */}
         </SafeAreaView>
     );
 }

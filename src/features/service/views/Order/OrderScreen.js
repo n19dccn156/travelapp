@@ -12,17 +12,18 @@ import {
     Alert,
 } from 'react-native';
 // import DatePicker from 'react-native-date-picker';
-import DatePicker from 'react-native-modern-datepicker';
+import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 import { Icon } from 'react-native-elements';
-import Moment from 'moment';
 import COLORS from '../../consts/colors';
 import style from '../../style/Home/style';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getSheduleByServiceId } from '../../services/getData';
 import ListSheduleForService from './ListSheduleForService';
+import { orderService } from '../../services/Order/postData';
 
 function OrderScreen({ navigation, route }) {
     console.log('route', route);
+    const service = route.params;
     const [selectedDate, setSelectedDate] = useState('');
     const [number, setNumber] = useState('');
     const [phone, setPhone] = useState('');
@@ -74,7 +75,23 @@ function OrderScreen({ navigation, route }) {
         }
     };
 
-    const bookService = () => {};
+    const bookService = () => {
+        checkData();
+        orderService(selectedShedule, selectedDate, number, phone, service)
+            .then(function (res) {
+                console.log('res', res);
+                if (res.status == 'success') {
+                    // setTypeService(res.data);
+                    // // setText(res.data.name);
+                    // getAllCaterogyAgain();
+                }
+
+                Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: bookService ~ line 17 ~ error', err);
+            });
+    };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -92,7 +109,15 @@ function OrderScreen({ navigation, route }) {
             <ScrollView>
                 <View>
                     <Text style={styles.textStyle}>Chọn ngày(*)</Text>
-                    <DatePicker onSelectedChange={(date) => setSelectedDate(date)} />
+                    <DatePicker
+                        selected={getFormatedDate(new Date(), 'YYYY-MM-DD')}
+                        current={getFormatedDate(new Date(), 'YYYY-MM-DD')}
+                        minimumDate={getFormatedDate(new Date(), 'YYYY-MM-DD')}
+                        // maximumDate="2020-07-25"
+                        mode="calendar"
+                        minuteInterval={30}
+                        onSelectedChange={(date) => setSelectedDate(date)}
+                    />
                     {/* <Text style={styles.textStyle}>Chọn thời gian kết thúc</Text>
                     <DatePicker onSelectedChange={(date) => setSelectedDateEnd(date)} /> */}
                     <Text style={styles.textStyle}>Chọn suất(*)</Text>
@@ -118,7 +143,7 @@ function OrderScreen({ navigation, route }) {
                         keyboardType="numeric"
                         onChangeText={(newText) => setPhone(newText)}
                     />
-                    <TouchableOpacity style={styles.btnDatStyle} onPress={() => checkData()}>
+                    <TouchableOpacity style={styles.btnDatStyle} onPress={() => bookService()}>
                         <Text style={styles.txtDatStyle}>Thanh toán</Text>
                     </TouchableOpacity>
                 </View>

@@ -3,10 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeServiceScreen from '../views/Home/HomeServiceScreen';
 import DetailsScreen from '../views/DetailsScreen';
 import ListScreen from '../views/ListScreen';
-import ListMostService from '../views/ListMostService';
 import SearchScreen from '../views/SearchScreen';
-import AllServices from '../views/AllServices';
-import ServiceScreen from '../views/ServiceScreen';
 import OrderScreen from '../views/Order/OrderScreen';
 import BookingScreen from '../views/Booking/BookingScreen';
 import ProfileSceen from '../views/manage/ProfileSceen';
@@ -15,6 +12,9 @@ import ListTypeScreen from '../views/manage/ListTypeScreen';
 import EditTypeScreen from '../views/manage/EditTypeScreen';
 import ListServiceScreen from '../views/manage/ListServiceScreen';
 import EditService from '../views/manage/EditService';
+import ListServiceForOneType from '../views/Home/ListServiceForOneType';
+import AllTypeServices from '../views/Home/AllTypeServices';
+import ListMostService from '../views/Home/ListMostService';
 
 const Stack = createStackNavigator();
 
@@ -34,8 +34,8 @@ const MainStackNavigator = ({ navigation, route }) => {
             <Stack.Screen name="ListScreen" component={ListScreen} />
             <Stack.Screen name="ListMostService" component={ListMostService} />
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
-            <Stack.Screen name="AllServices" component={AllServices} />
-            <Stack.Screen name="ServiceScreen" component={ServiceScreen} />
+            <Stack.Screen name="AllTypeServices" component={AllTypeServices} />
+            <Stack.Screen name="ServiceScreenForOneType" component={ListServiceForOneType} />
             <Stack.Screen name="OrderScreen" component={OrderScreen} />
 
             <Stack.Screen name="ManageStackNavigator" component={ManageStackNavigator} />
