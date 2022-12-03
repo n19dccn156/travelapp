@@ -21,6 +21,7 @@ function ListMostService({ navigation, route }) {
                 setlistServiceForType([...res.data.content]);
             })
             .catch((err) => {
+                setlistServiceForType([]);
                 console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
             });
     };

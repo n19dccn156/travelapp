@@ -61,4 +61,16 @@ const updateServiceById = async (service, name, description, price) => {
     }
 };
 
-export { updateTypeServiceById, addTypeService, updateServiceById };
+const deleteServiceById = async (id) => {
+    try {
+        const response = await fetch(`${host}/api/v1/services/${id}/activity`, {
+            method: 'PATCH',
+        });
+
+        return response.json();
+    } catch (error) {
+        console.log('deleteServiceById ~ error', error);
+    }
+};
+
+export { updateTypeServiceById, addTypeService, updateServiceById, deleteServiceById };

@@ -13,7 +13,6 @@ const getListServices = async () => {
 const getAllCaterogy = async () => {
     try {
         const response = await fetch(`${host}/api/v1/typeservices`);
-        // const response = await fetch(`https://phuquy-travel-app.herokuapp.com/api/v1/typeservices`);
 
         return response.json();
     } catch (error) {

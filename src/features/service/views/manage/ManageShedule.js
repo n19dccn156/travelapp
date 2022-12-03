@@ -8,7 +8,7 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { deleteServiceById, updateServiceById, updateTypeServiceById } from '../../services/updateData';
 import { getAllCaterogy } from '../../services/getData';
 
-function EditService({ navigation, route }) {
+function ManageShedule({ navigation, route }) {
     console.log('route EditService', route);
     const service = route.params.service;
     const [name, setName] = useState(service.name);
@@ -86,7 +86,7 @@ function EditService({ navigation, route }) {
             </View> */}
             <ScrollView>
                 <View>
-                    <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Loại dịch vụ</Text>
+                    <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Lịch cố định theo ngày</Text>
                     <TextInput
                         placeholder="Nhập mã loại dịch vụ vào đây"
                         defaultValue={service.idTypeService}
@@ -192,4 +192,4 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
 });
-export default EditService;
+export default ManageShedule;

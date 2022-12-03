@@ -29,7 +29,9 @@ const DetailsScreen = ({ navigation, route }) => {
                     </Text>
                     <View style={{ flexDirection: 'row' }}>
                         <Icon name="star" size={30} color={COLORS.oranbge} />
-                        <Text style={{ color: COLORS.primary, fontWeight: 'bold', fontSize: 20 }}>{service.star}</Text>
+                        <Text style={{ color: COLORS.primary, fontWeight: 'bold', fontSize: 20 }}>
+                            {service.star.toFixed(1)}
+                        </Text>
                     </View>
                 </View>
             </ImageBackground>

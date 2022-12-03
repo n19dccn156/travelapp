@@ -9,6 +9,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TextInput } from 'react-native-gesture-handler';
 import ListService from './ListService';
 import { getServiceOfCaterogy } from '../../services/getData';
+import { addServiceForType } from '../../services/service/postData';
 function ListServiceScreen({ navigation, route }) {
     console.log('route ListServiceScreen', route);
 
@@ -79,6 +80,19 @@ function ListServiceScreen({ navigation, route }) {
         }
     };
 
+    const addService = () => {
+        checkData();
+        addServiceForType(serviceType, name, price, number, phone, description)
+            .then(function (res) {
+                console.log(res);
+
+                Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+            });
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -88,7 +102,7 @@ function ListServiceScreen({ navigation, route }) {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-                    onPress={() => navigation.navigate('ProfileSceen')}
+                    onPress={() => navigation.navigate('ManageScreen')}
                 />
                 <Text style={style.headerTitle}>Quản lý dịch vụ</Text>
                 <View style={{ marginTop: 10 }}>
@@ -120,12 +134,13 @@ function ListServiceScreen({ navigation, route }) {
             />
 
             {/* modal them loai */}
+
             <Modal animationType="slide" transparent={true} visible={modalVisible}>
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                         <View>
                             <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 8, fontSize: 18 }}>
-                                Thêm loại dịch vụ
+                                Thêm dịch vụ
                             </Text>
                         </View>
                         <View>
@@ -191,7 +206,7 @@ function ListServiceScreen({ navigation, route }) {
                                     justifyContent: 'center',
                                 }}
                                 activeOpacity={0.8}
-                                onPress={() => checkData()}
+                                onPress={() => addService()}
                             >
                                 <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Lưu</Text>
                             </TouchableOpacity>
@@ -213,6 +228,7 @@ function ListServiceScreen({ navigation, route }) {
                     </View>
                 </View>
             </Modal>
+
             {/* </ScrollView> */}
         </SafeAreaView>
     );

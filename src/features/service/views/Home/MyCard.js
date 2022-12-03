@@ -37,7 +37,11 @@ function MyCard({ navigation, service }) {
                         <AntDesign name="hearto" size={20} color={COLORS.white} />
                     </View>
                 </View>
-                <Text style={{ color: COLORS.white, fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>
+                <Text
+                    style={{ color: COLORS.white, fontSize: 20, fontWeight: 'bold', marginTop: 10 }}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                >
                     {service.name}
                 </Text>
                 <View
@@ -49,7 +53,7 @@ function MyCard({ navigation, service }) {
                 >
                     <View style={{ flexDirection: 'row' }}>
                         <Icon name="star" size={20} color={COLORS.white} />
-                        <Text style={{ marginLeft: 5, color: COLORS.white }}>{service.star}</Text>
+                        <Text style={{ marginLeft: 5, color: COLORS.white }}>{service.star.toFixed(1)}</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={{ marginLeft: 5, color: COLORS.white }}>| {service.numberRating} đánh giá</Text>
