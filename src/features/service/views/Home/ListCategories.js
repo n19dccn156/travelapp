@@ -22,14 +22,14 @@ function ListCategories({ navigation, route }) {
         <Ionicons name="help-buoy-outline" size={25} color={COLORS.primary} />,
         <FontAwesome5 name="tshirt" size={25} color={COLORS.primary} />,
     ];
-    const categoryIcons2 = [
-        <Icon name="tour" size={25} color={COLORS.primary} />,
-        <Icon name="car-rental" size={25} color={COLORS.primary} />,
-        <FontAwesome5 name="fish" size={25} color={COLORS.primary} />,
-        <Ionicons name="help-buoy-outline" size={25} color={COLORS.primary} />,
-        <FontAwesome5 name="tshirt" size={25} color={COLORS.primary} />,
-        <Feather name="more-horizontal" size={25} color={COLORS.primary} />,
-    ];
+    // const categoryIcons2 = [
+    //     <Icon name="tour" size={25} color={COLORS.primary} />,
+    //     <Icon name="car-rental" size={25} color={COLORS.primary} />,
+    //     <FontAwesome5 name="fish" size={25} color={COLORS.primary} />,
+    //     <Ionicons name="help-buoy-outline" size={25} color={COLORS.primary} />,
+    //     <FontAwesome5 name="tshirt" size={25} color={COLORS.primary} />,
+    //     <Feather name="more-horizontal" size={25} color={COLORS.primary} />,
+    // ];
     return (
         <View>
             {/* <View style={style.categoryContainer}>
@@ -49,7 +49,7 @@ function ListCategories({ navigation, route }) {
                     <TouchableOpacity
                         key={item.id}
                         onPress={() => {
-                            navigation.navigate('ServiceScreen');
+                            navigation.navigate('ServiceScreenForOneType', { category: item });
                         }}
                     >
                         <View style={style.iconContainer}>

@@ -97,7 +97,7 @@ const HomeServiceScreen = ({ navigation, route }) => {
                     </Text>
                     <TouchableOpacity
                         style={{ flex: 1 }}
-                        onPress={() => navigation.navigate('AllServices', listCategory)}
+                        onPress={() => navigation.navigate('AllTypeServices', listCategory)}
                     >
                         <Text
                             style={{

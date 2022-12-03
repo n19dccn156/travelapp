@@ -127,12 +127,6 @@ function ProfileSceen({ navigation }) {
                 onPress={() =>
                     navigation.navigate('ListServiceScreen', {
                         listCategory: listCategory,
-                        getServiceOfType: getServiceOfType,
-                        setListCategory: setListCategory,
-                        listServiceForType: listServiceForType,
-                        setlistServiceForType: setlistServiceForType,
-                        serviceType: serviceType,
-                        setServiceType: setServiceType,
                     })
                 }
             >
