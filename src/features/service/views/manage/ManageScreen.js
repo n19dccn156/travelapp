@@ -7,7 +7,7 @@ import style from '../../style/Home/style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { getAllCaterogy, getServiceOfCaterogy } from '../../services/getData';
 
-function ProfileSceen({ navigation }) {
+function ManageScreen({ navigation }) {
     const [serviceType, setServiceType] = useState('');
 
     //load list category
@@ -58,7 +58,7 @@ function ProfileSceen({ navigation }) {
                 <Text style={style.headerTitle}>Quản lý thông tin</Text>
             </View>
             <Image />
-            {/* Sua thong tin ca nhan */}
+            {/* quan ly lich */}
             <TouchableOpacity
                 style={{
                     backgroundColor: COLORS.grey,
@@ -79,7 +79,7 @@ function ProfileSceen({ navigation }) {
                         flex: 1,
                     }}
                 >
-                    <Text>Sửa thông tin cá nhân</Text>
+                    <Text>Quản lý lịch đặt</Text>
                     <AntDesign name="right" size={20} />
                 </View>
             </TouchableOpacity>
@@ -154,4 +154,4 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primary,
     },
 });
-export default ProfileSceen;
+export default ManageScreen;

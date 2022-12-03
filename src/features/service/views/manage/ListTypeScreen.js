@@ -61,7 +61,7 @@ function ListTypeScreen({ navigation, route }) {
                         name="arrow-back"
                         size={28}
                         color={COLORS.white}
-                        onPress={() => navigation.navigate('ProfileSceen')}
+                        onPress={() => navigation.navigate('ManageScreen')}
                     />
                     <Text style={style.headerTitle}>Quản lý loại dịch vụ</Text>
                     <View style={{ marginTop: 10 }}>

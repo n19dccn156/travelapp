@@ -19,7 +19,8 @@ function MyServiceCard({ navigation, route }) {
             }}
             activeOpacity={0.8}
             key={service.id}
-            onPress={() => navigation.navigate('EditService', { service: service, listCategory: route.listCategory })}
+            // onPress={() => navigation.navigate('EditService', { service: service, listCategory: route.listCategory })}
+            onPress={() => navigation.navigate('ManageService', { service: service, listCategory: route.listCategory })}
         >
             <Image style={style.myCardImage} source={{ uri: `${service.avatar}` }} />
 
@@ -50,7 +51,7 @@ function MyServiceCard({ navigation, route }) {
                 >
                     <View style={{ flexDirection: 'row' }}>
                         <Icon name="star" size={20} color={COLORS.white} />
-                        <Text style={{ marginLeft: 5, color: COLORS.white }}>{service.star}</Text>
+                        <Text style={{ marginLeft: 5, color: COLORS.white }}>{service.star.toFixed(1)}</Text>
                     </View>
                     <View style={{ flexDirection: 'row' }}>
                         <Text style={{ marginLeft: 5, color: COLORS.white }}>| {service.numberRating} đánh giá</Text>
