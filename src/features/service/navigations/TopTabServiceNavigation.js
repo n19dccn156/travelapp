@@ -1,7 +1,7 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import EditService from '../views/manage/EditService';
-import ManageService from '../views/manage/ManageService';
+import ManageShedule from '../views/manage/ManageShedule';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -15,7 +15,7 @@ function TopTabServiceNavigation({ navigation, route }) {
             />
             <Tab.Screen
                 name="Cập nhật lịch"
-                component={EditService}
+                component={ManageShedule}
                 initialParams={{ service: route.service, listCategory: route.listCategory }}
             />
         </Tab.Navigator>

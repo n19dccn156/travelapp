@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, View, Modal, Alert } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
@@ -6,158 +6,125 @@ import COLORS from '../../consts/colors';
 import style from '../../style/Home/style';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { deleteServiceById, updateServiceById, updateTypeServiceById } from '../../services/updateData';
-import { getAllCaterogy } from '../../services/getData';
+import { getAllCaterogy, getSheduleByServiceId } from '../../services/getData';
+import ListSheduleForService from './ListSheduleForService';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { addSheduleService } from '../../services/Shedule/postData';
 
 function ManageShedule({ navigation, route }) {
-    console.log('route EditService', route);
-    const service = route.params.service;
-    const [name, setName] = useState(service.name);
-    const [description, setDescription] = useState(service.description);
-    const [price, setPrice] = useState(service.price + '');
+    const [listShedule, setListShedule] = useState([]);
+    const [name, setName] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const getScheduleServiceAgain = (idService) => {
+        getSheduleByServiceId(idService)
+            .then(function (res) {
+                setListShedule(res.data);
+                console.log('res', res);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
+            });
+    };
+
+    useEffect(() => {
+        getScheduleServiceAgain(route.params.service.id);
+    }, []);
+
     const checkData = () => {
-        if (name.trim() == '' || description.trim() == '' || price.trim() == '') {
-            Alert.alert('Thông báo!', 'Không được để trống trường nào!', [
+        if (name.trim() == '') {
+            Alert.alert('Thông báo!', 'Không được để trống  nội dung!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
-    };
-    const updateService = () => {
-        checkData();
-
-        updateServiceById(service, name, description, price)
-            .then(function (res) {
-                console.log('res', res);
-                if (res.status == 'success') {
-                    // setTypeService(res.data);
-                    // // setText(res.data.name);
-                    // getAllCaterogyAgain();
-                }
-
-                Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
-            })
-            .catch((err) => {
-                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
-            });
+        return true;
     };
 
-    const confirmDelete = () => {
-        Alert.alert('Cảnh báo!', 'Bạn có chắc chắn muốn xóa dịch vụ này không!', [
-            {
-                text: 'Không',
-                onPress: () => console.log('Cancel Pressed'),
-                style: 'cancel',
-            },
-            { text: ' Chắc', onPress: () => deleteService() },
-        ]);
-    };
-
-    const deleteService = () => {
-        deleteServiceById(service.id)
-            .then(function (res) {
-                console.log('res', res);
-
-                Alert.alert('Thông báo!', res.message, [
-                    {
-                        text: 'Đóng',
-                        onPress: () =>
-                            navigation.navigate('ListServiceScreen', { listCategory: route.params.listCategory }),
-                    },
-                ]);
-            })
-            .catch((err) => {
-                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
-            });
+    const addService = () => {
+        if (checkData())
+            addSheduleService(route.params.service.id, name)
+                .then(function (res) {
+                    console.log(res);
+                    if (res.status == 'success') {
+                        getScheduleServiceAgain(route.params.service.id);
+                    }
+                    Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
+                })
+                .catch((err) => {
+                    console.log('🚀 ~ file: addSheduleService-screen ~ line 17 ~ error', err);
+                });
     };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-            {/* <StatusBar translucent={false} backgroundColor={COLORS.primary} />
-
-            <View style={styles.header}>
-                <Icon
-                    name="arrow-back"
-                    size={28}
-                    color={COLORS.white}
-                    onPress={() =>
-                        navigation.navigate('ListServiceScreen', { listCategory: route.params.listCategory })
-                    }
-                />
-                <Text style={style.headerTitle}>Cập nhật dịch vụ</Text>
-            </View> */}
-            <ScrollView>
-                <View>
+            <View>
+                <View style={{ flexDirection: 'row' }}>
                     <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Lịch cố định theo ngày</Text>
-                    <TextInput
-                        placeholder="Nhập mã loại dịch vụ vào đây"
-                        defaultValue={service.idTypeService}
-                        style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
-                        editable={false}
-                    />
-                </View>
-                <View>
-                    <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Tên dịch vụ (*)</Text>
-                    <TextInput
-                        placeholder="Nhập tên dịch vụ vào đây"
-                        defaultValue={service.name}
-                        style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
-                        onChangeText={(newName) => setName(newName)}
-                    />
-                </View>
-                <View>
-                    <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Mô tả (*)</Text>
-                    <TextInput
-                        placeholder="Nhập mô tả dịch vụ vào đây"
-                        style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
-                        defaultValue={service.description}
-                        onChangeText={(newDescription) => setDescription(newDescription)}
-                    />
-                </View>
-                <View>
-                    <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Giá (VNĐ)(*)</Text>
-                    <TextInput
-                        placeholder="Nhập giá dịch vụ vào đây"
-                        style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
-                        defaultValue={service.price + ''}
-                        onChangeText={(newPrice) => setPrice(newPrice)}
-                        keyboardType={'numeric'}
-                    />
+                    <TouchableOpacity onPress={() => setModalVisible(true)}>
+                        <Ionicons name="add" size={28} color={COLORS.primary} style={{ marginTop: 5 }} />
+                    </TouchableOpacity>
                 </View>
 
-                <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                    <TouchableOpacity
-                        style={{
-                            backgroundColor: COLORS.primary,
-                            margin: 20,
-                            borderRadius: 15,
-                            flexDirection: 'row',
-                            padding: 10,
-                            justifyContent: 'center',
-                            width: 100,
-                        }}
-                        activeOpacity={0.8}
-                        onPress={() => {
-                            updateService();
-                        }}
-                    >
-                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Cập nhật</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            backgroundColor: COLORS.primary,
-                            margin: 20,
-                            borderRadius: 15,
-                            flexDirection: 'row',
-                            padding: 10,
-                            justifyContent: 'center',
-                            width: 100,
-                        }}
-                        activeOpacity={0.8}
-                        onPress={() => confirmDelete()}
-                    >
-                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Xóa</Text>
-                    </TouchableOpacity>
-                </View>
-            </ScrollView>
+                <ListSheduleForService
+                    route={{
+                        listShedule: listShedule,
+                        setListShedule: setListShedule,
+                        getScheduleServiceAgain: getScheduleServiceAgain,
+                    }}
+                />
+                {/* modal them loai */}
+                <Modal animationType="slide" transparent={true} visible={modalVisible}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <View>
+                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10, fontSize: 18 }}>
+                                    Thêm loại dịch vụ
+                                </Text>
+                            </View>
+                            <View>
+                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>
+                                    Nội dung lịch(*)
+                                </Text>
+                                <TextInput
+                                    placeholder="Nhập nội dung vào đây"
+                                    style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
+                                    onChangeText={(newName) => setName(newName)}
+                                />
+                            </View>
+                            <View style={{ flexDirection: 'row' }}>
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: COLORS.primary,
+                                        margin: 20,
+                                        borderRadius: 15,
+                                        flexDirection: 'row',
+                                        padding: 10,
+                                        justifyContent: 'center',
+                                    }}
+                                    activeOpacity={0.8}
+                                    onPress={() => addService()}
+                                >
+                                    <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Lưu</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: COLORS.primary,
+                                        margin: 20,
+                                        borderRadius: 15,
+                                        flexDirection: 'row',
+                                        padding: 10,
+                                        justifyContent: 'center',
+                                    }}
+                                    activeOpacity={0.8}
+                                    onPress={() => setModalVisible(!modalVisible)}
+                                >
+                                    <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Hủy</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+            </View>
         </SafeAreaView>
     );
 }
