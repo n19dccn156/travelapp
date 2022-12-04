@@ -4,9 +4,10 @@ import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
 import style from '../../style/Home/style';
-import TopTabServiceNavigation from '../../navigations/TopTabServiceNavigation';
+import TopTabOrderForStaff from '../../navigations/TopTabOrderForStaff';
 
-function ManageService({ navigation, route }) {
+function ManageOrderForStaff({ navigation, route }) {
+    const service = route.params.service;
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -16,15 +17,11 @@ function ManageService({ navigation, route }) {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-                    onPress={() =>
-                        navigation.navigate('ListServiceScreen', { listCategory: route.params.listCategory })
-                    }
+                    onPress={() => navigation.navigate('ManageScreen')}
                 />
-                <Text style={style.headerTitle}>Quản lý dịch vụ</Text>
+                <Text style={style.headerTitle}>Quản lý đơn đặt</Text>
             </View>
-            <TopTabServiceNavigation
-                route={{ service: route.params.service, listCategory: route.params.listCategory }}
-            />
+            <TopTabOrderForStaff route={{ id: service.id }} />
         </SafeAreaView>
     );
 }
@@ -36,4 +33,4 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primary,
     },
 });
-export default ManageService;
+export default ManageOrderForStaff;

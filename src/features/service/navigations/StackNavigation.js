@@ -6,7 +6,6 @@ import ListScreen from '../views/ListScreen';
 import SearchScreen from '../views/SearchScreen';
 import OrderScreen from '../views/Order/OrderScreen';
 import BookingScreen from '../views/Booking/BookingScreen';
-import EditProfileScreen from '../views/manage/EditProfileScreen';
 import ListTypeScreen from '../views/manage/ListTypeScreen';
 import EditTypeScreen from '../views/manage/EditTypeScreen';
 import ListServiceScreen from '../views/manage/ListServiceScreen';
@@ -16,6 +15,8 @@ import AllTypeServices from '../views/Home/AllTypeServices';
 import ListMostService from '../views/Home/ListMostService';
 import ManageScreen from '../views/manage/ManageScreen';
 import ManageService from '../views/manage/ManageService';
+import ManageOrderForStaff from '../views/manage/ManageOrderForStaff';
+import ListServiceForOrderScreen from '../views/manage/ListServiceForOrderScreen';
 
 const Stack = createStackNavigator();
 
@@ -62,12 +63,13 @@ const ManageStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="ManageScreen" component={ManageScreen} />
-            <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
             <Stack.Screen name="ListTypeScreen" component={ListTypeScreen} />
             <Stack.Screen name="EditTypeScreen" component={EditTypeScreen} />
             <Stack.Screen name="ListServiceScreen" component={ListServiceScreen} />
             <Stack.Screen name="EditService" component={EditService} />
             <Stack.Screen name="ManageService" component={ManageService} />
+            <Stack.Screen name="ManageOrderForStaff" component={ManageOrderForStaff} />
+            <Stack.Screen name="ListServiceForOrderScreen" component={ListServiceForOrderScreen} />
         </Stack.Navigator>
     );
 };
