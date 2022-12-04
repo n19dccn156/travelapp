@@ -15,27 +15,26 @@ function MyScheduleCard({ navigation, route }) {
 
     const checkData = () => {
         if (name.trim() == '') {
-            Alert.alert('Thông báo!', 'Không được để trống nội dung!', [
-                { text: 'OK', onPress: () => setActive(true) },
-            ]);
-            return;
+            Alert.alert('Thông báo!', 'Không được để trống nội dung!', [{ text: 'OK', onPress: () => {} }]);
+            return false;
         }
+        return true;
     };
     const updateSchedule = () => {
-        checkData();
-
-        updateScheduleById(schedule, name)
-            .then(function (res) {
-                console.log('res', res);
-                if (res.status == 'success') {
-                    getScheduleServiceAgain(schedule.idService);
-                }
-                Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
-            })
-            .catch((err) => {
-                console.log('🚀 ~ file: updateSchedule-screen ~ line 17 ~ error', err);
-            });
-        setActive(false);
+        if (checkData()) {
+            updateScheduleById(schedule, name)
+                .then(function (res) {
+                    console.log('res', res);
+                    if (res.status == 'success') {
+                        getScheduleServiceAgain(schedule.idService);
+                    }
+                    Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
+                })
+                .catch((err) => {
+                    console.log('🚀 ~ file: updateSchedule-screen ~ line 17 ~ error', err);
+                });
+            setActive(false);
+        }
     };
 
     const confirmDelete = () => {
@@ -87,7 +86,12 @@ function MyScheduleCard({ navigation, route }) {
                 onChangeText={(newText) => setName(newText)}
             />
             <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                <TouchableOpacity onPress={() => setActive(true)}>
+                <TouchableOpacity
+                    onPress={() => {
+                        setActive(!active);
+                        setName(schedule.name);
+                    }}
+                >
                     <View style={{ margin: 5 }}>
                         <FontAwesome5 name="pen" size={20} color={COLORS.primary} />
                     </View>

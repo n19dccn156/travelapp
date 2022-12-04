@@ -47,50 +47,52 @@ function OrderScreen({ navigation, route }) {
             Alert.alert('Thông báo!', 'Không được để trống ngày!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
+
         if (selectedShedule.trim() == '') {
             Alert.alert('Thông báo!', 'Bạn chưa chọn suất!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
         if (number.trim() == '') {
             Alert.alert('Thông báo!', 'Không được để trống số lượng!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
         if (Number(number.trim()) < 1) {
             Alert.alert('Thông báo!', 'Số lượng phải lớn hơn hoặc bằng 1!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
         if (phone.trim() != '' && phone.trim().length < 10) {
             Alert.alert('Thông báo!', 'Số điện thoại không hợp lệ!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
+        return true;
     };
 
     const bookService = () => {
-        checkData();
-        orderService(selectedShedule, selectedDate, number, phone, service)
-            .then(function (res) {
-                console.log('res', res);
-                if (res.status == 'success') {
-                    // setTypeService(res.data);
-                    // // setText(res.data.name);
-                    // getAllCaterogyAgain();
-                }
+        if (checkData())
+            orderService(selectedShedule, selectedDate, number, phone, service)
+                .then(function (res) {
+                    console.log('res', res);
+                    if (res.status == 'success') {
+                        // setTypeService(res.data);
+                        // // setText(res.data.name);
+                        // getAllCaterogyAgain();
+                    }
 
-                Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
-            })
-            .catch((err) => {
-                console.log('🚀 ~ file: bookService ~ line 17 ~ error', err);
-            });
+                    Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
+                })
+                .catch((err) => {
+                    console.log('🚀 ~ file: bookService ~ line 17 ~ error', err);
+                });
     };
 
     return (
@@ -144,7 +146,7 @@ function OrderScreen({ navigation, route }) {
                         onChangeText={(newText) => setPhone(newText)}
                     />
                     <TouchableOpacity style={styles.btnDatStyle} onPress={() => bookService()}>
-                        <Text style={styles.txtDatStyle}>Thanh toán</Text>
+                        <Text style={styles.txtDatStyle}>Xác nhận</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -173,7 +175,7 @@ const styles = StyleSheet.create({
         margin: 20,
     },
     txtDatStyle: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: 'bold',
         color: COLORS.white,
     },
