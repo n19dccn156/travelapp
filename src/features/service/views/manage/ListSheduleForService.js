@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { View } from 'react-native-animatable';
 import { FlatList } from 'react-native-gesture-handler';
-import COLORS from '../../consts/colors';
-import MyButton from '../Home/MyButton';
-import MyButtonType from './MyButtonType';
+import MyScheduleCard from './MyScheduleCard';
 
-function ListType({ navigation, route }) {
+function ListSheduleForService({ navigation, route }) {
     return (
         <View style={{ justifyContent: 'center' }}>
             <FlatList
@@ -16,15 +14,14 @@ function ListType({ navigation, route }) {
                 }}
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                data={route.listCategory}
+                data={route.listShedule}
                 renderItem={({ item }) => (
-                    <MyButtonType
+                    <MyScheduleCard
                         navigation={navigation}
                         route={{
-                            categories: item,
-                            getServiceOfType: route.getServiceOfType,
-                            setListCategory: route.setListCategory,
-                            listCategory: route.listCategory,
+                            schedule: item,
+                            setListShedule: route.setListShedule,
+                            getScheduleServiceAgain: route.getScheduleServiceAgain,
                         }}
                     />
                 )}
@@ -33,4 +30,4 @@ function ListType({ navigation, route }) {
     );
 }
 
-export default ListType;
+export default ListSheduleForService;
