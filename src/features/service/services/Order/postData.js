@@ -9,13 +9,13 @@ const orderService = async (idSchedule, dateStart, number, phone, service) => {
         'idSchedule: ' +
             idSchedule +
             ' dateStart: ' +
-            moment(dateStart).format('YYYY-MM-DD') +
+            moment().format('YYYY-MM-DD hh:mm:ss.sss') +
             '\nnumber: ' +
             number +
             '\nphone: ' +
             phone +
             '\nservice.price: ' +
-            service,
+            service.price,
         '\nservice.id: ' + service.id,
     );
     try {
@@ -26,18 +26,17 @@ const orderService = async (idSchedule, dateStart, number, phone, service) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                id: uuid.v4(),
-                idUser: '7055dcb1-67ce-4c5f-bf51-03863f7e5779',
+                idUser: '7055dcb1-67ce-4c5f-bf51-03863f7e5778',
                 idState: 'XACNHAN',
                 idSchedule: idSchedule,
-                dateNow: moment().format('YYYY-MM-DD hh:mm:ss.sss'),
+                dateNow: moment().format('YYYY-MM-DDThh:mm:ss.sss'),
                 dateStart: moment(dateStart).format('YYYY-MM-DD'),
                 number: number,
                 price: service.price,
                 phone: phone,
+                idService: service.id,
                 star: 0,
                 comment: '',
-                idService: service.id,
             }),
         });
 

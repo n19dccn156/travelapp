@@ -6,7 +6,7 @@ import style from '../../style/Home/style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity } from 'react-native';
 
-function MyServiceCard({ navigation, route }) {
+function MyServiceCardForOrder({ navigation, route }) {
     const service = route.service;
     return (
         <TouchableOpacity
@@ -19,7 +19,9 @@ function MyServiceCard({ navigation, route }) {
             }}
             activeOpacity={0.8}
             key={service.id}
-            onPress={() => navigation.navigate('ManageService', { service: service, listCategory: route.listCategory })}
+            onPress={() =>
+                navigation.navigate('ManageOrderForStaff', { service: service, listCategory: route.listCategory })
+            }
         >
             <Image style={style.myCardImage} source={{ uri: `${service.avatar}` }} />
 
@@ -61,4 +63,4 @@ function MyServiceCard({ navigation, route }) {
     );
 }
 
-export default MyServiceCard;
+export default MyServiceCardForOrder;

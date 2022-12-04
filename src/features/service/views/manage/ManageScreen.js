@@ -68,7 +68,11 @@ function ManageScreen({ navigation }) {
                     padding: 10,
                 }}
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('EditProfileScreen')}
+                onPress={() =>
+                    navigation.navigate('ListServiceForOrderScreen', {
+                        listCategory: listCategory,
+                    })
+                }
             >
                 <View
                     style={{
@@ -79,7 +83,7 @@ function ManageScreen({ navigation }) {
                         flex: 1,
                     }}
                 >
-                    <Text>Quản lý lịch đặt</Text>
+                    <Text>Quản lý đơn đặt của khách hàng</Text>
                     <AntDesign name="right" size={20} />
                 </View>
             </TouchableOpacity>
