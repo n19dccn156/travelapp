@@ -9,7 +9,7 @@ import moment from 'moment';
 import { getSheduleBySheduleId } from '../../services/Shedule/getData';
 import { updateStateOrderById } from '../../services/Order/updateData';
 
-function MyOrderWaitConfirmCard({ navigation, route }) {
+function MyOrderCancelCard({ navigation, route }) {
     const order = route.order;
 
     const [schedule, setSchedule] = useState('');
@@ -60,12 +60,18 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
 
                 style: 'cancel',
             },
-            { text: ' Chắc', onPress: () => upDateStateOrder('THANHCONG') },
+            { text: ' Chắc', onPress: () => upDateStateOrder('HOANTHANH') },
         ]);
     };
 
     return (
-        <View style={{ flexDirection: 'row', borderBottomWidth: 1 }}>
+        <View
+            style={{
+                flexDirection: 'row',
+                borderBottomWidth: 1,
+                width: 380,
+            }}
+        >
             <View
                 style={{
                     borderWidth: 1,
@@ -105,19 +111,12 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
 
             {/* nut xác nhan và huy */}
             <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <TouchableOpacity onPress={() => confirmVerify()}>
-                    <View style={{ backgroundColor: COLORS.primary, borderRadius: 5, padding: 5, margin: 2 }}>
-                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Xác nhận</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => confirmCancel()}>
-                    <View style={{ backgroundColor: COLORS.red, borderRadius: 5, padding: 5 }}>
-                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Hủy</Text>
-                    </View>
-                </TouchableOpacity>
+                <View style={{ backgroundColor: COLORS.red, borderRadius: 5, padding: 5 }}>
+                    <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Đã Hủy</Text>
+                </View>
             </View>
         </View>
     );
 }
 
-export default MyOrderWaitConfirmCard;
+export default MyOrderCancelCard;

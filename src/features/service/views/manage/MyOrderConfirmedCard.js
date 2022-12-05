@@ -9,7 +9,7 @@ import moment from 'moment';
 import { getSheduleBySheduleId } from '../../services/Shedule/getData';
 import { updateStateOrderById } from '../../services/Order/updateData';
 
-function MyOrderWaitConfirmCard({ navigation, route }) {
+function MyOrderConfirmedCard({ navigation, route }) {
     const order = route.order;
 
     const [schedule, setSchedule] = useState('');
@@ -60,7 +60,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
 
                 style: 'cancel',
             },
-            { text: ' Chắc', onPress: () => upDateStateOrder('THANHCONG') },
+            { text: ' Chắc', onPress: () => upDateStateOrder('HOANTHANH') },
         ]);
     };
 
@@ -107,7 +107,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity onPress={() => confirmVerify()}>
                     <View style={{ backgroundColor: COLORS.primary, borderRadius: 5, padding: 5, margin: 2 }}>
-                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Xác nhận</Text>
+                        <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Hoàn thành</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => confirmCancel()}>
@@ -120,4 +120,4 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
     );
 }
 
-export default MyOrderWaitConfirmCard;
+export default MyOrderConfirmedCard;

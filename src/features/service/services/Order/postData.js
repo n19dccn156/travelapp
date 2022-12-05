@@ -4,20 +4,6 @@ import moment from 'moment';
 var host = variables.host;
 
 const orderService = async (idSchedule, dateStart, number, phone, service) => {
-    console.log(
-        'orderService: ',
-        'idSchedule: ' +
-            idSchedule +
-            ' dateStart: ' +
-            moment().format('YYYY-MM-DD hh:mm:ss.sss') +
-            '\nnumber: ' +
-            number +
-            '\nphone: ' +
-            phone +
-            '\nservice.price: ' +
-            service.price,
-        '\nservice.id: ' + service.id,
-    );
     try {
         const response = await fetch(`${host}/api/v1/orderservice`, {
             method: 'POST',
