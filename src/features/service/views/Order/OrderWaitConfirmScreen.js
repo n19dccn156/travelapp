@@ -11,6 +11,7 @@ import {
     FlatList,
 } from 'react-native';
 import { Text } from 'react-native-animatable';
+import { ScrollView } from 'react-native-gesture-handler';
 import COLORS from '../../consts/colors';
 import { getOrderByIdAndState, getOrderByIdUserAndState } from '../../services/Order/getData';
 import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
@@ -35,27 +36,28 @@ function OrderWaitConfirmScreen({ navigation, route }) {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <View>
-                <View>
-                    <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>
-                        Danh sách chờ xác nhận
-                    </Text>
-                </View>
-
-                <FlatList
-                    contentContainerStyle={{
-                        // flex: 1,
-                        // margin: 10,
-                        flexDirection: 'column',
-                    }}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    data={listOrder}
-                    renderItem={({ item }) => (
-                        <MyOrderWaitConfirmCard
-                            route={{ order: item, getOrderByIdUserAndStateAgain: getOrderByIdUserAndStateAgain }}
-                        />
-                    )}
-                />
+                <ScrollView>
+                    <View style={{ borderBottomWidth: 10 }}>
+                        <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>
+                            Danh sách chờ xác nhận
+                        </Text>
+                    </View>
+                    <FlatList
+                        contentContainerStyle={{
+                            // flex: 1,
+                            // margin: 10,
+                            flexDirection: 'column',
+                        }}
+                        horizontal
+                        showsHorizontalScrollIndicator={true}
+                        data={listOrder}
+                        renderItem={({ item }) => (
+                            <MyOrderWaitConfirmCard
+                                route={{ order: item, getOrderByIdUserAndStateAgain: getOrderByIdUserAndStateAgain }}
+                            />
+                        )}
+                    />
+                </ScrollView>
             </View>
         </SafeAreaView>
     );

@@ -8,15 +8,25 @@ import { TouchableOpacity, Alert } from 'react-native';
 import moment from 'moment';
 import { getSheduleBySheduleId } from '../../services/Shedule/getData';
 import { updateStateOrderById } from '../../services/Order/updateData';
+import { getUserById } from '../../services/User/getData';
 
 function MyOrderCancelCard({ navigation, route }) {
     const order = route.order;
 
     const [schedule, setSchedule] = useState('');
+    const [user, setUser] = useState('');
     useEffect(() => {
         getSheduleBySheduleId(order.idSchedule)
             .then(function (res) {
                 setSchedule(res.data);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
+            });
+        getUserById(order.idUser)
+            .then(function (res) {
+                setUser(res.data);
+                console.log('user', user);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
@@ -89,7 +99,7 @@ function MyOrderCancelCard({ navigation, route }) {
 
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ fontWeight: 'bold', color: COLORS.dark }}>Họ tên: </Text>
-                    <Text>Nguyễn Văn A</Text>
+                    <Text>{user.firstName + ' ' + user.lastName}</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ fontWeight: 'bold', color: COLORS.dark }}>Ngày bắt đầu: </Text>

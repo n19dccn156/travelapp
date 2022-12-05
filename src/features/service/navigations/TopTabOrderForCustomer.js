@@ -18,13 +18,13 @@ function TopTabOrderForCustomer({ navigation, route }) {
                     idUser: route.idUser,
                 }}
             />
-            {/* <Tab.Screen
+            <Tab.Screen
                 name="Đã xác nhận"
                 component={OrderWaitConfirmScreen}
                 initialParams={{ idUser: route.idUser }}
             />
             <Tab.Screen name="Đã hủy" component={OrderWaitConfirmScreen} initialParams={{ idUser: route.idUser }} />
-            <Tab.Screen name="Hoàn thành" component={OrderWaitConfirmScreen} initialParams={{ idUser: route.idUser }} /> */}
+            <Tab.Screen name="Hoàn thành" component={OrderWaitConfirmScreen} initialParams={{ idUser: route.idUser }} />
         </Tab.Navigator>
     );
 }
