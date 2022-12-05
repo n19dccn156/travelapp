@@ -6,11 +6,7 @@ import { Provider } from "react-redux";
 import { createStore } from "redux";
 import store from "./src/redux/store";
 import modifyModalFood from "./src/redux/action/modifyModal";
-const test={
-  name:'Manh',
-  price: 80,
-  imgUrl: 'http:../'
-}
+
 // const MyTheme = {
 //     ...DefaultTheme,
 //     colors: {
