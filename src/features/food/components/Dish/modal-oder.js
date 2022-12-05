@@ -13,11 +13,14 @@ import styles from "../../styles/styleShop/styles-modal-component";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { ScrollView } from "react-native-gesture-handler";
+import modifyModalFood from "../../../../redux/action/modifyModal";
+import { useSelector } from "react-redux/es/exports";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import store from "../../../../redux/store";
 export default function ModalOrder(props) {
   const visibleModal = props.visible;
-  const info = props.info;
   const [count, setCount] = useState(1);
-
+  const data= store.getState().DataReducer;
   return (
     <Modal
       animationType="slide"
@@ -39,8 +42,7 @@ export default function ModalOrder(props) {
           <View style={styles.info}>
             <Image
               source={{
-                uri:
-                  "https://assets.grab.com/wp-content/uploads/sites/11/2020/03/05000908/kaiwaii.food_69339317_366915090886222_2114771019841597291_n-e1583338157148.jpg"
+                uri: data.imgUrl
               }}
               style={{ height: 110, width: 110 }}
             />
@@ -121,7 +123,7 @@ export default function ModalOrder(props) {
     if (newCount < 20) setCount((newCount += 1));
   }
   function renderInfo() {
-    let price = 50000;
+    let price = data.price;
     let ship = 13000;
     let info = [
       { text: "Giá:", value: `${price} đ` },

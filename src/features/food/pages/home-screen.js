@@ -11,10 +11,8 @@ import ModalOrder from "../components/Dish/modal-oder";
 export function FoodScreen({ navigation }) {
   return (
     <View>
-      <ModalOrder  
-        visible={true}
-      />
-      {/* <StatusBar
+   
+      <StatusBar
         animated={true}
         backgroundColor={colors.primary}
         barStyle={"light-content"}
@@ -32,7 +30,7 @@ export function FoodScreen({ navigation }) {
         <View style={{height:'89%'}}>
           <ListShopFood navigation={navigation} />
         </View>
-      </SafeAreaView> */}
+      </SafeAreaView>
     </View>
   );
 }
