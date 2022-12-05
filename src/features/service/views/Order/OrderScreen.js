@@ -20,6 +20,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { getSheduleByServiceId } from '../../services/getData';
 import ListSheduleForService from './ListSheduleForService';
 import { orderService } from '../../services/Order/postData';
+import moment from 'moment';
 
 function OrderScreen({ navigation, route }) {
     console.log('route', route);
@@ -83,12 +84,12 @@ function OrderScreen({ navigation, route }) {
                 .then(function (res) {
                     console.log('res', res);
                     if (res.status == 'success') {
-                        // setTypeService(res.data);
-                        // // setText(res.data.name);
-                        // getAllCaterogyAgain();
+                        Alert.alert('Thông báo!', res.message, [
+                            { text: 'Đóng', onPress: () => navigation.navigate('HomeScreen') },
+                        ]);
+                    } else {
+                        Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
                     }
-
-                    Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
                 })
                 .catch((err) => {
                     console.log('🚀 ~ file: bookService ~ line 17 ~ error', err);
@@ -112,9 +113,9 @@ function OrderScreen({ navigation, route }) {
                 <View>
                     <Text style={styles.textStyle}>Chọn ngày(*)</Text>
                     <DatePicker
-                        selected={getFormatedDate(new Date(), 'YYYY-MM-DD')}
-                        current={getFormatedDate(new Date(), 'YYYY-MM-DD')}
-                        minimumDate={getFormatedDate(new Date(), 'YYYY-MM-DD')}
+                        selected={moment().format('YYYY-MM-DD')}
+                        current={moment().format('YYYY-MM-DD')}
+                        minimumDate={moment().format('YYYY-MM-DD')}
                         // maximumDate="2020-07-25"
                         mode="calendar"
                         minuteInterval={30}
