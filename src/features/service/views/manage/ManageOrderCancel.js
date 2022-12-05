@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Image,
     SafeAreaView,
@@ -13,13 +13,14 @@ import {
 import { Text } from 'react-native-animatable';
 import COLORS from '../../consts/colors';
 import { getOrderByIdAndState } from '../../services/Order/getData';
+import MyOrderCancelCard from './MyOrderCancelCard';
+import MyOrderConfirmedCard from './MyOrderConfirmedCard';
 import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
 
-function ManageOrderWaitConfirm({ navigation, route }) {
+function ManageOrderCancel({ navigation, route }) {
     const [listOrder, setListOrder] = useState([]);
-
     const getOrderByIdAndStateAgain = (id) => {
-        getOrderByIdAndState(id, 'XACNHAN')
+        getOrderByIdAndState(id, 'DAHUY')
             .then(function (res) {
                 console.log('res', res);
                 setListOrder([...res.data.content]);
@@ -28,8 +29,6 @@ function ManageOrderWaitConfirm({ navigation, route }) {
                 console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
             });
     };
-    console.log('ManageOrderWaitConfirm route', route);
-    // const getOrderByIdAndStateAgain = route.params.getOrderByIdAndStateAgain;
 
     useEffect(() => {
         getOrderByIdAndStateAgain(route.params.id);
@@ -39,9 +38,7 @@ function ManageOrderWaitConfirm({ navigation, route }) {
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <View>
                 <View>
-                    <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>
-                        Danh sách chờ xác nhận
-                    </Text>
+                    <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>Danh sách đã hủy</Text>
                 </View>
 
                 <FlatList
@@ -54,7 +51,7 @@ function ManageOrderWaitConfirm({ navigation, route }) {
                     showsHorizontalScrollIndicator={false}
                     data={listOrder}
                     renderItem={({ item }) => (
-                        <MyOrderWaitConfirmCard
+                        <MyOrderCancelCard
                             route={{ order: item, getOrderByIdAndStateAgain: getOrderByIdAndStateAgain }}
                         />
                     )}
@@ -94,4 +91,4 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
 });
-export default ManageOrderWaitConfirm;
+export default ManageOrderCancel;
