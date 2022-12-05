@@ -12,6 +12,8 @@ import notifyMessage from "../../../utility/notifyMessage";
 import ModalOrder from "../components/Dish/modal-oder";
 import LoadComponent from "../../../utility/load-component";
 import { variables } from "../../../common/constants/const";
+import store from "../../../redux/store";
+import modifyModalFood from "../../../redux/action/modifyModal";
 const host = variables.host;
 export function DishScreen({ navigation, route }) {
   const [dish, setDish] = useState({});
@@ -19,6 +21,12 @@ export function DishScreen({ navigation, route }) {
   const [err, setErr] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [loadVisible, setLoadVisible] = useState(true);
+  const data = {
+    name:dish.name,
+    price: dish.price,
+    imgUrl: `${dish.avatar}`
+  }
+    
   useEffect(() => {
     setDish({ ...route.params });
     setLoadVisible(false);
@@ -74,6 +82,7 @@ export function DishScreen({ navigation, route }) {
           }}
           onPress={() => {
             setModalVisible(true);
+            store.dispatch(modifyModalFood(data));
           }}
         >
           <Text
@@ -96,7 +105,7 @@ export function DishScreen({ navigation, route }) {
         callbackClose={() => {
           setModalVisible(false);
         }}
-        info={dish}
+      
       />
     </View>
   );
