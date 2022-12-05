@@ -87,6 +87,37 @@ function ManageScreen({ navigation }) {
                     <AntDesign name="right" size={20} />
                 </View>
             </TouchableOpacity>
+
+            {/* quan ly lich */}
+            <TouchableOpacity
+                style={{
+                    backgroundColor: COLORS.grey,
+                    margin: 5,
+                    borderRadius: 10,
+                    flexDirection: 'row',
+                    padding: 10,
+                }}
+                activeOpacity={0.8}
+                onPress={() =>
+                    navigation.navigate('OrderManageForCustomer', {
+                        idUser: '7055dcb1-67ce-4c5f-bf51-03863f7e5778',
+                    })
+                }
+            >
+                <View
+                    style={{
+                        color: COLORS.grey,
+                        backgroundColor: COLORS.grey,
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        flex: 1,
+                    }}
+                >
+                    <Text>Lịch sử đơn đặt của khách hàng</Text>
+                    <AntDesign name="right" size={20} />
+                </View>
+            </TouchableOpacity>
+
             {/* Quan ly loai dich vu */}
             <TouchableOpacity
                 style={{
