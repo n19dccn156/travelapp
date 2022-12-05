@@ -17,6 +17,7 @@ import ManageScreen from '../views/manage/ManageScreen';
 import ManageService from '../views/manage/ManageService';
 import ManageOrderForStaff from '../views/manage/ManageOrderForStaff';
 import ListServiceForOrderScreen from '../views/manage/ListServiceForOrderScreen';
+import OrderManageForCustomer from '../views/Order/OrderManageForCustomer';
 
 const Stack = createStackNavigator();
 
@@ -70,6 +71,7 @@ const ManageStackNavigator = () => {
             <Stack.Screen name="ManageService" component={ManageService} />
             <Stack.Screen name="ManageOrderForStaff" component={ManageOrderForStaff} />
             <Stack.Screen name="ListServiceForOrderScreen" component={ListServiceForOrderScreen} />
+            <Stack.Screen name="OrderManageForCustomer" component={OrderManageForCustomer} />
         </Stack.Navigator>
     );
 };
