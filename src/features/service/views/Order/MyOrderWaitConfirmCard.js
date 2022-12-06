@@ -12,6 +12,7 @@ import moment from 'moment';
 
 function MyOrderWaitConfirmCard({ navigation, route }) {
     const order = route.order;
+    const idState = route.idState;
 
     const [schedule, setSchedule] = useState('');
     const [service, setService] = useState('');
@@ -38,7 +39,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
         updateStateOrderById(order.id, idState)
             .then(function (res) {
                 if (res.status == 'success') {
-                    route.getOrderByIdAndStateAgain(order.idService);
+                    route.getOrderByIdUserAndStateAgain(order.idUser);
                 }
                 Alert.alert('Thông báo!', res.message, [
                     {
@@ -161,19 +162,50 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
                     Thành tiền: {order.price * order.number} VND
                 </Text>
             </View>
+            {idState == 'XACNHAN' ? (
+                <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity>
+                        <View style={{ backgroundColor: COLORS.oranbge, padding: 5, borderRadius: 10, margin: 10 }}>
+                            <Text style={{ color: COLORS.white }}>Chi tiết</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => confirmCancel()}>
+                        <View style={{ backgroundColor: COLORS.red, padding: 5, borderRadius: 10, margin: 10 }}>
+                            <Text style={{ color: COLORS.white }}>Hủy</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            ) : (
+                ''
+            )}
 
-            <View style={{ flexDirection: 'row' }}>
-                <TouchableOpacity>
+            {idState == 'THANHCONG' ? (
+                <View style={{ flexDirection: 'row' }}>
                     <View style={{ backgroundColor: COLORS.oranbge, padding: 5, borderRadius: 10, margin: 10 }}>
-                        <Text style={{ color: COLORS.white }}>Chi tiết</Text>
+                        <Text style={{ color: COLORS.white }}>Đã xác nhận</Text>
                     </View>
-                </TouchableOpacity>
-                <TouchableOpacity>
+                </View>
+            ) : (
+                ''
+            )}
+            {idState == 'DAHUY' ? (
+                <View style={{ flexDirection: 'row' }}>
                     <View style={{ backgroundColor: COLORS.red, padding: 5, borderRadius: 10, margin: 10 }}>
-                        <Text style={{ color: COLORS.white }}>Hủy</Text>
+                        <Text style={{ color: COLORS.white }}>Đã hủy</Text>
                     </View>
-                </TouchableOpacity>
-            </View>
+                </View>
+            ) : (
+                ''
+            )}
+            {idState == 'HOANTHANH' ? (
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={{ backgroundColor: COLORS.green, padding: 5, borderRadius: 10, margin: 10 }}>
+                        <Text style={{ color: COLORS.white }}>Hoàn thành</Text>
+                    </View>
+                </View>
+            ) : (
+                ''
+            )}
         </View>
     );
 }
