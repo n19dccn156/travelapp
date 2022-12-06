@@ -164,7 +164,11 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             </View>
             {idState == 'XACNHAN' ? (
                 <View style={{ flexDirection: 'row' }}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={() =>
+                            navigation.navigate('OrderScreen', { service: service, state: 'update', order: order })
+                        }
+                    >
                         <View style={{ backgroundColor: COLORS.oranbge, padding: 5, borderRadius: 10, margin: 10 }}>
                             <Text style={{ color: COLORS.white }}>Chi tiết</Text>
                         </View>

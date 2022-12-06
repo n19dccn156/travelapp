@@ -12,8 +12,8 @@ const DetailsScreen = ({ navigation, route }) => {
             <StatusBar translucent backgroundColor="rgba(0,0,0,0)" />
             <ImageBackground style={{ flex: 0.7 }} source={{ uri: `${service.avatar}` }}>
                 <View style={style.header}>
-                    <Icon name="arrow-back-ios" size={28} color={COLORS.primary} onPress={navigation.goBack} />
-                    <Icon name="more-vert" size={28} color={COLORS.primary} />
+                    <Icon name="arrow-back-ios" size={28} color={COLORS.white} onPress={navigation.goBack} />
+                    <Icon name="more-vert" size={28} color={COLORS.white} />
                 </View>
                 <View style={style.imageDetailes}>
                     <Text
@@ -22,14 +22,14 @@ const DetailsScreen = ({ navigation, route }) => {
                             fontSize: 30,
                             fontWeight: 'bold',
                             marginBottom: 20,
-                            color: COLORS.primary,
+                            color: COLORS.white,
                         }}
                     >
                         {service.name}
                     </Text>
                     <View style={{ flexDirection: 'row' }}>
                         <Icon name="star" size={30} color={COLORS.oranbge} />
-                        <Text style={{ color: COLORS.primary, fontWeight: 'bold', fontSize: 20 }}>
+                        <Text style={{ color: COLORS.white, fontWeight: 'bold', fontSize: 20 }}>
                             {service.star.toFixed(1)}
                         </Text>
                     </View>
@@ -40,8 +40,8 @@ const DetailsScreen = ({ navigation, route }) => {
                     <Icon name="favorite" color={COLORS.red} size={30} />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                    <AntDesign name="tag" size={20} color={COLORS.primary} />
-                    <Text style={{ marginLeft: 5, fontSize: 20, fontWeight: 'bold', color: COLORS.primary }}>
+                    <AntDesign name="tag" size={20} color={COLORS.white} />
+                    <Text style={{ marginLeft: 5, fontSize: 20, fontWeight: 'bold', color: COLORS.white }}>
                         {service.idTypeService}
                     </Text>
                 </View>
@@ -71,7 +71,9 @@ const DetailsScreen = ({ navigation, route }) => {
                     </Text>
                 </View>
 
-                <TouchableOpacity onPress={() => navigation.navigate('OrderScreen', service)}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('OrderScreen', { service: service, state: 'order', order: '' })}
+                >
                     <View style={style.bookNowBtn}>
                         <Text style={{ color: COLORS.primary, fontSize: 16, fontWeight: 'bold' }}>Đặt ngay</Text>
                     </View>
