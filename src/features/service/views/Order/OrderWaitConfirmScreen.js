@@ -18,9 +18,9 @@ import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
 
 function OrderWaitConfirmScreen({ navigation, route }) {
     const [listOrder, setListOrder] = useState([]);
-
+    const idState = route.params.idState;
     const getOrderByIdUserAndStateAgain = (id) => {
-        getOrderByIdUserAndState(id, 'XACNHAN')
+        getOrderByIdUserAndState(id, idState)
             .then(function (res) {
                 setListOrder([...res.data.content]);
             })
@@ -39,7 +39,10 @@ function OrderWaitConfirmScreen({ navigation, route }) {
                 <ScrollView>
                     <View style={{ borderBottomWidth: 10 }}>
                         <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>
-                            Danh sách chờ xác nhận
+                            {idState == 'XACNHAN' ? 'Danh sách chờ xác nhận' : ''}
+                            {idState == 'THANHCONG' ? 'Danh sách đã xác nhận' : ''}
+                            {idState == 'DAHUY' ? 'Danh sách đã hủy' : ''}
+                            {idState == 'HOANTHANH' ? 'Danh sách đã hoàn thành' : ''}
                         </Text>
                     </View>
                     <FlatList
@@ -53,7 +56,11 @@ function OrderWaitConfirmScreen({ navigation, route }) {
                         data={listOrder}
                         renderItem={({ item }) => (
                             <MyOrderWaitConfirmCard
-                                route={{ order: item, getOrderByIdUserAndStateAgain: getOrderByIdUserAndStateAgain }}
+                                route={{
+                                    order: item,
+                                    getOrderByIdUserAndStateAgain: getOrderByIdUserAndStateAgain,
+                                    idState: idState,
+                                }}
                             />
                         )}
                     />
