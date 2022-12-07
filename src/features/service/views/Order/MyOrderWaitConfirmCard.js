@@ -6,7 +6,7 @@ import style from '../../style/Home/style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import { getSheduleBySheduleId } from '../../services/Shedule/getData';
-import { updateStateOrderById } from '../../services/Order/updateData';
+import { updateOrderById, updateStateOrderById } from '../../services/Order/updateData';
 import { getServiceById } from '../../services/service/getData';
 import moment from 'moment';
 import { getSheduleByServiceId } from '../../services/getData';
@@ -20,21 +20,19 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
     const idState = route.idState;
 
     const [modalVisible, setModalVisible] = useState(false);
-    const [schedule, setSchedule] = useState('');
+    // const [schedule, setSchedule] = useState('');
     const [service, setService] = useState('');
     useEffect(() => {
-        getSheduleBySheduleId(order.idSchedule)
-            .then(function (res) {
-                setSchedule(res.data);
-            })
-            .catch((err) => {
-                console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
-            });
+        // getSheduleBySheduleId(order.idSchedule)
+        //     .then(function (res) {
+        //         setSchedule(res.data);
+        //     })
+        //     .catch((err) => {
+        //         console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
+        //     });
         getServiceById(order.idService)
             .then(function (res) {
-                console.log('res', res);
                 setService(res.data);
-                console.log('service', service);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
@@ -70,7 +68,6 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
         getSheduleByServiceId(service.id)
             .then(function (res) {
                 setListShedule(res.data);
-                console.log('res', res);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
@@ -125,15 +122,28 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
 
     const updateOrder = () => {
         if (checkData())
-            updateStateOrderById(order.id, selectedDate, number, phone, service)
+            updateOrderById(order, selectedShedule, selectedDate, number, service.price, phone)
                 .then(function (res) {
-                    console.log('res', res);
+                    console.log('updateOrder res', res);
                     if (res.status == 'success') {
                         Alert.alert('Thông báo!', res.message, [
-                            { text: 'Đóng', onPress: () => navigation.navigate('HomeScreen') },
+                            {
+                                text: 'Đóng',
+                                onPress: () => {
+                                    route.getOrderByIdUserAndStateAgain(order.idUser);
+                                    setModalVisible(false);
+                                },
+                            },
                         ]);
                     } else {
-                        Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
+                        Alert.alert('Thông báo!', res.message, [
+                            {
+                                text: 'Đóng',
+                                onPress: () => {
+                                    setModalVisible(false);
+                                },
+                            },
+                        ]);
                     }
                 })
                 .catch((err) => {
@@ -315,7 +325,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
                                 <DatePicker
                                     selected={order.dateStart}
                                     // current={moment(order.dateStart).format('YYYY-MM-DD')}
-                                    // minimumDate={moment().format('YYYY-MM-DD')}
+                                    minimumDate={moment().format('YYYY-MM-DD')}
                                     // maximumDate="2020-07-25"
                                     mode="calendar"
                                     minuteInterval={30}
@@ -348,7 +358,12 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
                                     onChangeText={(newText) => setPhone(newText)}
                                 />
                                 <View style={{ flexDirection: 'row' }}>
-                                    <TouchableOpacity style={styles.btnDatStyle} onPress={() => {}}>
+                                    <TouchableOpacity
+                                        style={styles.btnDatStyle}
+                                        onPress={() => {
+                                            updateOrder();
+                                        }}
+                                    >
                                         <Text style={styles.txtDatStyle}>Cập nhật</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity
