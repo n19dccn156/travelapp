@@ -10,13 +10,13 @@ const style = StyleSheet.create({
         width: '100%',
         height: '10%',
         paddingHorizontal:10,
-
+         elevation: 15,
     },
     searchInputContainer: {
         height: 40,
         width: '95%',
         backgroundColor: COLORS.light,
-        marginTop: 5,
+        marginTop: 15,
         marginLeft: 10,
         borderTopLeftRadius: 30,
         borderBottomLeftRadius: 30,
@@ -29,42 +29,98 @@ const style = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 20,
-        marginTop: 10
+        marginTop: 10,
+        marginBottom: 10,
+
     },
     categoryListText: {
         flexDirection: 'column',
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: 'bold'
     },
-    card: {
-        height: 280,
-        width: '90%',
+    CardHotel: {
+        height: 200,
+        width: '97%',
         elevation: 15,
-        marginRight: 20,
         borderRadius: 15,
         backgroundColor: COLORS.white,
-        marginHorizontal: 10,
-        marginVertical: 10,
+        marginHorizontal: 5,
+        marginVertical: 1,
+        flexDirection: 'row',
+        padding: 10,
+    },
+    Image: {
+        height: '100%',
+        width: '90%',
+        borderRadius: 15,
+        backgroundColor: COLORS.white,
     },
     cardImage: {
-    height: 180,
-    width: '100%',
-    borderTopLeftRadius: 15,
-    borderTopRightRadius: 15,
+        height: '90%',
+        width: '35%',
+        marginVertical: 8,
+    },
+    cardText: {
+        flex: 1,
+        height: '100%',
+        // weight: '60%',
+        // backgroundColor: COLORS.red,
+        flexDirection: 'column'
     },
     saleTag: {
-        height: 40,
-        width: 60,
-        backgroundColor: COLORS.primary,
+        height: '15%',
+        width: '30%',
+        backgroundColor: COLORS.lightblue,
+        opacity: 0.9,
         position: 'absolute',
         zIndex: 1,
-        top: 10,
-        right: 10,
-        borderTopRightRadius: 15,
-        borderBottomLeftRadius: 15,
+        top: 5,
+        left: 5,
+        borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    textDetail: {
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginLeft: 5,
+    },
+    heartButtonStyle: {
+        color: COLORS.red,
+        position: 'absolute',
+        bottom: 5,
+        right: 15,
+
+    },
+    ratingTag: {
+        height: 25,
+        width: 60,
+        backgroundColor: COLORS.orange,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderTopLeftRadius: 5,
+        borderBottomLeftRadius: 5,
+        borderBottomRightRadius: 5,
+        marginTop: 5,
+    },
+    starRating: {
+        paddingHorizontal: 5,
+        paddingVertical: 10,
+    },
+    h1: {
+        color: 'black',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    rowBetween: {
+        flexDirection:'row',
+        justifyContent: 'space-between'
+    },
+    rowCenter: {
+        flexDirection: 'row',
+        alignItems: 'space-between'
     }
-})
+}
+);
 
 export default style;
