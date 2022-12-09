@@ -9,23 +9,25 @@ import {
     Modal,
     Alert,
     FlatList,
+    ActivityIndicator,
 } from 'react-native';
 import { Text } from 'react-native-animatable';
 import COLORS from '../../consts/colors';
 import { getOrderByIdAndState } from '../../services/Order/getData';
 import MyOrderCancelCard from './MyOrderCancelCard';
-import MyOrderConfirmedCard from './MyOrderConfirmedCard';
-import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
 
 function ManageOrderCancel({ navigation, route }) {
+    const [showed, setShowed] = useState(true);
     const [listOrder, setListOrder] = useState([]);
     const getOrderByIdAndStateAgain = (id) => {
         getOrderByIdAndState(id, 'DAHUY')
             .then(function (res) {
-                console.log('res', res);
                 setListOrder([...res.data.content]);
+                setShowed(false);
             })
             .catch((err) => {
+                setListOrder([]);
+                setShowed(false);
                 console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
             });
     };
@@ -40,22 +42,26 @@ function ManageOrderCancel({ navigation, route }) {
                 <View>
                     <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>Danh sách đã hủy</Text>
                 </View>
-
-                <FlatList
-                    contentContainerStyle={{
-                        // flex: 1,
-                        // margin: 10,
-                        flexDirection: 'column',
-                    }}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    data={listOrder}
-                    renderItem={({ item }) => (
-                        <MyOrderCancelCard
-                            route={{ order: item, getOrderByIdAndStateAgain: getOrderByIdAndStateAgain }}
+                <ActivityIndicator size="large" color={COLORS.primary} animating={showed} />
+                {!showed ? (
+                    <View>
+                        <FlatList
+                            contentContainerStyle={{
+                                flexDirection: 'column',
+                            }}
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={listOrder}
+                            renderItem={({ item }) => (
+                                <MyOrderCancelCard
+                                    route={{ order: item, getOrderByIdAndStateAgain: getOrderByIdAndStateAgain }}
+                                />
+                            )}
                         />
-                    )}
-                />
+                    </View>
+                ) : (
+                    ''
+                )}
             </View>
         </SafeAreaView>
     );

@@ -44,6 +44,8 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             .then(function (res) {
                 if (res.status == 'success') {
                     route.getOrderByIdUserAndStateAgain(order.idUser);
+                    route.setShowedCancel(true);
+                    console.log('showedCancel', route.showedCancel);
                 }
                 Alert.alert('Thông báo!', res.message, [
                     {

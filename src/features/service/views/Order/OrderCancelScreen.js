@@ -17,24 +17,24 @@ import COLORS from '../../consts/colors';
 import { getOrderByIdAndState, getOrderByIdUserAndState } from '../../services/Order/getData';
 import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
 
-function OrderWaitConfirmScreen({ navigation, route }) {
+function OrderCancelScreen({ navigation, route }) {
     const [listOrder, setListOrder] = useState([]);
     const idState = route.params.idState;
-    // const [showed, setShowed] = useState(route.params.showed);
-    const showed = route.params.showed;
-    const setShowed = route.params.setShowed;
 
-    const [showedCancel, setShowedCancel] = useState(route.params.showedCancel);
-    console.log('showedCancel OrderWaitConfirmScreen', showedCancel);
+    const showedCancel = route.params.showedCancel;
+    const setShowedCancel = route.params.setShowedCancel;
+    console.log('showedCancel OrderCancelScreen', showedCancel);
     const getOrderByIdUserAndStateAgain = (id) => {
         getOrderByIdUserAndState(id, idState)
             .then(function (res) {
                 setListOrder([...res.data.content]);
-                setShowed(false);
+                setShowedCancel(false);
+                console.log('tai du lieu xong roi showed=', showedCancel);
             })
             .catch((err) => {
                 setListOrder([]);
-                setShowed(false);
+
+                setShowedCancel(false);
 
                 console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
             });
@@ -42,7 +42,7 @@ function OrderWaitConfirmScreen({ navigation, route }) {
 
     useEffect(() => {
         getOrderByIdUserAndStateAgain(route.params.idUser);
-    }, [showed]);
+    }, [showedCancel]);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -56,8 +56,8 @@ function OrderWaitConfirmScreen({ navigation, route }) {
                             {idState == 'HOANTHANH' ? 'Danh sách đã hoàn thành' : ''}
                         </Text>
                     </View>
-                    <ActivityIndicator size="large" color={COLORS.primary} animating={showed} />
-                    {!showed || (!showedCancel && idState == 'DAHUY') ? (
+                    <ActivityIndicator size="large" color={COLORS.primary} animating={showedCancel} />
+                    {!showedCancel ? (
                         <View>
                             <FlatList
                                 contentContainerStyle={{
@@ -72,8 +72,7 @@ function OrderWaitConfirmScreen({ navigation, route }) {
                                             order: item,
                                             getOrderByIdUserAndStateAgain: getOrderByIdUserAndStateAgain,
                                             idState: idState,
-                                            showedCancel: route.params.showedCancel,
-                                            setShowedCancel: route.params.setShowedCancel,
+                                            setShowedCancel: setShowedCancel,
                                         }}
                                     />
                                 )}
@@ -118,4 +117,4 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
 });
-export default OrderWaitConfirmScreen;
+export default OrderCancelScreen;
