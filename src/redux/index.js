@@ -1,7 +1,9 @@
-import { combineReducers} from "redux";
+import { combineReducers } from "redux";
 import modifyModalFood from "./action/modifyModal";
-import DataReducer from "./reducers/reducerFood";
+import { ModalReducer, OrderReducer, OrderDetailReducer} from "./reducers/reducerFood";
 const allReducers = combineReducers({
-    DataReducer
-})
+  modal: ModalReducer,
+  order: OrderReducer,
+  detailOrder: OrderDetailReducer,
+});
 export default allReducers;

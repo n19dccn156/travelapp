@@ -4,7 +4,7 @@ import { StyleSheet } from "react-native";
 const style = StyleSheet.create({
     container: {
             height: 50,
-            width: '97%',
+            width: '80%',
             borderRadius:14,
             flexDirection: 'row',
             alignItems: 'center',

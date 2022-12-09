@@ -45,5 +45,14 @@ const getInfoShop = async (id) => {
     console.log('🚀 ~ file: getShopFood ~ line 16 ~ error', error);
   }
 };
-export {getListShop, getAllDishes,getInfoDish,getInfoShop,getDishByIdShop};
+async function createRequest(url,type='get',body){
+  try {
+    const response = await fetch(`${host}/api/v1/foods/47477528-628c-11ed-9d10-3855030e3f14`);
+    return response.json();
+  } catch (error) {
+    return{}
+    console.log('🚀 ~ file: getShopFood ~ line 16 ~ error', error);
+  }
+}
+export {getListShop, getAllDishes,getInfoDish,getInfoShop,getDishByIdShop,createRequest};
 

@@ -1,7 +1,7 @@
 import React from "react";
 import SearchComponent from "./search";
 import { View, TouchableOpacity, Image, Text } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import Fontisto from "react-native-vector-icons/Fontisto";
 import { styleIcon, styleText } from "../../styles/styleHome/styles-header";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import StyleOption from "../../styles/styleShop/styles-option";
@@ -22,7 +22,19 @@ export function HeaderComponnent({ navigation, nameScreen, minHeight }) {
     <View
       style={{ flex: 1, minHeight: minHeight, paddingBottom: 10, margin: 8 }}
     >
-      <SearchComponent />
+      <View style={{flexDirection:'row', alignItems:'center'}}>
+        <SearchComponent />
+        <TouchableOpacity style={{left:-40}} onPress={()=>{{
+           navigation.navigate("OrderScreen");
+        }}}>
+        <Fontisto
+              name="shopping-basket"
+              style={{ color: "#df3030", top: 1, marginRight: 4 }}
+              size={30}
+            />
+        </TouchableOpacity>
+      </View>
+
       {/* danh sách lựa chọn */}
       <View>
         <ScrollView horizontal={true}>
