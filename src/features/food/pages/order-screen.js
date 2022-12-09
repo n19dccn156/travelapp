@@ -4,16 +4,18 @@ import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import store from "../../../redux/store";
 import { styleView, styleButton, styleText } from "../styles/styleOrder";
 import { ItemOrder } from "../components/Order/item-order";
-let order = store.getState().order;
-let listOrder = store.getState().detailOrder;
-let ship = 13000;
-let voucher = 0;
-let service = 2000;
-let price = 0;
-listOrder.forEach(element => {
-  price += element.price;
-});
+import SendOrder from "../services/handle_order";
+
 export function OrderScreen({ navigation }) {
+  let order = store.getState().order;
+  let listOrder = store.getState().detailOrder;
+  let ship = 13000;
+  let voucher = 0;
+  let service = 2000;
+  let price = 0;
+  listOrder.forEach(element => {
+    price += element.price * element.number;
+  });
   return (
     <View style={styleView.container}>
       <ScrollView style={{ height: "100%", paddingLeft: 15 }}>
@@ -57,31 +59,31 @@ export function OrderScreen({ navigation }) {
         <View
           style={{ alignItems: "center", width: "100%", marginVertical: 10 }}
         >
-          <TouchableOpacity style={styleButton.order}>
+          <TouchableOpacity style={styleButton.order} onPress={SendOrder}>
             <Text style={styleText.button}>Đặt Hàng</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
   );
-}
-function createItem() {
-  let listItem = [
-    { title: "Giá", value: price },
-    { title: "Phí giao hàng", value: ship },
-    { title: "Giảm giá", value: voucher },
-    { title: "Phí dịch vụ", value: service }
-  ];
-  return listItem.map((element, index) => {
-    return (
-      <View style={styleView.itemPayment} key={index}>
-        <Text style={styleText.content}>
-          {element.title}
-        </Text>
-        <Text style={styleText.content}>
-          {element.value} đ
-        </Text>
-      </View>
-    );
-  });
+  function createItem() {
+    let listItem = [
+      { title: "Giá", value: price },
+      { title: "Phí giao hàng", value: ship },
+      { title: "Giảm giá", value: voucher },
+      { title: "Phí dịch vụ", value: service }
+    ];
+    return listItem.map((element, index) => {
+      return (
+        <View style={styleView.itemPayment} key={index}>
+          <Text style={styleText.content}>
+            {element.title}
+          </Text>
+          <Text style={styleText.content}>
+            {element.value} đ
+          </Text>
+        </View>
+      );
+    });
+  }
 }
