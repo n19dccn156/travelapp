@@ -20,6 +20,7 @@ function MyButton({ navigation, route }) {
             // onPress={() => navigation.navigate('ServiceScreen')}
             onPress={() => {
                 // handleClick();
+                route.setShowedListService(true);
                 route.getServiceOfType(route.categories.id);
                 route.setServiceType(route.categories.id);
             }}

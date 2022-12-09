@@ -158,7 +158,12 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
 
                 style: 'cancel',
             },
-            { text: ' Chắc', onPress: () => upDateStateOrder('DAHUY') },
+            {
+                text: ' Chắc',
+                onPress: () => {
+                    upDateStateOrder('DAHUY');
+                },
+            },
         ]);
     };
 

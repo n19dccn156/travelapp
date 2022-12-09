@@ -22,17 +22,26 @@ function TopTabOrderForCustomer({ navigation, route }) {
             <Tab.Screen
                 name="Đã xác nhận"
                 component={OrderWaitConfirmScreen}
-                initialParams={{ idUser: route.idUser, idState: 'THANHCONG' }}
+                initialParams={{
+                    idUser: route.idUser,
+                    idState: 'THANHCONG',
+                }}
             />
             <Tab.Screen
                 name="Đã hủy"
                 component={OrderWaitConfirmScreen}
-                initialParams={{ idUser: route.idUser, idState: 'DAHUY' }}
+                initialParams={{
+                    idUser: route.idUser,
+                    idState: 'DAHUY',
+                }}
             />
             <Tab.Screen
                 name="Hoàn thành"
                 component={OrderWaitConfirmScreen}
-                initialParams={{ idUser: route.idUser, idState: 'HOANTHANH' }}
+                initialParams={{
+                    idUser: route.idUser,
+                    idState: 'HOANTHANH',
+                }}
             />
         </Tab.Navigator>
     );
