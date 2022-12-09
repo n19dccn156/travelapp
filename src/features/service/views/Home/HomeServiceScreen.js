@@ -19,8 +19,8 @@ import ListCategories from './ListCategories';
 import style from '../../style/Home/style';
 import { getAllCaterogy, getServiceOfCaterogy } from '../../services/getData';
 import ListButtonCategory from './ListButtonCategory';
-import ListServiceForType from './ListServiceForType';
 import MyCard from './MyCard';
+import Swiper from 'react-native-swiper';
 
 const HomeServiceScreen = ({ navigation, route }) => {
     const [serviceType, setServiceType] = useState('');
@@ -102,7 +102,33 @@ const HomeServiceScreen = ({ navigation, route }) => {
                         </View>
                     </View>
                 </View>
-                <View style={{ paddingTop: 30, flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
+
+                <Swiper autoplay style={{ backgroundColor: COLORS.dark, height: 100, flex: 1, marginTop: 80 }}>
+                    <Image
+                        index={1}
+                        style={{ height: 100 }}
+                        source={{
+                            uri: `https://boxdesign.vn/wp-content/uploads/2022/06/T%E1%BB%95ng-Th%E1%BB%83-2.jpg`,
+                        }}
+                    />
+                    <Image
+                        index={2}
+                        style={{ height: 100 }}
+                        source={{
+                            uri: `https://viettourist.com//resources/images/KHACH-DOAN/trong%20nuoc/team-buildingKD/KD-B-15.jpg`,
+                        }}
+                    />
+
+                    <Image
+                        index={3}
+                        style={{ height: 100 }}
+                        source={{
+                            uri: `https://vietrektravel.com/ckeditor/plugins/fileman/Uploads/cheo-sup/cheo-sup-da-nang-5.jpg`,
+                        }}
+                    />
+                </Swiper>
+
+                <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>
                     <Text
                         style={{
                             textAlign: 'left',

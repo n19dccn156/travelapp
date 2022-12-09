@@ -20,16 +20,9 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
     const idState = route.idState;
 
     const [modalVisible, setModalVisible] = useState(false);
-    // const [schedule, setSchedule] = useState('');
+
     const [service, setService] = useState('');
     useEffect(() => {
-        // getSheduleBySheduleId(order.idSchedule)
-        //     .then(function (res) {
-        //         setSchedule(res.data);
-        //     })
-        //     .catch((err) => {
-        //         console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
-        //     });
         getServiceById(order.idService)
             .then(function (res) {
                 setService(res.data);
@@ -76,17 +69,6 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             });
     };
 
-    // useEffect(() => {
-    //     getSheduleByServiceId(service.id)
-    //         .then(function (res) {
-    //             setListShedule(res.data);
-    //             console.log('res', res);
-    //         })
-    //         .catch((err) => {
-    //             console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
-    //         });
-    // }, []);
-
     const checkData = () => {
         if (selectedDate.trim() == '') {
             Alert.alert('Thông báo!', 'Không được để trống ngày!', [
@@ -126,7 +108,6 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
         if (checkData())
             updateOrderById(order, selectedShedule, selectedDate, number, service.price, phone)
                 .then(function (res) {
-                    console.log('updateOrder res', res);
                     if (res.status == 'success') {
                         Alert.alert('Thông báo!', res.message, [
                             {
@@ -169,19 +150,12 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
         ]);
     };
 
-    const confirmVerify = () => {
-        Alert.alert('Cảnh báo!', 'Bạn có chắc chắn muốn xác nhận đơn đặt này không!', [
-            {
-                text: 'Không',
-
-                style: 'cancel',
-            },
-            { text: ' Chắc', onPress: () => upDateStateOrder('THANHCONG') },
-        ]);
-    };
+    function currencyFormat(num) {
+        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + 'vnđ';
+    }
 
     return (
-        <View style={{ borderBottomWidth: 10 }}>
+        <View style={{ borderBottomWidth: 1 }}>
             <View style={{ flexDirection: 'row', margin: 5 }}>
                 <Text style={{ fontWeight: 'bold', color: COLORS.dark }}>
                     Ngày đặt: {moment(order.dateNow).format('YYYY-MM-DD')}{' '}
@@ -255,7 +229,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             <View style={{ flexDirection: 'row', margin: 5 }}>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ color: COLORS.dark }}>Giá: </Text>
-                    <Text>{order.price} VND</Text>
+                    <Text>{currencyFormat(order.price)}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginLeft: 10 }}>
                     <Text style={{ color: COLORS.dark }}>Số lượng: </Text>
@@ -264,7 +238,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             </View>
             <View style={{ margin: 5 }}>
                 <Text style={{ fontWeight: 'bold', color: COLORS.dark }}>
-                    Thành tiền: {order.price * order.number} VND
+                    Thành tiền: {currencyFormat(order.price * order.number)}
                 </Text>
             </View>
             {idState == 'XACNHAN' ? (

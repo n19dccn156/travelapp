@@ -12,6 +12,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import { Text } from 'react-native-animatable';
+import { BackgroundImage } from 'react-native-elements/dist/config';
 import { ScrollView } from 'react-native-gesture-handler';
 import COLORS from '../../consts/colors';
 import { getOrderByIdAndState, getOrderByIdUserAndState } from '../../services/Order/getData';
@@ -20,12 +21,8 @@ import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
 function OrderWaitConfirmScreen({ navigation, route }) {
     const [listOrder, setListOrder] = useState([]);
     const idState = route.params.idState;
-    // const [showed, setShowed] = useState(route.params.showed);
-    const showed = route.params.showed;
-    const setShowed = route.params.setShowed;
+    const [showed, setShowed] = useState(true);
 
-    const [showedCancel, setShowedCancel] = useState(route.params.showedCancel);
-    console.log('showedCancel OrderWaitConfirmScreen', showedCancel);
     const getOrderByIdUserAndStateAgain = (id) => {
         getOrderByIdUserAndState(id, idState)
             .then(function (res) {
@@ -46,44 +43,48 @@ function OrderWaitConfirmScreen({ navigation, route }) {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-            <View>
-                <ScrollView>
-                    <View style={{ borderBottomWidth: 10 }}>
-                        <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>
-                            {idState == 'XACNHAN' ? 'Danh sách chờ xác nhận' : ''}
-                            {idState == 'THANHCONG' ? 'Danh sách đã xác nhận' : ''}
-                            {idState == 'DAHUY' ? 'Danh sách đã hủy' : ''}
-                            {idState == 'HOANTHANH' ? 'Danh sách đã hoàn thành' : ''}
-                        </Text>
+            <ScrollView>
+                <View>
+                    <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>
+                        {idState == 'XACNHAN' ? 'Danh sách chờ xác nhận' : ''}
+                        {idState == 'THANHCONG' ? 'Danh sách đã xác nhận' : ''}
+                        {idState == 'DAHUY' ? 'Danh sách đã hủy' : ''}
+                        {idState == 'HOANTHANH' ? 'Danh sách đã hoàn thành' : ''}
+                    </Text>
+                </View>
+                <View>
+                    <BackgroundImage
+                        source={{
+                            uri: `https://media.glamour.com/photos/6178677a1d7a08b9c1cc4c62/16:9/w_1280,c_limit/Holiday%20Sites%20with%20Fastest%20Shipping%20Times.jpg`,
+                        }}
+                        style={{ height: 100 }}
+                    ></BackgroundImage>
+                </View>
+                <ActivityIndicator size="large" color={COLORS.primary} animating={showed} />
+                {!showed ? (
+                    <View>
+                        <FlatList
+                            contentContainerStyle={{
+                                flexDirection: 'column',
+                            }}
+                            horizontal
+                            showsHorizontalScrollIndicator={true}
+                            data={listOrder}
+                            renderItem={({ item }) => (
+                                <MyOrderWaitConfirmCard
+                                    route={{
+                                        order: item,
+                                        getOrderByIdUserAndStateAgain: getOrderByIdUserAndStateAgain,
+                                        idState: idState,
+                                    }}
+                                />
+                            )}
+                        />
                     </View>
-                    <ActivityIndicator size="large" color={COLORS.primary} animating={showed} />
-                    {!showed || (!showedCancel && idState == 'DAHUY') ? (
-                        <View>
-                            <FlatList
-                                contentContainerStyle={{
-                                    flexDirection: 'column',
-                                }}
-                                horizontal
-                                showsHorizontalScrollIndicator={true}
-                                data={listOrder}
-                                renderItem={({ item }) => (
-                                    <MyOrderWaitConfirmCard
-                                        route={{
-                                            order: item,
-                                            getOrderByIdUserAndStateAgain: getOrderByIdUserAndStateAgain,
-                                            idState: idState,
-                                            showedCancel: route.params.showedCancel,
-                                            setShowedCancel: route.params.setShowedCancel,
-                                        }}
-                                    />
-                                )}
-                            />
-                        </View>
-                    ) : (
-                        ''
-                    )}
-                </ScrollView>
-            </View>
+                ) : (
+                    ''
+                )}
+            </ScrollView>
         </SafeAreaView>
     );
 }

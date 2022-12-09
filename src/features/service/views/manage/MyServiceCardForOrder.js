@@ -33,7 +33,7 @@ function MyServiceCardForOrder({ navigation, route }) {
                     }}
                 >
                     <View style={{ flexDirection: 'row' }}>
-                        <Icon name="place" size={20} color={COLORS.white} />
+                        <AntDesign name="tag" size={20} color={COLORS.white} />
                         <Text style={{ marginLeft: 5, color: COLORS.white }}>{service.idTypeService}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', marginLeft: 50 }}>
