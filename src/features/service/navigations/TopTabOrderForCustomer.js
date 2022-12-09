@@ -5,10 +5,13 @@ import ManageOrderConfirmed from '../views/manage/ManageOrderConfirmed';
 import ManageOrderCancel from '../views/manage/ManageOrderCancel';
 import { getOrderByIdAndState } from '../services/Order/getData';
 import OrderWaitConfirmScreen from '../views/Order/OrderWaitConfirmScreen';
+import OrderCancelScreen from '../views/Order/OrderCancelScreen';
 
 const Tab = createMaterialTopTabNavigator();
 
 function TopTabOrderForCustomer({ navigation, route }) {
+    let [showed, setShowed] = useState(true);
+    const [showedCancel, setShowedCancel] = useState(true);
     return (
         <Tab.Navigator>
             <Tab.Screen
@@ -17,6 +20,10 @@ function TopTabOrderForCustomer({ navigation, route }) {
                 initialParams={{
                     idUser: route.idUser,
                     idState: 'XACNHAN',
+                    showed: showed,
+                    setShowed: setShowed,
+                    showedCancel: showedCancel,
+                    setShowedCancel: setShowedCancel,
                 }}
             />
             <Tab.Screen
@@ -29,10 +36,14 @@ function TopTabOrderForCustomer({ navigation, route }) {
             />
             <Tab.Screen
                 name="Đã hủy"
-                component={OrderWaitConfirmScreen}
+                component={OrderCancelScreen}
                 initialParams={{
                     idUser: route.idUser,
                     idState: 'DAHUY',
+                    showed: showed,
+                    setShowed: setShowed,
+                    showedCancel: showedCancel,
+                    setShowedCancel: setShowedCancel,
                 }}
             />
             <Tab.Screen

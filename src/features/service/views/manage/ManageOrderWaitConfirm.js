@@ -9,22 +9,27 @@ import {
     Modal,
     Alert,
     FlatList,
+    ActivityIndicator,
 } from 'react-native';
 import { Text } from 'react-native-animatable';
+import { ScrollView } from 'react-native-gesture-handler';
 import COLORS from '../../consts/colors';
 import { getOrderByIdAndState } from '../../services/Order/getData';
 import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
 
 function ManageOrderWaitConfirm({ navigation, route }) {
     const [listOrder, setListOrder] = useState([]);
+    const [showed, setShowed] = useState(true);
 
     const getOrderByIdAndStateAgain = (id) => {
         getOrderByIdAndState(id, 'XACNHAN')
             .then(function (res) {
-                console.log('res', res);
                 setListOrder([...res.data.content]);
+                setShowed(false);
             })
             .catch((err) => {
+                setListOrder([]);
+                setShowed(false);
                 console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
             });
     };
@@ -36,31 +41,37 @@ function ManageOrderWaitConfirm({ navigation, route }) {
     }, []);
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-            <View>
+        <ScrollView>
+            <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
                 <View>
-                    <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>
-                        Danh sách chờ xác nhận
-                    </Text>
-                </View>
-
-                <FlatList
-                    contentContainerStyle={{
-                        // flex: 1,
-                        // margin: 10,
-                        flexDirection: 'column',
-                    }}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    data={listOrder}
-                    renderItem={({ item }) => (
-                        <MyOrderWaitConfirmCard
-                            route={{ order: item, getOrderByIdAndStateAgain: getOrderByIdAndStateAgain }}
-                        />
+                    <View>
+                        <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>
+                            Danh sách chờ xác nhận
+                        </Text>
+                    </View>
+                    <ActivityIndicator size="large" color={COLORS.primary} animating={showed} />
+                    {!showed ? (
+                        <View>
+                            <FlatList
+                                contentContainerStyle={{
+                                    flexDirection: 'column',
+                                }}
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                data={listOrder}
+                                renderItem={({ item }) => (
+                                    <MyOrderWaitConfirmCard
+                                        route={{ order: item, getOrderByIdAndStateAgain: getOrderByIdAndStateAgain }}
+                                    />
+                                )}
+                            />
+                        </View>
+                    ) : (
+                        ''
                     )}
-                />
-            </View>
-        </SafeAreaView>
+                </View>
+            </SafeAreaView>
+        </ScrollView>
     );
 }
 const styles = StyleSheet.create({
