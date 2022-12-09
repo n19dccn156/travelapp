@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StatusBar, View } from 'react-native';
+import { SafeAreaView, ScrollView, StatusBar, View, ActivityIndicator } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
@@ -10,6 +10,8 @@ import ListServiceForType from './ListServiceForType';
 
 function ListMostService({ navigation, route }) {
     const [serviceType, setServiceType] = useState('');
+    const [showedButtonCategory, setShowedButtonCategory] = useState(true);
+    const [showedListService, setShowedListService] = useState(true);
 
     const listCategory = route.params;
     //load list service for type
@@ -19,9 +21,13 @@ function ListMostService({ navigation, route }) {
         getServiceOfCaterogy(type)
             .then(function (res) {
                 setlistServiceForType([...res.data.content]);
+                setShowedButtonCategory(false);
+                setShowedListService(false);
             })
             .catch((err) => {
                 setlistServiceForType([]);
+                setShowedButtonCategory(false);
+                setShowedListService(false);
                 console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
             });
     };
@@ -48,20 +54,36 @@ function ListMostService({ navigation, route }) {
                     onPress={() => navigation.navigate('SearchScreen')}
                 />
             </View>
-            {/* <ScrollView> */}
-            {/* list category for all type */}
-            <ListButtonCategory
-                navigation={navigation}
-                route={{
-                    listCategory: listCategory,
-                    getServiceOfType: getServiceOfType,
-                    serviceType: serviceType,
-                    setServiceType: setServiceType,
-                }}
-            />
-            {/* list service of type */}
-            <ListServiceForType navigation={navigation} route={{ listServiceForType: listServiceForType }} />
-            {/* </ScrollView> */}
+            <ActivityIndicator size="large" color={COLORS.primary} animating={showedButtonCategory} />
+            {!showedButtonCategory ? (
+                <View>
+                    {/* list category for all type */}
+                    <ListButtonCategory
+                        navigation={navigation}
+                        route={{
+                            listCategory: listCategory,
+                            getServiceOfType: getServiceOfType,
+                            serviceType: serviceType,
+                            setServiceType: setServiceType,
+                            setShowedListService: setShowedListService,
+                        }}
+                    />
+                    <ActivityIndicator size="small" color={COLORS.primary} animating={showedListService} />
+                    {!showedListService ? (
+                        <View>
+                            {/* list service of type */}
+                            <ListServiceForType
+                                navigation={navigation}
+                                route={{ listServiceForType: listServiceForType }}
+                            />
+                        </View>
+                    ) : (
+                        ''
+                    )}
+                </View>
+            ) : (
+                ''
+            )}
         </SafeAreaView>
     );
 }

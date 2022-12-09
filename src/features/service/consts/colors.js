@@ -8,6 +8,7 @@ const COLORS = {
     oranbge: '#f5a623',
     red: 'red',
     green: 'green',
+    yellow: 'yellow',
 };
 
 export default COLORS;
