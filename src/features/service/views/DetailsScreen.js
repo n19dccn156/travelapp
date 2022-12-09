@@ -16,7 +16,6 @@ import COLORS from '../consts/colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-swiper';
-import { shadow } from 'react-native-paper';
 
 const DetailsScreen = ({ navigation, route }) => {
     const service = route.params;
@@ -32,6 +31,10 @@ const DetailsScreen = ({ navigation, route }) => {
         });
         setListImg(listImg1);
     }, []);
+
+    function currencyFormat(num) {
+        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + 'vnđ';
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -107,7 +110,7 @@ const DetailsScreen = ({ navigation, route }) => {
                             color: COLORS.white,
                         }}
                     >
-                        {service.price} VND
+                        {currencyFormat(service.price)}
                     </Text>
                     <Text
                         style={{

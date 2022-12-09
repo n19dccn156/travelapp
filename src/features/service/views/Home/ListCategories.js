@@ -22,26 +22,8 @@ function ListCategories({ navigation, route }) {
         <Ionicons name="help-buoy-outline" size={25} color={COLORS.primary} />,
         <FontAwesome5 name="tshirt" size={25} color={COLORS.primary} />,
     ];
-    // const categoryIcons2 = [
-    //     <Icon name="tour" size={25} color={COLORS.primary} />,
-    //     <Icon name="car-rental" size={25} color={COLORS.primary} />,
-    //     <FontAwesome5 name="fish" size={25} color={COLORS.primary} />,
-    //     <Ionicons name="help-buoy-outline" size={25} color={COLORS.primary} />,
-    //     <FontAwesome5 name="tshirt" size={25} color={COLORS.primary} />,
-    //     <Feather name="more-horizontal" size={25} color={COLORS.primary} />,
-    // ];
     return (
         <View>
-            {/* <View style={style.categoryContainer}>
-                {listCategory.map((id, name) => (
-                    <TouchableOpacity key={id} onPress={() => navigation.navigate('ServiceScreen')}>
-                        <View>
-                            <View style={style.iconContainer}>{}</View>
-                            <Text>{name}</Text>
-                        </View>
-                    </TouchableOpacity>
-                ))}
-            </View> */}
             <FlatList
                 horizontal={true}
                 data={route.listCategory}
@@ -59,15 +41,6 @@ function ListCategories({ navigation, route }) {
                     </TouchableOpacity>
                 )}
             />
-
-            {/* <View style={style.categoryContainer}>
-                {categoryIcons2.map((icon, index) => (
-                    <View key={index}>
-                        <View style={style.iconContainer}>{icon}</View>
-                        <Text>Thuê</Text>
-                    </View>
-                ))}
-            </View> */}
         </View>
     );
 }

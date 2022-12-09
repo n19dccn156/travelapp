@@ -5,25 +5,10 @@ import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
 import style from '../../style/Home/style';
 import TopTabOrderForStaff from '../../navigations/TopTabOrderForStaff';
-import { getOrderByIdAndState } from '../../services/Order/getData';
 
 function ManageOrderForStaff({ navigation, route }) {
     const service = route.params.service;
-    // const [listOrder, setListOrder] = useState([]);
 
-    // const getOrderByIdAndStateAgain = (id) => {
-    //     getOrderByIdAndState(id, 'XACNHAN')
-    //         .then(function (res) {
-    //             console.log('ManageOrderForStaff res', res);
-    //             setListOrder([...res.data.content]);
-    //         })
-    //         .catch((err) => {
-    //             console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
-    //         });
-    // };
-    // useEffect(() => {
-    //     getOrderByIdAndStateAgain(service.id);
-    // }, []);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -38,7 +23,7 @@ function ManageOrderForStaff({ navigation, route }) {
                 <Text style={style.headerTitle}>Quản lý đơn đặt</Text>
             </View>
 
-            <TopTabOrderForStaff route={{ id: service.id }} />
+            <TopTabOrderForStaff route={{ service: service }} />
         </SafeAreaView>
     );
 }
