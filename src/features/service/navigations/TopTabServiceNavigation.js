@@ -19,21 +19,6 @@ function TopTabServiceNavigation({ navigation, route }) {
                 component={ManageShedule}
                 initialParams={{ service: route.service, listCategory: route.listCategory }}
             />
-            <Tab.Screen
-                name="Chờ xác nhận"
-                component={ManageOrderWaitConfirm}
-                initialParams={{ service: route.service, listCategory: route.listCategory }}
-            />
-            <Tab.Screen
-                name="Đã xác nhận"
-                component={ManageOrderWaitConfirm}
-                initialParams={{ service: route.service, listCategory: route.listCategory }}
-            />
-            <Tab.Screen
-                name="Đã hủy"
-                component={ManageOrderWaitConfirm}
-                initialParams={{ service: route.service, listCategory: route.listCategory }}
-            />
         </Tab.Navigator>
     );
 }

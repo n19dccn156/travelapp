@@ -24,16 +24,18 @@ import moment from 'moment';
 
 function OrderScreen({ navigation, route }) {
     console.log('route', route);
-    const service = route.params;
-    const [selectedDate, setSelectedDate] = useState('');
-    const [number, setNumber] = useState('');
-    const [phone, setPhone] = useState('');
+    const service = route.params.service;
+    const state = route.params.state;
+    const order = route.params.order;
+    const [selectedDate, setSelectedDate] = useState(state == 'update' ? order.dateStart : '');
+    const [number, setNumber] = useState(state == 'update' ? order.number : '');
+    const [phone, setPhone] = useState(state == 'update' ? order.phone : '');
 
     const [listShedule, setListShedule] = useState([]);
-    const [selectedShedule, setSelectedShedule] = useState('');
+    const [selectedShedule, setSelectedShedule] = useState(state == 'update' ? order.idSchedule : '');
 
     useEffect(() => {
-        getSheduleByServiceId(route.params.id)
+        getSheduleByServiceId(service.id)
             .then(function (res) {
                 setListShedule(res.data);
                 console.log('res', res);
@@ -113,8 +115,8 @@ function OrderScreen({ navigation, route }) {
                 <View>
                     <Text style={styles.textStyle}>Chọn ngày(*)</Text>
                     <DatePicker
-                        selected={moment().format('YYYY-MM-DD')}
-                        current={moment().format('YYYY-MM-DD')}
+                        selected={state == 'update' ? order.dateStart : moment().format('YYYY-MM-DD')}
+                        // current={moment().format('YYYY-MM-DD')}
                         minimumDate={moment().format('YYYY-MM-DD')}
                         // maximumDate="2020-07-25"
                         mode="calendar"
@@ -137,6 +139,7 @@ function OrderScreen({ navigation, route }) {
                         style={styles.inputStyle}
                         placeholder="Nhập số lượng"
                         keyboardType="numeric"
+                        defaultValue={state == 'update' ? order.number : ''}
                         onChangeText={(newText) => setNumber(newText)}
                     ></TextInput>
                     <Text style={styles.textStyle}>Số điện thoại</Text>
@@ -144,11 +147,18 @@ function OrderScreen({ navigation, route }) {
                         placeholder="Nhập số điện thoại"
                         style={styles.inputStyle}
                         keyboardType="numeric"
+                        defaultValue={state == 'update' ? order.phone : ''}
                         onChangeText={(newText) => setPhone(newText)}
                     />
-                    <TouchableOpacity style={styles.btnDatStyle} onPress={() => bookService()}>
-                        <Text style={styles.txtDatStyle}>Xác nhận</Text>
-                    </TouchableOpacity>
+                    {state == 'update' ? (
+                        <TouchableOpacity style={styles.btnDatStyle} onPress={() => {}}>
+                            <Text style={styles.txtDatStyle}>Cập nhật</Text>
+                        </TouchableOpacity>
+                    ) : (
+                        <TouchableOpacity style={styles.btnDatStyle} onPress={() => bookService()}>
+                            <Text style={styles.txtDatStyle}>Xác nhận</Text>
+                        </TouchableOpacity>
+                    )}
                 </View>
             </ScrollView>
         </SafeAreaView>

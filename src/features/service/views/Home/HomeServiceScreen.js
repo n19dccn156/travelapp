@@ -1,6 +1,16 @@
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StatusBar, View, Text, ScrollView, TextInput, Image, FlatList } from 'react-native';
+import {
+    SafeAreaView,
+    StatusBar,
+    View,
+    Text,
+    ScrollView,
+    TextInput,
+    Image,
+    FlatList,
+    ActivityIndicator,
+} from 'react-native';
 import COLORS from '../../consts/colors';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -14,6 +24,9 @@ import MyCard from './MyCard';
 
 const HomeServiceScreen = ({ navigation, route }) => {
     const [serviceType, setServiceType] = useState('');
+    const [showedCategory, setShowedCategory] = useState(true);
+    const [showedButtonCategory, setShowedButtonCategory] = useState(true);
+    const [showedListService, setShowedListService] = useState(true);
 
     //load list category
     const [listCategory, setListCategory] = useState([]);
@@ -24,9 +37,13 @@ const HomeServiceScreen = ({ navigation, route }) => {
         getServiceOfCaterogy(type)
             .then(function (res) {
                 setlistServiceForType([...res.data.content]);
+                setShowedButtonCategory(false);
+                setShowedListService(false);
             })
             .catch((err) => {
                 setlistServiceForType([]);
+                setShowedButtonCategory(false);
+                setShowedListService(false);
                 console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
             });
     };
@@ -34,12 +51,14 @@ const HomeServiceScreen = ({ navigation, route }) => {
         getAllCaterogy()
             .then(function (res) {
                 setListCategory([...res.data]);
-
+                setShowedCategory(false);
                 // setServiceType(res.data[0].id);
                 getServiceOfType(res.data[0].id);
                 setServiceType(res.data[0].id);
             })
             .catch((err) => {
+                setShowedCategory(false);
+                setListCategory([]);
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
             });
     }, []);
@@ -112,9 +131,14 @@ const HomeServiceScreen = ({ navigation, route }) => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <View>
-                    <ListCategories navigation={navigation} route={{ listCategory: listCategory }} />
-                </View>
+                <ActivityIndicator size="large" color={COLORS.primary} animating={showedCategory} />
+                {!showedCategory ? (
+                    <View>
+                        <ListCategories navigation={navigation} route={{ listCategory: listCategory }} />
+                    </View>
+                ) : (
+                    ''
+                )}
 
                 <View style={{ paddingTop: 30, flexDirection: 'row', justifyContent: 'space-between' }}>
                     <Text
@@ -146,22 +170,41 @@ const HomeServiceScreen = ({ navigation, route }) => {
                     </TouchableOpacity>
                 </View>
                 {/* list category for all type */}
-                <ListButtonCategory
-                    navigation={navigation}
-                    route={{
-                        listCategory: listCategory,
-                        getServiceOfType: getServiceOfType,
-                        serviceType: serviceType,
-                        setServiceType: setServiceType,
-                    }}
-                />
-                {/* list service of type */}
-                {/* <ListServiceForType navigation={navigation} route={{ listServiceForType: listServiceForType }} /> */}
-                <View>
-                    {listServiceForType.map((item) => (
-                        <MyCard key={item.id} service={item} navigation={navigation} />
-                    ))}
-                </View>
+                <ActivityIndicator size="large" color={COLORS.primary} animating={showedButtonCategory} />
+                {!showedButtonCategory ? (
+                    <View>
+                        <ListButtonCategory
+                            navigation={navigation}
+                            route={{
+                                listCategory: listCategory,
+                                getServiceOfType: getServiceOfType,
+                                serviceType: serviceType,
+                                setServiceType: setServiceType,
+                                setShowedListService: setShowedListService,
+                            }}
+                        />
+                        {/* list service of type */}
+                        {/* <ListServiceForType navigation={navigation} route={{ listServiceForType: listServiceForType }} /> */}
+                        <ActivityIndicator size="small" color={COLORS.primary} animating={showedListService} />
+                        {!showedListService ? (
+                            <View>
+                                {listServiceForType.map((item) => (
+                                    <MyCard
+                                        key={item.id}
+                                        navigation={navigation}
+                                        route={{
+                                            service: item,
+                                        }}
+                                    />
+                                ))}
+                            </View>
+                        ) : (
+                            ''
+                        )}
+                    </View>
+                ) : (
+                    ''
+                )}
             </ScrollView>
         </SafeAreaView>
     );

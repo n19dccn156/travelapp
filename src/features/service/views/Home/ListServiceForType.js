@@ -11,7 +11,7 @@ function ListServiceForType({ navigation, route }) {
                 vertical
                 showsVerticalScrollIndicator={false}
                 data={route.listServiceForType}
-                renderItem={({ item }) => <MyCard service={item} navigation={navigation} />}
+                renderItem={({ item }) => <MyCard route={{ service: item }} navigation={navigation} />}
             />
         </View>
     );

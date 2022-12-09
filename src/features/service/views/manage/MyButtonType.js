@@ -5,7 +5,6 @@ import COLORS from '../../consts/colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 function MyButtonType({ navigation, route }) {
-    console.log('route MyButtonType', route);
     const [categories, setCategories] = useState(route.categories);
     return (
         <TouchableOpacity

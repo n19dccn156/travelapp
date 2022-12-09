@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StatusBar, View, Modal, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import {
+    SafeAreaView,
+    ScrollView,
+    StatusBar,
+    View,
+    Modal,
+    StyleSheet,
+    TouchableOpacity,
+    Alert,
+    ActivityIndicator,
+} from 'react-native';
 import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
@@ -11,7 +21,8 @@ import ListService from './ListService';
 import { getServiceOfCaterogy } from '../../services/getData';
 import { addServiceForType } from '../../services/service/postData';
 function ListServiceScreen({ navigation, route }) {
-    console.log('route ListServiceScreen', route);
+    const [showedButtonCategory, setShowedButtonCategory] = useState(true);
+    const [showedListService, setShowedListService] = useState(true);
 
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
@@ -30,9 +41,13 @@ function ListServiceScreen({ navigation, route }) {
         getServiceOfCaterogy(type)
             .then(function (res) {
                 setlistServiceForType([...res.data.content]);
+                setShowedButtonCategory(false);
+                setShowedListService(false);
             })
             .catch((err) => {
                 setlistServiceForType([]);
+                setShowedButtonCategory(false);
+                setShowedListService(false);
                 console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
             });
     };
@@ -114,24 +129,37 @@ function ListServiceScreen({ navigation, route }) {
                     />
                 </View>
             </View>
-            {/* <ScrollView> */}
-            {/* list category for all type */}
-            <ListButtonCategory
-                navigation={navigation}
-                route={{
-                    listCategory: listCategory,
-                    getServiceOfType: getServiceOfType,
-                    // serviceType: route.params.serviceType,
-                    // setServiceType: route.params.setServiceType,
-                    serviceType: serviceType,
-                    setServiceType: setServiceType,
-                }}
-            />
-            {/* list service of type */}
-            <ListService
-                navigation={navigation}
-                route={{ listServiceForType: listServiceForType, listCategory: listCategory }}
-            />
+
+            <ActivityIndicator size="large" color={COLORS.primary} animating={showedButtonCategory} />
+            {!showedButtonCategory ? (
+                <View>
+                    {/* list category for all type */}
+                    <ListButtonCategory
+                        navigation={navigation}
+                        route={{
+                            listCategory: listCategory,
+                            getServiceOfType: getServiceOfType,
+                            serviceType: serviceType,
+                            setServiceType: setServiceType,
+                            setShowedListService: setShowedListService,
+                        }}
+                    />
+                    <ActivityIndicator size="small" color={COLORS.primary} animating={showedListService} />
+                    {!showedListService ? (
+                        <View>
+                            {/* list service of type */}
+                            <ListService
+                                navigation={navigation}
+                                route={{ listServiceForType: listServiceForType, listCategory: listCategory }}
+                            />
+                        </View>
+                    ) : (
+                        ''
+                    )}
+                </View>
+            ) : (
+                ''
+            )}
 
             {/* modal them loai */}
 

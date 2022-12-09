@@ -23,6 +23,7 @@ function ListButtonCategory({ navigation, route }) {
                             getServiceOfType: route.getServiceOfType,
                             serviceType: route.serviceType,
                             setServiceType: route.setServiceType,
+                            setShowedListService: route.setShowedListService,
                         }}
                     />
                 )}

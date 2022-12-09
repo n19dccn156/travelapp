@@ -11,4 +11,15 @@ const getOrderByIdAndState = async (id, state) => {
         console.log('🚀 ~ file: getSheduleByServiceId ~ line 16 ~ error', error);
     }
 };
-export { getOrderByIdAndState };
+
+const getOrderByIdUserAndState = async (id, state) => {
+    try {
+        const response = await fetch(`${host}/api/v1/orderservice/iduser/${id}?_state=${state}&_page=0&_size=10`);
+
+        return response.json();
+    } catch (error) {
+        console.log('🚀 ~ file: getSheduleByServiceId ~ line 16 ~ error', error);
+    }
+};
+
+export { getOrderByIdAndState, getOrderByIdUserAndState };

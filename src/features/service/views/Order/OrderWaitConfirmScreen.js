@@ -14,15 +14,20 @@ import {
 import { Text } from 'react-native-animatable';
 import { ScrollView } from 'react-native-gesture-handler';
 import COLORS from '../../consts/colors';
-import { getOrderByIdAndState } from '../../services/Order/getData';
+import { getOrderByIdAndState, getOrderByIdUserAndState } from '../../services/Order/getData';
 import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
 
-function ManageOrderWaitConfirm({ navigation, route }) {
+function OrderWaitConfirmScreen({ navigation, route }) {
     const [listOrder, setListOrder] = useState([]);
-    const [showed, setShowed] = useState(true);
+    const idState = route.params.idState;
+    // const [showed, setShowed] = useState(route.params.showed);
+    const showed = route.params.showed;
+    const setShowed = route.params.setShowed;
 
-    const getOrderByIdAndStateAgain = (id) => {
-        getOrderByIdAndState(id, 'XACNHAN')
+    const [showedCancel, setShowedCancel] = useState(route.params.showedCancel);
+    console.log('showedCancel OrderWaitConfirmScreen', showedCancel);
+    const getOrderByIdUserAndStateAgain = (id) => {
+        getOrderByIdUserAndState(id, idState)
             .then(function (res) {
                 setListOrder([...res.data.content]);
                 setShowed(false);
@@ -30,38 +35,46 @@ function ManageOrderWaitConfirm({ navigation, route }) {
             .catch((err) => {
                 setListOrder([]);
                 setShowed(false);
+
                 console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
             });
     };
-    console.log('ManageOrderWaitConfirm route', route);
-    // const getOrderByIdAndStateAgain = route.params.getOrderByIdAndStateAgain;
 
     useEffect(() => {
-        getOrderByIdAndStateAgain(route.params.id);
-    }, []);
+        getOrderByIdUserAndStateAgain(route.params.idUser);
+    }, [showed]);
 
     return (
-        <ScrollView>
-            <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-                <View>
-                    <View>
+        <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
+            <View>
+                <ScrollView>
+                    <View style={{ borderBottomWidth: 10 }}>
                         <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>
-                            Danh sách chờ xác nhận
+                            {idState == 'XACNHAN' ? 'Danh sách chờ xác nhận' : ''}
+                            {idState == 'THANHCONG' ? 'Danh sách đã xác nhận' : ''}
+                            {idState == 'DAHUY' ? 'Danh sách đã hủy' : ''}
+                            {idState == 'HOANTHANH' ? 'Danh sách đã hoàn thành' : ''}
                         </Text>
                     </View>
                     <ActivityIndicator size="large" color={COLORS.primary} animating={showed} />
-                    {!showed ? (
+                    {!showed || (!showedCancel && idState == 'DAHUY') ? (
                         <View>
                             <FlatList
                                 contentContainerStyle={{
                                     flexDirection: 'column',
                                 }}
                                 horizontal
-                                showsHorizontalScrollIndicator={false}
+                                showsHorizontalScrollIndicator={true}
                                 data={listOrder}
                                 renderItem={({ item }) => (
                                     <MyOrderWaitConfirmCard
-                                        route={{ order: item, getOrderByIdAndStateAgain: getOrderByIdAndStateAgain }}
+                                        route={{
+                                            order: item,
+                                            getOrderByIdUserAndStateAgain: getOrderByIdUserAndStateAgain,
+                                            idState: idState,
+                                            showedCancel: route.params.showedCancel,
+                                            setShowedCancel: route.params.setShowedCancel,
+                                        }}
                                     />
                                 )}
                             />
@@ -69,9 +82,9 @@ function ManageOrderWaitConfirm({ navigation, route }) {
                     ) : (
                         ''
                     )}
-                </View>
-            </SafeAreaView>
-        </ScrollView>
+                </ScrollView>
+            </View>
+        </SafeAreaView>
     );
 }
 const styles = StyleSheet.create({
@@ -105,4 +118,4 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
 });
-export default ManageOrderWaitConfirm;
+export default OrderWaitConfirmScreen;
