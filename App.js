@@ -25,9 +25,6 @@ import modifyModalFood from "./src/redux/action/modifyModal";
 // }
 
 // const store = createStore(allReducers);
-store.subscribe(() => {
-  console.log(store.getState());
-});
 const MyTheme = {
   ...DefaultTheme,
   colors: {
@@ -35,6 +32,7 @@ const MyTheme = {
     background: "#ffffff"
   }
 };
+console.log(store.getState());
 const Main = () => {
   return (
     <Provider store={store}>

@@ -8,10 +8,10 @@ import { ShopFoodScreen } from "./shop-food-screen";
 import { ListDish } from "../components/Dish/all-dishes";
 import { TestScreen } from "./test-redux";
 import ModalOrder from "../components/Dish/modal-oder";
+import { OrderScreen } from "./order-screen";
 export function FoodScreen({ navigation }) {
   return (
     <View>
-   
       <StatusBar
         animated={true}
         backgroundColor={colors.primary}

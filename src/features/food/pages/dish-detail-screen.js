@@ -13,7 +13,7 @@ import ModalOrder from "../components/Dish/modal-oder";
 import LoadComponent from "../../../utility/load-component";
 import { variables } from "../../../common/constants/const";
 import store from "../../../redux/store";
-import modifyModalFood from "../../../redux/action/modifyModal";
+import {modifyModalFood}from "../../../redux/action/modifyModal";
 const host = variables.host;
 export function DishScreen({ navigation, route }) {
   const [dish, setDish] = useState({});
@@ -21,14 +21,17 @@ export function DishScreen({ navigation, route }) {
   const [err, setErr] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [loadVisible, setLoadVisible] = useState(true);
-  const data = {
+  const  data = {
+    Id: dish.id,
+    idFood:dish.idFood,
     name:dish.name,
     price: dish.price,
-    imgUrl: `${dish.avatar}`
+    imgUrl: dish.avatar,
   }
-    
+    store.getState();
   useEffect(() => {
     setDish({ ...route.params });
+   
     setLoadVisible(false);
     getInfoShop(dish.idFood)
       .then(function(res) {
@@ -81,8 +84,8 @@ export function DishScreen({ navigation, route }) {
             minHeight: 40
           }}
           onPress={() => {
-            setModalVisible(true);
             store.dispatch(modifyModalFood(data));
+            setModalVisible(true);
           }}
         >
           <Text

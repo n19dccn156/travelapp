@@ -13,14 +13,20 @@ import styles from "../../styles/styleShop/styles-modal-component";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { ScrollView } from "react-native-gesture-handler";
-import modifyModalFood from "../../../../redux/action/modifyModal";
 import { useSelector } from "react-redux/es/exports";
 import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import {modifyModalFood,modifyOrder,modifyDetailOrder} from "../../../../redux/action/modifyModal";
 import store from "../../../../redux/store";
+import { orderService } from "../../services/order";
+import {
+  createOrder,
+  createDetailOrder
+} from "../../../../redux/reducers/reducerFood";
+import removeDuplicate from "../../services/handle_order";
 export default function ModalOrder(props) {
   const visibleModal = props.visible;
   const [count, setCount] = useState(1);
-  const data= store.getState().DataReducer;
+  const data = store.getState().modal;
   return (
     <Modal
       animationType="slide"
@@ -47,7 +53,7 @@ export default function ModalOrder(props) {
               style={{ height: 110, width: 110 }}
             />
             <View>
-            {renderInfo()}
+              {renderInfo()}
             </View>
           </View>
           <KeyboardAvoidingView style={styles.note} behavior={"padding"}>
@@ -57,12 +63,12 @@ export default function ModalOrder(props) {
               underlineColorAndroid={"rgba(0, 0, 0, 0.05)"}
             />
           </KeyboardAvoidingView>
-          <View style={styles.options}>
+          {/* <View style={styles.options}>
             <ScrollView>
               <Text style={{ fontSize: 40 }}>options</Text>
               <Text style={{ fontSize: 40 }}>options</Text>
             </ScrollView>
-          </View>
+          </View> */}
           <View style={styles.amount}>
             <View style={styles.quantity}>
               <TouchableOpacity
@@ -105,8 +111,8 @@ export default function ModalOrder(props) {
               </TouchableOpacity>
             </View>
             <View style={styles.buttonbuy}>
-              <TouchableOpacity>
-                <Text style={{ textAlign: "center" }}>Mua</Text>
+              <TouchableOpacity onPress={Order}>
+                <Text style={{ textAlign: "center" }}>Thêm vào giỏ hàng</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -131,16 +137,39 @@ export default function ModalOrder(props) {
       { text: "Phí giao hàng:", value: `${ship} đ` },
       { text: "Tổng cộng:", value: count == 0 ? 0 : price * count + ship }
     ];
-   return info.map((item, index) => {
+    return info.map((item, index) => {
       return (
         <View style={{ flexDirection: "row", marginLeft: 45 }} key={index}>
-          <Text style={styles.textInfo}>{item.text}</Text>
-          <Text style={[styles.textInfo, {right:-30}]}>
-            {/* {info.price} */}
+          <Text style={styles.textInfo}>
+            {item.text}
+          </Text>
+          <Text style={[styles.textInfo, { right: -30 }]}>
             {item.value}
           </Text>
         </View>
       );
     });
+  }
+function Order() {
+    const listOrder = store.getState().order;
+    const listOrderDetail = store.getState().detailOrder;
+    const dataOrder = {
+      idFood: data.idFood,
+      note: "Cho em xin thêm ít đá",
+      location:'Tăng Nhơn Phú B'
+    };
+     let order= {...createOrder(dataOrder)};
+     let  detailOrder = {...createDetailOrder({
+      idDish:data.id,
+      idOrder:order.id,
+      number:count,
+      price: data.price,
+      name:data.name,
+      imgUrl:data.imgUrl
+     })};
+      store.dispatch(modifyOrder('create',order));
+      store.dispatch(modifyDetailOrder('createDetail',detailOrder));
+      console.log(store.getState())
+      removeDuplicate();
   }
 }
