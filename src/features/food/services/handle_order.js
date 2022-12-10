@@ -28,7 +28,6 @@ function SendOrder(){
         }
       })] 
     }
-    console.log(body)
     orderService(body).then().then(data=>{console.log(data)}).catch((err)=>{
       console.log(err);
     })

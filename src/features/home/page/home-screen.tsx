@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { View, Text, ScrollView, Image, Modal, TouchableOpacity, Alert, Pressable, StyleSheet, Button, SafeAreaView, StatusBar } from "react-native";
 import ImageViewer from "react-native-image-zoom-viewer";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { FooterComponent } from "../../../common/components/footer";
 import { colors } from "../../../common/constants/colors";
 import { sizeScale, variables } from "../../../common/constants/const";
 import { FeaturesComponent } from "../components/features-component";
-import { HeaderComponent } from "../../../common/components/header-components";
-import SearchComponent from "../components/search-component";
+import { HeaderComponent } from "../../../common/constants/components/header-components";
+
 
 type objCheckin = {
     address: string,

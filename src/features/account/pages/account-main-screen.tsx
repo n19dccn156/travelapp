@@ -1,12 +1,12 @@
 import { Avatar, Icon, ListItem } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, Image, Modal, TouchableOpacity, Alert, Pressable, StyleSheet, Button, ActivityIndicator } from "react-native";
+import { View,Alert} from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { colors } from "../../../common/constants/colors";
 import { sizeScale } from "../../../common/constants/const";
 
 export function AccountScreen({navigation} : {navigation: any}) {
-
     const [modalVisible, setModalVisible] = useState(false);
 
     function accept(site: String) {
@@ -49,8 +49,8 @@ export function AccountScreen({navigation} : {navigation: any}) {
         {
             name: 'Thông Tin Cá Nhân',
             sizeName: 22,
-            icon: 'person-circle',
-            sizeIcon: 50,
+            icon: 'user-circle',
+            sizeIcon: 30,
             color: colors.red,
             navigation: 'ProfileScreen',
             accept: false,
@@ -58,22 +58,31 @@ export function AccountScreen({navigation} : {navigation: any}) {
             // },
         },
         {
+            name: 'Về Chúng Tôi',
+            sizeName: 22,
+            icon: 'info-circle',
+            sizeIcon: 30,
+            color: colors.red,
+            navigation: 'DevelopScreen',
+            accept: false,
+        },
+        {
+            name: 'Quản Lý Dịch Vụ',
+            sizeName: 22,
+            icon: 'store',
+            sizeIcon: 30,
+            color: colors.red,
+            navigation: 'ManageStackNavigator',
+            accept: false,
+        },
+        {
             name: 'Đăng Xuất',
             sizeName: 22,
             icon: 'log-out',
             sizeIcon: 50,
-            // color: colors.indigo,
+            color: colors.red,
             navigation: 'Login',
             accept: true,
-          },
-          {
-            name: 'Về chúng tôi',
-            sizeName: 22,
-            icon: 'information-circle',
-            sizeIcon: 50,
-            //  color: colors.indigo,
-            navigation: 'DevelopScreen',
-            accept: false,
           },
     ];
 
@@ -97,7 +106,8 @@ export function AccountScreen({navigation} : {navigation: any}) {
                     :
                     (
                         <ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
-                            <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)}/>
+                         {/* {i!=2} ? <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)}/>: */}
+                            <FontAwesome5 name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)}></FontAwesome5>
                             <ListItem.Content>
                                 <ListItem.Title style={{fontSize: sizeScale(l.sizeName)}}>{l.name}</ListItem.Title>
                             </ListItem.Content>
