@@ -4,8 +4,13 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { Badge } from "react-native-elements";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
+<<<<<<< HEAD:src/common/constants/components/header-components.tsx
+import { colors } from "../colors";
+import style from "../../../features/service/style/Home/style";
+=======
 import { colors } from "../constants/colors";
 import style from "../../features/tour/style/Home/style";
+>>>>>>> 9e7c8bd3e8c64da39296516201c809797d04f2da:src/common/components/header-components.tsx
 
 
 export function HeaderComponent({ numberNotifi, name, navigation }: {numberNotifi: String; name: String; navigation: any}) {

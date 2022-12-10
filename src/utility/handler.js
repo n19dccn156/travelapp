@@ -13,4 +13,10 @@ function RenderLongText(text,option){
   }
 
 }
-export {RenderLongText};
+function IsObjectEmpty(value) {
+   return (
+     Object.prototype.toString.call(value) === '[object Object]' &&
+     JSON.stringify(value) === '{}'
+   );
+ }
+export {RenderLongText,IsObjectEmpty};
