@@ -11,7 +11,6 @@ import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { addTypeService } from '../../services/updateData';
 
 function ListTypeScreen({ navigation, route }) {
-    console.log('route ListTypeScreen', route);
     const [modalVisible, setModalVisible] = useState(false);
     const [id, setId] = useState('');
     const [name, setName] = useState('');
@@ -46,11 +45,6 @@ function ListTypeScreen({ navigation, route }) {
             });
     };
 
-    // useEffect(() => {
-    //     Alert.alert('Thông báo!', 'UseEffect', [{ text: 'Đóng' }]);
-    //     getAllCaterogyAgain();
-    // }, []);
-
     return (
         <ScrollView>
             <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -81,6 +75,7 @@ function ListTypeScreen({ navigation, route }) {
                             getServiceOfType: route.params.getServiceOfType,
                             setListCategory: route.params.setListCategory,
                             setlistServiceForType: route.params.setlistServiceForType,
+                            getAllCaterogyAgain: getAllCaterogyAgain,
                         }}
                     />
                     {/* modal them loai */}
