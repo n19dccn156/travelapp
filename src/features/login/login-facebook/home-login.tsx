@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
-import { LoginButton, AccessToken, LoginResult } from 'react-native-fbsdk-next';
-import { Profile } from "react-native-fbsdk-next";
+import { LoginButton, AccessToken, LoginResult, Profile } from 'react-native-fbsdk-next';
+
 const currentProfile = Profile.getCurrentProfile().then(
   function(currentProfile) {
     if (currentProfile) {
-      console.log("The current logged user is: " +
-        currentProfile.name
-        + ". His profile id is: " +
-        currentProfile.userID
+      console.log(
+        // currentProfile.email + "_\n" +
+        // currentProfile.firstName + "_\n" +
+        // currentProfile.middleName + "_\n" +
+        // currentProfile.lastName + "_\n" +
+        currentProfile.imageURL + "_\n"
+        // currentProfile.userID + "_\n"
       );
     }
   }
 );
+
 export function Login()  {
     return (
       <View>

@@ -25,6 +25,7 @@ function ListType({ navigation, route }) {
                             getServiceOfType: route.getServiceOfType,
                             setListCategory: route.setListCategory,
                             listCategory: route.listCategory,
+                            getAllCaterogyAgain: route.getAllCaterogyAgain,
                         }}
                     />
                 )}
