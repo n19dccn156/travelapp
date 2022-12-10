@@ -21,6 +21,7 @@ import { getSheduleByServiceId } from '../../services/getData';
 import ListSheduleForService from './ListSheduleForService';
 import { orderService } from '../../services/Order/postData';
 import moment from 'moment';
+import { BackgroundImage } from 'react-native-elements/dist/config';
 
 function OrderScreen({ navigation, route }) {
     console.log('route', route);
@@ -98,6 +99,10 @@ function OrderScreen({ navigation, route }) {
                 });
     };
 
+    function currencyFormat(num) {
+        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + 'vnđ';
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -112,6 +117,11 @@ function OrderScreen({ navigation, route }) {
                 <Text style={style.headerTitle}>Đặt dịch vụ</Text>
             </View>
             <ScrollView>
+                <View>
+                    <BackgroundImage source={{ uri: `${service.avatar}` }} style={{ height: 100 }}>
+                        <Text style={{ color: COLORS.white, fontWeight: 'bold', margin: 10 }}>{service.name}</Text>
+                    </BackgroundImage>
+                </View>
                 <View>
                     <Text style={styles.textStyle}>Chọn ngày(*)</Text>
                     <DatePicker
@@ -150,6 +160,13 @@ function OrderScreen({ navigation, route }) {
                         defaultValue={state == 'update' ? order.phone : ''}
                         onChangeText={(newText) => setPhone(newText)}
                     />
+                    <View style={{ flexDirection: 'row', borderTopWidth: 1, margin: 10 }}>
+                        <Text style={{ fontStyle: 'italic', fontSize: 18 }}>Giá: {currencyFormat(service.price)}</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', margin: 10 }}>
+                        <Text style={styles.textStyle}>Tổng: </Text>
+                        <Text style={styles.textStyle}>{currencyFormat(service.price * number)}</Text>
+                    </View>
                     {state == 'update' ? (
                         <TouchableOpacity style={styles.btnDatStyle} onPress={() => {}}>
                             <Text style={styles.txtDatStyle}>Cập nhật</Text>

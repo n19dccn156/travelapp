@@ -12,6 +12,7 @@ import {
     ActivityIndicator,
 } from 'react-native';
 import { Text } from 'react-native-animatable';
+import { BackgroundImage } from 'react-native-elements/dist/config';
 import { ScrollView } from 'react-native-gesture-handler';
 import COLORS from '../../consts/colors';
 import { getOrderByIdAndState } from '../../services/Order/getData';
@@ -21,8 +22,11 @@ function ManageOrderWaitConfirm({ navigation, route }) {
     const [listOrder, setListOrder] = useState([]);
     const [showed, setShowed] = useState(true);
 
+    const service = route.params.service;
+    const idState = route.params.idState;
+
     const getOrderByIdAndStateAgain = (id) => {
-        getOrderByIdAndState(id, 'XACNHAN')
+        getOrderByIdAndState(id, idState)
             .then(function (res) {
                 setListOrder([...res.data.content]);
                 setShowed(false);
@@ -33,11 +37,9 @@ function ManageOrderWaitConfirm({ navigation, route }) {
                 console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
             });
     };
-    console.log('ManageOrderWaitConfirm route', route);
-    // const getOrderByIdAndStateAgain = route.params.getOrderByIdAndStateAgain;
 
     useEffect(() => {
-        getOrderByIdAndStateAgain(route.params.id);
+        getOrderByIdAndStateAgain(service.id);
     }, []);
 
     return (
@@ -46,8 +48,16 @@ function ManageOrderWaitConfirm({ navigation, route }) {
                 <View>
                     <View>
                         <Text style={{ color: COLORS.primary, fontWeight: 'bold', margin: 10 }}>
-                            Danh sách chờ xác nhận
+                            {idState == 'XACNHAN' ? 'Danh sách chờ xác nhận' : ''}
+                            {idState == 'THANHCONG' ? 'Danh sách đã xác nhận' : ''}
+                            {idState == 'DAHUY' ? 'Danh sách đã hủy' : ''}
+                            {idState == 'HOANTHANH' ? 'Danh sách đã hoàn thành' : ''}
                         </Text>
+                    </View>
+                    <View>
+                        <BackgroundImage source={{ uri: `${service.avatar}` }} style={{ height: 100 }}>
+                            <Text style={{ color: COLORS.white, fontWeight: 'bold', margin: 10 }}>{service.name}</Text>
+                        </BackgroundImage>
                     </View>
                     <ActivityIndicator size="large" color={COLORS.primary} animating={showed} />
                     {!showed ? (
@@ -61,7 +71,11 @@ function ManageOrderWaitConfirm({ navigation, route }) {
                                 data={listOrder}
                                 renderItem={({ item }) => (
                                     <MyOrderWaitConfirmCard
-                                        route={{ order: item, getOrderByIdAndStateAgain: getOrderByIdAndStateAgain }}
+                                        route={{
+                                            order: item,
+                                            getOrderByIdAndStateAgain: getOrderByIdAndStateAgain,
+                                            idState: idState,
+                                        }}
                                     />
                                 )}
                             />

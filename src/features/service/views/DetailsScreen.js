@@ -16,12 +16,12 @@ import COLORS from '../consts/colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-swiper';
-import { shadow } from 'react-native-paper';
+import { Image } from 'react-native-elements';
 
 const DetailsScreen = ({ navigation, route }) => {
     const service = route.params;
     const [modalVisible, setModalVisible] = useState(false);
-    const [listImg, setListImg] = useState([{ url: '' }]);
+    const [listImg, setListImg] = useState([]);
     const pictures = service.pictures;
 
     const list = pictures.split(',');
@@ -33,13 +33,22 @@ const DetailsScreen = ({ navigation, route }) => {
         setListImg(listImg1);
     }, []);
 
+    function currencyFormat(num) {
+        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + 'vnđ';
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent backgroundColor="rgba(0,0,0,0)" />
             <Swiper style={{ flex: 1 }}>
                 {listImg.map((data, index) => {
                     return (
-                        <TouchableOpacity key={index} style={{ flex: 1 }} onPress={() => setModalVisible(true)}>
+                        <TouchableOpacity
+                            key={index}
+                            testID={index + ''}
+                            style={{ flex: 1 }}
+                            onPress={() => setModalVisible(true)}
+                        >
                             <ImageBackground style={{ flex: 1 }} source={{ uri: `${data.url}` }}>
                                 <View style={style.header}>
                                     <Icon
@@ -107,7 +116,7 @@ const DetailsScreen = ({ navigation, route }) => {
                             color: COLORS.white,
                         }}
                     >
-                        {service.price} VND
+                        {currencyFormat(service.price)}
                     </Text>
                     <Text
                         style={{
