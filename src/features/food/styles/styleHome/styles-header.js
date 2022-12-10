@@ -1,5 +1,9 @@
 import {StyleSheet, TextStyle, ViewStyle, ImageStyle} from 'react-native';
+<<<<<<< HEAD:src/features/food/styles/styles-header.js
+import COLORS from '../../tour/consts/colors';
+=======
 import COLORS from '../../../service/consts/colors';
+>>>>>>> refs/remotes/origin/master:src/features/food/styles/styleHome/styles-header.js
 const styleIcon = StyleSheet.create({
   icon_close: {
     marginLeft: 10,
