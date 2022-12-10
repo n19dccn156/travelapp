@@ -46,11 +46,6 @@ function ListTypeScreen({ navigation, route }) {
             });
     };
 
-    // useEffect(() => {
-    //     Alert.alert('Thông báo!', 'UseEffect', [{ text: 'Đóng' }]);
-    //     getAllCaterogyAgain();
-    // }, []);
-
     return (
         <ScrollView>
             <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -81,6 +76,7 @@ function ListTypeScreen({ navigation, route }) {
                             getServiceOfType: route.params.getServiceOfType,
                             setListCategory: route.params.setListCategory,
                             setlistServiceForType: route.params.setlistServiceForType,
+                            getAllCaterogyAgain: getAllCaterogyAgain,
                         }}
                     />
                     {/* modal them loai */}

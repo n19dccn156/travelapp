@@ -23,6 +23,7 @@ function MyButtonType({ navigation, route }) {
                     categories: route.categories,
                     setListCategory: route.setListCategory,
                     listCategory: route.listCategory,
+                    getAllCaterogyAgain: route.getAllCaterogyAgain,
                 })
             }
             // onPress={() => route.getServiceOfType(route.categories.id)}

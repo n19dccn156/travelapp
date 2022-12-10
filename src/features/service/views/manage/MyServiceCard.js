@@ -19,7 +19,13 @@ function MyServiceCard({ navigation, route }) {
             }}
             activeOpacity={0.8}
             key={service.id}
-            onPress={() => navigation.navigate('ManageService', { service: service, listCategory: route.listCategory })}
+            onPress={() =>
+                navigation.navigate('ManageService', {
+                    service: service,
+                    listCategory: route.listCategory,
+                    getServiceOfType: route.getServiceOfType,
+                })
+            }
         >
             <Image style={style.myCardImage} source={{ uri: `${service.avatar}` }} />
 
@@ -38,8 +44,18 @@ function MyServiceCard({ navigation, route }) {
                         <AntDesign name="hearto" size={20} color={COLORS.white} />
                     </View>
                 </View>
-                <Text style={{ color: COLORS.white, fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>
-                    {service.name}
+                <Text
+                    style={{
+                        color: COLORS.white,
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        marginTop: 10,
+                        width: 200,
+                    }}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                >
+                    {service.name} vcbvdfghdfgbdfh
                 </Text>
                 <View
                     style={{

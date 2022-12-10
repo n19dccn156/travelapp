@@ -23,6 +23,7 @@ function MyCard({ navigation, route }) {
                     flexDirection: 'row',
                     padding: 10,
                     backgroundColor: COLORS.primary,
+                    overflow: 'hidden',
                 }}
                 source={{ uri: `${service.avatar}` }}
             >
