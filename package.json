@@ -10,7 +10,7 @@
         "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
     },
     "dependencies": {
-        "@react-native-async-storage/async-storage": "^1.17.11",
+        "@react-native-async-storage/async-storage": "^1.17.10",
         "@react-native-masked-view/masked-view": "^0.2.7",
         "@react-navigation/bottom-tabs": "^6.4.0",
         "@react-navigation/drawer": "^6.5.0",
@@ -20,8 +20,8 @@
         "@react-navigation/stack": "^6.3.1",
         "@rneui/themed": "^4.0.0-rc.6",
         "lodash.isequal": "^4.5.0",
-        "lottie-react-native": "^5.1.4",
         "moment": "^2.29.4",
+        "radio-buttons-react-native": "^1.0.4",
         "react": "18.0.0",
         "react-native": "0.69.4",
         "react-native-animatable": "^1.3.3",
@@ -43,8 +43,12 @@
         "react-native-screens": "^3.17.0",
         "react-native-svg": "^12.4.4",
         "react-native-swipeable": "^0.6.0",
+        "react-native-swiper": "^1.6.0",
         "react-native-tab-view": "^3.3.0",
+        "react-native-uuid": "^2.0.1",
         "react-native-vector-icons": "^9.2.0",
+        "react-redux": "^8.0.5",
+        "redux": "^4.2.0",
         "string-hash-64": "^1.0.3"
     },
     "devDependencies": {

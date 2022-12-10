@@ -69,6 +69,6 @@ export function TabBottomNavigation() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.mint
+    backgroundColor: colors.mint,
   }
 })

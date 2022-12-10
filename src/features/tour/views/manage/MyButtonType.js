@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Text, View } from 'react-native-animatable';
 import COLORS from '../../consts/colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
 function MyButtonType({ navigation, route }) {
+    const [categories, setCategories] = useState(route.categories);
     return (
         <TouchableOpacity
             style={{

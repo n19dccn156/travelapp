@@ -1,44 +1,105 @@
-import React, { useState } from 'react';
-import { ImageBackground, SafeAreaView, StatusBar, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+    ImageBackground,
+    SafeAreaView,
+    StatusBar,
+    StyleSheet,
+    View,
+    Text,
+    TouchableOpacity,
+    Modal,
+    Pressable,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import ImageViewer from 'react-native-image-zoom-viewer';
 import COLORS from '../consts/colors';
-import ModalOrder from './ModalOrder';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Swiper from 'react-native-swiper';
+import { Image } from 'react-native-elements';
 
 const DetailsScreen = ({ navigation, route }) => {
     const service = route.params;
+    const [modalVisible, setModalVisible] = useState(false);
+    const [listImg, setListImg] = useState([]);
+    const pictures = service.pictures;
+
+    const list = pictures.split(',');
+    const listImg1 = [];
+    useEffect(() => {
+        list.map((data) => {
+            listImg1.push({ url: data });
+        });
+        setListImg(listImg1);
+    }, []);
+
+    function currencyFormat(num) {
+        return num.toFixed(0).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.') + 'vnđ';
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent backgroundColor="rgba(0,0,0,0)" />
-            <ImageBackground style={{ flex: 0.7 }} source={{ uri: `${service.avatar}` }}>
-                <View style={style.header}>
-                    <Icon name="arrow-back-ios" size={28} color={COLORS.primary} onPress={navigation.goBack} />
-                    <Icon name="more-vert" size={28} color={COLORS.primary} />
-                </View>
-                <View style={style.imageDetailes}>
-                    <Text
-                        style={{
-                            width: '70%',
-                            fontSize: 30,
-                            fontWeight: 'bold',
-                            marginBottom: 20,
-                            color: COLORS.primary,
-                        }}
-                    >
-                        {service.name}
-                    </Text>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Icon name="star" size={30} color={COLORS.oranbge} />
-                        <Text style={{ color: COLORS.primary, fontWeight: 'bold', fontSize: 20 }}>{service.star}</Text>
-                    </View>
-                </View>
-            </ImageBackground>
+            <Swiper style={{ flex: 1 }}>
+                {listImg.map((data, index) => {
+                    return (
+                        <TouchableOpacity
+                            key={index}
+                            testID={index + ''}
+                            style={{ flex: 1 }}
+                            onPress={() => setModalVisible(true)}
+                        >
+                            <ImageBackground style={{ flex: 1 }} source={{ uri: `${data.url}` }}>
+                                <View style={style.header}>
+                                    <Icon
+                                        name="arrow-back-ios"
+                                        size={28}
+                                        color={COLORS.white}
+                                        onPress={navigation.goBack}
+                                    />
+                                    <Icon name="more-vert" size={28} color={COLORS.white} />
+                                </View>
+                                <View style={style.imageDetailes}>
+                                    <Text
+                                        style={{
+                                            width: '70%',
+                                            fontSize: 30,
+                                            fontWeight: 'bold',
+                                            marginBottom: 20,
+                                            color: COLORS.white,
+                                            textShadowColor: COLORS.dark,
+                                            textShadowRadius: 1,
+                                        }}
+                                    >
+                                        {service.name}
+                                    </Text>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <Icon name="star" size={30} color={COLORS.oranbge} />
+                                        <Text
+                                            style={{
+                                                color: COLORS.white,
+                                                fontWeight: 'bold',
+                                                fontSize: 20,
+                                                textShadowColor: COLORS.dark,
+                                                textShadowRadius: 1,
+                                            }}
+                                        >
+                                            {service.star.toFixed(1)}
+                                        </Text>
+                                    </View>
+                                </View>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    );
+                })}
+            </Swiper>
+
             <View style={style.detailsContainer}>
                 <View style={style.iconContainer}>
                     <Icon name="favorite" color={COLORS.red} size={30} />
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10 }}>
-                    <Icon name="place" size={28} color={COLORS.primary} />
+                    <AntDesign name="tag" size={20} color={COLORS.primary} />
                     <Text style={{ marginLeft: 5, fontSize: 20, fontWeight: 'bold', color: COLORS.primary }}>
                         {service.idTypeService}
                     </Text>
@@ -55,7 +116,7 @@ const DetailsScreen = ({ navigation, route }) => {
                             color: COLORS.white,
                         }}
                     >
-                        {service.price} VND
+                        {currencyFormat(service.price)}
                     </Text>
                     <Text
                         style={{
@@ -69,12 +130,30 @@ const DetailsScreen = ({ navigation, route }) => {
                     </Text>
                 </View>
 
-                <TouchableOpacity onPress={() => navigation.navigate('OrderScreen')}>
+                <TouchableOpacity
+                    onPress={() => navigation.navigate('OrderScreen', { service: service, state: 'order', order: '' })}
+                >
                     <View style={style.bookNowBtn}>
                         <Text style={{ color: COLORS.primary, fontSize: 16, fontWeight: 'bold' }}>Đặt ngay</Text>
                     </View>
                 </TouchableOpacity>
             </View>
+            <Modal
+                animationType="slide"
+                visible={modalVisible}
+                transparent={true}
+                onRequestClose={() => {
+                    Alert.alert('Modal has been closed.');
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <ImageViewer imageUrls={listImg} index={1} style={{ height: 500, paddingStart: 0, paddingEnd: 0 }} />
+                <View style={style.modalView}>
+                    <Pressable onPress={() => setModalVisible(!modalVisible)}>
+                        <Ionicons name="close-circle" size={28} style={{ color: 'white' }} />
+                    </Pressable>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 };
@@ -132,6 +211,10 @@ const style = StyleSheet.create({
         paddingHorizontal: 20,
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
+    },
+    modalView: {
+        position: 'absolute',
+        padding: 40,
     },
 });
 

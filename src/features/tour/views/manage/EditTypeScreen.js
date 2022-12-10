@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Image, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, View, Modal, Alert } from 'react-native';
 import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
@@ -19,7 +19,9 @@ function EditTypeScreen({ navigation, route }) {
             .then(function (res) {
                 console.log('res', res);
                 if (res.status == 'success') {
-                    setTypeService(res.data.name);
+                    setTypeService(res.data);
+
+                    // setText(res.data.name);
                     getAllCaterogyAgain();
                 }
 
@@ -36,7 +38,6 @@ function EditTypeScreen({ navigation, route }) {
         getAllCaterogy()
             .then(function (res) {
                 route.params.setListCategory([...res.data]);
-                console.log('route.params.listCategory', route.params.listCategory);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
@@ -75,6 +76,15 @@ function EditTypeScreen({ navigation, route }) {
                 <Text style={style.headerTitle}>Cập nhật loại dịch vụ</Text>
             </View>
             <View>
+                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Mã loại dịch vụ</Text>
+                <TextInput
+                    placeholder="Nhập mã loại dịch vụ vào đây"
+                    defaultValue={typeService.id}
+                    style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
+                    editable={false}
+                />
+            </View>
+            <View>
                 <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Tên loại dịch vụ</Text>
                 <TextInput
                     placeholder="Nhập tên loại dịch vụ vào đây"
@@ -89,13 +99,7 @@ function EditTypeScreen({ navigation, route }) {
                     // }}
                 />
             </View>
-            <View>
-                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Icon</Text>
-                <TextInput
-                    placeholder="Nhập số điện thoại vào đây"
-                    style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
-                />
-            </View>
+
             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity
                     style={{

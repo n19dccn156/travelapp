@@ -36,12 +36,13 @@ const style = StyleSheet.create({
         justifyContent: 'space-between',
     },
     iconContainer: {
-        height: 60,
-        width: 60,
+        height: 80,
+        width: 80,
         backgroundColor: COLORS.secondarry,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10,
+        margin: 5,
     },
     secionTitle: {
         marginHorizontal: 20,
