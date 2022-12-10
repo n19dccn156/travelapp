@@ -13,7 +13,7 @@ export function WeatherScreen({navigation}: {navigation: any}) {
 
     return(
         <View>
-            <Button title="Click Tour" onPress={() => navigation.navigate('Tour')}/>
+            {/* <Button title="Click Tour" onPress={() => navigation.navigate('Tour')}/> */}
             <Ionicons name="cloudy-outline" size={30}/>
         </View>
     );
