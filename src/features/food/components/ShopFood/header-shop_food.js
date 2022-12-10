@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image, StatusBar, TouchableOpacity } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { variables } from "../../../../common/constants/const";
-import COLORS from "../../../service/consts/colors";
+import COLORS from "../../../tour/consts/colors";
 import { styleIcon } from "../../styles/styles-header";
 import { StyleImages, StyleViews } from "../../styles/styleShop/styles-shop-food";
 export function HeaderShopFood({ navigation}) {
@@ -81,7 +81,7 @@ export function HeaderShopFood({ navigation}) {
             "https://cdn.tgdd.vn/2021/05/CookProduct/Banh-Mi-Bo-Nuong-Sa-(Vietnamese-Beef-Banh-Mi)-6-5-screenshot-1200x676.jpg"
         }}
         style={StyleImages.img_avatar}
-        //source={{ uri: `${item.avatar}` }}
+        // source={{ uri: `${item.avatar}` }}
       />
     </View>
   );

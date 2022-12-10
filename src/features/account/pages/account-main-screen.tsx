@@ -65,7 +65,7 @@ export function AccountScreen({navigation} : {navigation: any}) {
             // color: colors.indigo,
             navigation: 'Login',
             accept: true,
-          },
+        },
     ];
 
     return(

@@ -9,6 +9,9 @@ export function OrderHistoryMainScreen({navigation} : {navigation:any}) {
     return(
         <View>
             <Button title="Go to Order History Order" onPress={() => navigation.navigate('OrderDetailScreen')}/>
+            <Button title="Go to Login" onPress={() => navigation.navigate('Login')}/>
+            {/* <Button title="Go to Login FaceBook" onPress={() => navigation.navigate('LoginFacebook')}/> */}
+
         </View>
 
     );
