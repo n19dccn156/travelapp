@@ -13,6 +13,7 @@ import { getSheduleByServiceId } from '../../services/getData';
 import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 import ListSheduleForService from './ListSheduleForService';
 import { ScrollView } from 'react-native-gesture-handler';
+import { BackgroundImage } from 'react-native-elements/dist/config';
 
 function MyOrderWaitConfirmCard({ navigation, route }) {
     const order = route.order;
@@ -302,6 +303,13 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
                                 </Text>
                             </View>
                             <View>
+                                <BackgroundImage source={{ uri: `${service.avatar}` }} style={{ height: 100 }}>
+                                    <Text style={{ color: COLORS.white, fontWeight: 'bold', margin: 10 }}>
+                                        {service.name}
+                                    </Text>
+                                </BackgroundImage>
+                            </View>
+                            <View>
                                 <Text style={styles.textStyle}>Chọn ngày(*)</Text>
                                 <DatePicker
                                     selected={order.dateStart}
@@ -338,6 +346,15 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
                                     defaultValue={order.phone}
                                     onChangeText={(newText) => setPhone(newText)}
                                 />
+                                <View style={{ flexDirection: 'row', borderTopWidth: 1, margin: 10 }}>
+                                    <Text style={{ fontStyle: 'italic', fontSize: 14 }}>
+                                        Giá: {currencyFormat(order.price)}
+                                    </Text>
+                                </View>
+                                <View style={{ flexDirection: 'row', margin: 10 }}>
+                                    <Text style={styles.textStyle}>Tổng: </Text>
+                                    <Text style={styles.textStyle}>{currencyFormat(order.price * number)}</Text>
+                                </View>
                                 <View style={{ flexDirection: 'row' }}>
                                     <TouchableOpacity
                                         style={styles.btnDatStyle}
