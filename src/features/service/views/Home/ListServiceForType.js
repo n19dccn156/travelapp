@@ -7,7 +7,6 @@ function ListServiceForType({ navigation, route }) {
     return (
         <View>
             <FlatList
-                contentContainerStyle={{ paddingLeft: 20 }}
                 vertical
                 showsVerticalScrollIndicator={false}
                 data={route.listServiceForType}

@@ -9,7 +9,6 @@ import { deleteServiceById, updateServiceById, updateTypeServiceById } from '../
 import { getAllCaterogy } from '../../services/getData';
 
 function EditService({ navigation, route }) {
-    console.log('route EditService', route);
     const service = route.params.service;
     const [name, setName] = useState(service.name);
     const [description, setDescription] = useState(service.description);
@@ -32,6 +31,7 @@ function EditService({ navigation, route }) {
                     // setTypeService(res.data);
                     // // setText(res.data.name);
                     // getAllCaterogyAgain();
+                    route.params.getServiceOfType(service.idTypeService);
                 }
 
                 Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
@@ -71,19 +71,6 @@ function EditService({ navigation, route }) {
     };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-            {/* <StatusBar translucent={false} backgroundColor={COLORS.primary} />
-
-            <View style={styles.header}>
-                <Icon
-                    name="arrow-back"
-                    size={28}
-                    color={COLORS.white}
-                    onPress={() =>
-                        navigation.navigate('ListServiceScreen', { listCategory: route.params.listCategory })
-                    }
-                />
-                <Text style={style.headerTitle}>Cập nhật dịch vụ</Text>
-            </View> */}
             <ScrollView>
                 <View>
                     <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Loại dịch vụ</Text>
@@ -106,6 +93,8 @@ function EditService({ navigation, route }) {
                 <View>
                     <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Mô tả (*)</Text>
                     <TextInput
+                        multiline={true}
+                        numberOfLines={3}
                         placeholder="Nhập mô tả dịch vụ vào đây"
                         style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
                         defaultValue={service.description}

@@ -40,7 +40,11 @@ function MyServiceCardForOrder({ navigation, route }) {
                         <AntDesign name="hearto" size={20} color={COLORS.white} />
                     </View>
                 </View>
-                <Text style={{ color: COLORS.white, fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>
+                <Text
+                    style={{ color: COLORS.white, fontSize: 20, fontWeight: 'bold', marginTop: 10, width: 200 }}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                >
                     {service.name}
                 </Text>
                 <View

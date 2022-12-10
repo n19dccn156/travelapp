@@ -12,7 +12,11 @@ function TopTabServiceNavigation({ navigation, route }) {
             <Tab.Screen
                 name="Cập nhật dịch vụ "
                 component={EditService}
-                initialParams={{ service: route.service, listCategory: route.listCategory }}
+                initialParams={{
+                    service: route.service,
+                    listCategory: route.listCategory,
+                    getServiceOfType: route.getServiceOfType,
+                }}
             />
             <Tab.Screen
                 name="Cập nhật lịch"

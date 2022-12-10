@@ -150,7 +150,11 @@ function ListServiceScreen({ navigation, route }) {
                             {/* list service of type */}
                             <ListService
                                 navigation={navigation}
-                                route={{ listServiceForType: listServiceForType, listCategory: listCategory }}
+                                route={{
+                                    listServiceForType: listServiceForType,
+                                    listCategory: listCategory,
+                                    getServiceOfType: getServiceOfType,
+                                }}
                             />
                         </View>
                     ) : (
