@@ -1,29 +1,32 @@
-{
-  "detailOrder": [
-    {
-      "idDish": "0dd21124-62ad-11ed-9d10-3855030e3f14",
-      "idOrder": "202e81fd-8389-4895-9692-1bb9f706b265",
-      "imgUrl": "https://cdn.tgdd.vn/2021/05/CookProduct/Banh-Mi-Bo-Nuong-Sa-(Vietnamese-Beef-Banh-Mi)-6-5-screenshot-1200x676.jpg",
-      "name": "Trà tắc",
-      "number": 1,
-      "price": 15000
-    }
-  ],
-  "modal": {
-    "id": "0dd21124-62ad-11ed-9d10-3855030e3f14",
-    "idFood": "47477528-628c-11ed-9d10-3855030e3f14",
-    "imgUrl": "https://cdn.tgdd.vn/2021/05/CookProduct/Banh-Mi-Bo-Nuong-Sa-(Vietnamese-Beef-Banh-Mi)-6-5-screenshot-1200x676.jpg",
-    "name": "Trà tắc",
-    "price": 15000
-  },
-  "order": {
+[
+  {
     "dateNow": {},
     "dateStart": "2022-12-08",
-    "id": "08c7e808-f2a6-49b3-841b-450b1775d440",
+    "detail": [],
+    "id": "e61e5dc2-9411-4c90-a427-52ce2f2d6b26",
     "idFood": "47477528-628c-11ed-9d10-3855030e3f14",
     "idUser": "7055dcb1-67ce-4c5f-bf51-03863f7e5778",
-    "location": "hihi",
-    "note": "hihi",
+    "note": "Cho em xin thêm ít đá",
+    "phone": "0341254325"
+  },
+  {
+    "dateNow": {},
+    "dateStart": "2022-12-08",
+    "detail": [],
+    "id": "e61e5dc2-9411-4c90-a427-52ce2f2d6b26",
+    "idFood": "47477528-628c-11ed-9d10-3855030e3f14",
+    "idUser": "7055dcb1-67ce-4c5f-bf51-03863f7e5778",
+    "note": "Cho em xin thêm ít đá",
+    "phone": "0341254325"
+  },
+  {
+    "dateNow": {},
+    "dateStart": "2022-12-08",
+    "detail": [],
+    "id": "e61e5dc2-9411-4c90-a427-52ce2f2d6b26",
+    "idFood": "47477528-628c-11ed-9d10-3855030e3f14",
+    "idUser": "7055dcb1-67ce-4c5f-bf51-03863f7e5778",
+    "note": "Cho em xin thêm ít đá",
     "phone": "0341254325"
   }
-}
+]
