@@ -20,7 +20,7 @@ export function ListShopFood({ navigation }) {
   }, []);
   return (
     <View style={{ flex: 1.3, paddingTop: 20, }}>
-      <LoadComponent visible={loadVisible} />
+      {/* <LoadComponent visible={loadVisible} /> */}
       <FlatList
         data={listFood}
         renderItem={({ item, index }) =>
