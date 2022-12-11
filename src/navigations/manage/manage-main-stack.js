@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeManage } from '../../features/account/pages/manage-shop-screen';
-import { ManageShopFood } from '../../features/manage-shop/pages';
+import { ManageShopFood } from '../../features/manage-shop/pages/shop-food';
 import { ManageFoodStackNavigator } from './shop-food-stack';
 import { colors } from '../../common/constants/colors';
 const HomeManageStack = createNativeStackNavigator();
