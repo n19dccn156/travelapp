@@ -17,7 +17,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ListCategories from './ListCategories';
 import style from '../../style/Home/style';
-import { getAllCaterogy, getServiceOfCaterogy } from '../../services/getData';
+import { getAllCaterogy, getListServicesForPage, getServiceOfCaterogy } from '../../services/getData';
 import ListButtonCategory from './ListButtonCategory';
 import MyCard from './MyCard';
 import Swiper from 'react-native-swiper';
@@ -33,6 +33,7 @@ const HomeServiceScreen = ({ navigation, route }) => {
 
     //load list service for type
     const [listServiceForType, setlistServiceForType] = useState([]);
+
     const getServiceOfType = (type) => {
         getServiceOfCaterogy(type)
             .then(function (res) {
