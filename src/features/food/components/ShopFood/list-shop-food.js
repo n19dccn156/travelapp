@@ -3,11 +3,9 @@ import { FlatList, Text, View, Image, TouchableOpacity } from "react-native";
 import { getListShop, itemShopFood } from "../../services/get-data";
 import { stylesView, stylesImg, stylesText } from "../../styles/styleHome/styles-home";
 import { RenderLongText } from "../../../../utility/handler";
-import LoadComponent from "../../../../utility/load-component";
 import Ionicons from "react-native-vector-icons/Ionicons";
 export function ListShopFood({ navigation }) {
   const [listFood, setListFood] = useState([]);
-  const [loadVisible, setLoadVisible] = useState(true);
   useEffect(() => {
     getListShop()
       .then(function(res) {
@@ -20,7 +18,6 @@ export function ListShopFood({ navigation }) {
   }, []);
   return (
     <View style={{ flex: 1.3, paddingTop: 20, }}>
-      {/* <LoadComponent visible={loadVisible} /> */}
       <FlatList
         data={listFood}
         renderItem={({ item, index }) =>

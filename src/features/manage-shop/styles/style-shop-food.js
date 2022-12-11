@@ -7,7 +7,11 @@ const styleView = StyleSheet.create({
   item: {
     height: 60,
     width: "100%",
-    backgroundColor: "black"
+    justifyContent:'center',
+    backgroundColor:'rgba(0,0,0,0.2)',
+    padding:10,
+    borderRadius:10,
+    marginTop:10
   }
 });
 export { styleView };
