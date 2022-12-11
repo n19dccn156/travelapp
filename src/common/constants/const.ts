@@ -18,4 +18,6 @@ export const variables = {
     width: ScreenWidth,
     height: ScreenHeight,
     host: "https://travelappbackend.azurewebsites.net",
+    host2: "http://192.168.10.101:8080",
+
 }

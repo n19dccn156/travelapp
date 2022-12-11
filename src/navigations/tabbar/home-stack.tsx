@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from '../../features/home/page/home-screen';
-import ServiceScreen from '../../features/service/views/ServiceScreen';
+// import ServiceScreen from '../../features/service/views/ServiceScreen';
 import { DiscoveryStackNavigator } from '../discovery/discovery-main-stack';
 import { HotelStackNavigator } from '../hotel/hotel-main-stack';
 import { NotificationStackNavigator } from '../notification/notification-main-stack';
