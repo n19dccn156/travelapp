@@ -22,7 +22,7 @@ function EditTypeScreen({ navigation, route }) {
                     setTypeService(res.data);
 
                     // setText(res.data.name);
-                    getAllCaterogyAgain();
+                    route.params.getAllCaterogyAgain();
                 }
 
                 Alert.alert('Thông báo!', res.message, [
@@ -62,6 +62,7 @@ function EditTypeScreen({ navigation, route }) {
             { text: ' Chắc', onPress: () => console.log('OK Pressed') },
         ]);
     };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -121,7 +122,7 @@ function EditTypeScreen({ navigation, route }) {
                 >
                     <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Cập nhật</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     style={{
                         backgroundColor: COLORS.primary,
                         margin: 20,
@@ -135,7 +136,7 @@ function EditTypeScreen({ navigation, route }) {
                     onPress={() => confirmDelete()}
                 >
                     <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Xóa</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </SafeAreaView>
     );

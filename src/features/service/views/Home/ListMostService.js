@@ -4,7 +4,7 @@ import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
 import style from '../../style/Home/style';
-import { getServiceOfCaterogy } from '../../services/getData';
+import { getListServicesForPage, getServiceOfCaterogy } from '../../services/getData';
 import ListButtonCategory from './ListButtonCategory';
 import ListServiceForType from './ListServiceForType';
 
@@ -12,10 +12,13 @@ function ListMostService({ navigation, route }) {
     const [serviceType, setServiceType] = useState('');
     const [showedButtonCategory, setShowedButtonCategory] = useState(true);
     const [showedListService, setShowedListService] = useState(true);
+    const [page, setPage] = useState(0);
 
     const listCategory = route.params;
     //load list service for type
     const [listServiceForType, setlistServiceForType] = useState([]);
+
+    let listTempServiceForType = listTempServiceForType;
 
     const getServiceOfType = (type) => {
         getServiceOfCaterogy(type)
@@ -35,6 +38,27 @@ function ListMostService({ navigation, route }) {
         getServiceOfType(listCategory[0].id);
         setServiceType(listCategory[0].id);
     }, []);
+
+    const getMoreData = () => {
+        if (listServiceForType.length != 0) {
+            setShowedListService(true);
+            setPage(page + 1);
+            console.log('page: ' + page);
+            setShowedListService(false);
+            // getListServicesForPage(page)
+            //     .then(function (res) {
+            //         listTempServiceForType.push([...res.data.content]);
+            //         setlistServiceForType(listCategory);
+            //         setShowedListService(false);
+            //     })
+            //     .catch((err) => {
+            //         setlistServiceForType([]);
+            //         setShowedListService(false);
+            //         console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
+            //     });
+        }
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -71,10 +95,11 @@ function ListMostService({ navigation, route }) {
                     <ActivityIndicator size="small" color={COLORS.primary} animating={showedListService} />
                     {!showedListService ? (
                         <View>
+                            <Text>{console.log('listTempServiceForType', listTempServiceForType)}</Text>
                             {/* list service of type */}
                             <ListServiceForType
                                 navigation={navigation}
-                                route={{ listServiceForType: listServiceForType }}
+                                route={{ listServiceForType: listServiceForType, getMoreData: getMoreData }}
                             />
                         </View>
                     ) : (

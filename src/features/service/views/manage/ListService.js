@@ -7,13 +7,17 @@ function ListService({ navigation, route }) {
     return (
         <View>
             <FlatList
-                contentContainerStyle={{ paddingLeft: 20 }}
+                // contentContainerStyle={{ paddingLeft: 20 }}
                 vertical
                 showsVerticalScrollIndicator={false}
                 data={route.listServiceForType}
                 renderItem={({ item }) => (
                     <MyServiceCard
-                        route={{ service: item, listCategory: route.listCategory }}
+                        route={{
+                            service: item,
+                            listCategory: route.listCategory,
+                            getServiceOfType: route.getServiceOfType,
+                        }}
                         navigation={navigation}
                     />
                 )}
