@@ -1,16 +1,16 @@
-import COLORS from "../const/colors";
-import { StyleSheet } from "react-native";
+import COLORS from '../const/colors';
+import { StyleSheet } from 'react-native';
 
 const style = StyleSheet.create({
     header: {
-        justifyContent:'space-between',
+        justifyContent: 'space-between',
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: COLORS.primary,
         width: '100%',
         height: '10%',
-        paddingHorizontal:10,
-         elevation: 15,
+        paddingHorizontal: 10,
+        elevation: 15,
     },
     searchInputContainer: {
         height: 40,
@@ -31,14 +31,13 @@ const style = StyleSheet.create({
         marginHorizontal: 20,
         marginTop: 10,
         marginBottom: 10,
-
     },
     categoryListText: {
         flexDirection: 'column',
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
     },
-    CardHotel: {
+    singleCard: {
         height: 200,
         width: '97%',
         elevation: 15,
@@ -65,7 +64,7 @@ const style = StyleSheet.create({
         height: '100%',
         // weight: '60%',
         // backgroundColor: COLORS.red,
-        flexDirection: 'column'
+        flexDirection: 'column',
     },
     saleTag: {
         height: '15%',
@@ -80,6 +79,10 @@ const style = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    iconDetail: {
+        color: COLORS.orange,
+        marginTop: 2,
+    },
     textDetail: {
         fontSize: 14,
         fontWeight: 'bold',
@@ -90,7 +93,6 @@ const style = StyleSheet.create({
         position: 'absolute',
         bottom: 5,
         right: 15,
-
     },
     ratingTag: {
         height: 25,
@@ -107,20 +109,26 @@ const style = StyleSheet.create({
         paddingHorizontal: 5,
         paddingVertical: 10,
     },
+    line: {
+        backgroundColor: COLORS.grey,
+        height: 1,
+        width: '80%',
+        marginHorizontal: '10%',
+        marginBottom: 10,
+    },
     h1: {
         color: 'black',
         fontSize: 18,
         fontWeight: 'bold',
     },
     rowBetween: {
-        flexDirection:'row',
-        justifyContent: 'space-between'
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     rowCenter: {
         flexDirection: 'row',
-        alignItems: 'space-between'
-    }
-}
-);
+        alignItems: 'space-between',
+    },
+});
 
 export default style;
