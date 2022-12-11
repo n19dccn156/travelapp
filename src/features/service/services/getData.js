@@ -2,7 +2,7 @@ import { variables } from '../../../common/constants/const';
 var host = variables.host;
 const getListServices = async () => {
     try {
-        const response = await fetch(`${host}/api/v1/services?_type=ALL&_sort=ALL&_page=0&_size=10`);
+        const response = await fetch(`${host}/api/v1/services?_type=ALL&_sort=ALL&_page=0&_size=1`);
         console.log('call');
         return response.json();
     } catch (error) {
@@ -10,6 +10,18 @@ const getListServices = async () => {
         return {};
     }
 };
+
+const getListServicesForPage = async (page) => {
+    try {
+        const response = await fetch(`${host}/api/v1/services?_type=ALL&_sort=ALL&_page=${page}&_size=1`);
+        console.log('call');
+        return response.json();
+    } catch (error) {
+        console.log('🚀 ~ file: getListShop ~ line 4 ~ error', error);
+        return {};
+    }
+};
+
 const getAllCaterogy = async () => {
     try {
         const response = await fetch(`${host}/api/v1/typeservices`);
@@ -40,4 +52,4 @@ const getSheduleByServiceId = async (id) => {
         console.log('🚀 ~ file: getSheduleByServiceId ~ line 16 ~ error', error);
     }
 };
-export { getListServices, getAllCaterogy, getServiceOfCaterogy, getSheduleByServiceId };
+export { getListServices, getAllCaterogy, getServiceOfCaterogy, getSheduleByServiceId, getListServicesForPage };

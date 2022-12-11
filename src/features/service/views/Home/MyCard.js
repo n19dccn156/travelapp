@@ -76,7 +76,7 @@ function MyCard({ navigation, route }) {
                                     textShadowRadius: 1,
                                 }}
                             >
-                                {service.star.toFixed(1)}
+                                {/* {service.star.toFixed(1)} */}
                             </Text>
                         </View>
                         <View style={{ flexDirection: 'row' }}>

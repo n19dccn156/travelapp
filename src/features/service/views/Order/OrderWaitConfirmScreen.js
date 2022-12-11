@@ -15,18 +15,28 @@ import { Text } from 'react-native-animatable';
 import { BackgroundImage } from 'react-native-elements/dist/config';
 import { ScrollView } from 'react-native-gesture-handler';
 import COLORS from '../../consts/colors';
-import { getOrderByIdAndState, getOrderByIdUserAndState } from '../../services/Order/getData';
+import {
+    getOrderByIdAndState,
+    getOrderByIdUserAndState,
+    getOrderByIdUserAndStateForPage,
+} from '../../services/Order/getData';
 import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
 
 function OrderWaitConfirmScreen({ navigation, route }) {
     const [listOrder, setListOrder] = useState([]);
     const idState = route.params.idState;
     const [showed, setShowed] = useState(true);
+    const [showedFooter, setShowedFooter] = useState(false);
+    const [page, setPage] = useState(0);
+
+    let check = true;
+    const listTemp = [];
 
     const getOrderByIdUserAndStateAgain = (id) => {
         getOrderByIdUserAndState(id, idState)
             .then(function (res) {
                 setListOrder([...res.data.content]);
+                listTemp.push([...res.data.content]);
                 setShowed(false);
             })
             .catch((err) => {
@@ -37,9 +47,36 @@ function OrderWaitConfirmScreen({ navigation, route }) {
             });
     };
 
+    const getOrderByIdUserAndStateForPageAgain = (id) => {
+        console.log('listOrder: ' + listOrder);
+
+        if (listOrder.length != 0 && check == true) {
+            setPage(page + 1);
+            console.log('page: ' + page);
+            setShowedFooter(true);
+            getOrderByIdUserAndStateForPage(id, idState, page)
+                .then(function (res) {
+                    listTemp.push([...res.data.content]);
+                    setListOrder(listTemp);
+                    setShowedFooter(false);
+                })
+                .catch((err) => {
+                    setShowedFooter(false);
+                    check = false;
+                    console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
+                });
+        }
+    };
+
     useEffect(() => {
         getOrderByIdUserAndStateAgain(route.params.idUser);
     }, [showed]);
+
+    const footerComponent = () => {
+        <View>
+            <ActivityIndicator size="large" color={COLORS.primary} animating={showedFooter} />
+        </View>;
+    };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -79,6 +116,9 @@ function OrderWaitConfirmScreen({ navigation, route }) {
                                     }}
                                 />
                             )}
+                            ListFooterComponent={footerComponent}
+                            onEndReached={getOrderByIdUserAndStateForPageAgain}
+                            onEndReachedThreshold={0}
                         />
                     </View>
                 ) : (

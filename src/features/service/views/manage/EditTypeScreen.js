@@ -122,7 +122,7 @@ function EditTypeScreen({ navigation, route }) {
                 >
                     <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Cập nhật</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     style={{
                         backgroundColor: COLORS.primary,
                         margin: 20,
@@ -136,7 +136,7 @@ function EditTypeScreen({ navigation, route }) {
                     onPress={() => confirmDelete()}
                 >
                     <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Xóa</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </SafeAreaView>
     );
