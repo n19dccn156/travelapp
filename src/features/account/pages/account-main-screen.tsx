@@ -1,12 +1,15 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Avatar, Icon, ListItem } from "@rneui/themed";
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, Image, Modal, TouchableOpacity, Alert, Pressable, StyleSheet, Button, ActivityIndicator } from "react-native";
+import { View,Alert} from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { colors } from "../../../common/constants/colors";
 import { sizeScale } from "../../../common/constants/const";
 
+
 export function AccountScreen({ navigation }: { navigation: any }) {
+
 
     const [modalVisible, setModalVisible] = useState(false);
     const [logined, setLogined] = useState(false);
@@ -73,8 +76,8 @@ export function AccountScreen({ navigation }: { navigation: any }) {
         {
             name: 'Thông Tin Cá Nhân',
             sizeName: 22,
-            icon: 'person-circle',
-            sizeIcon: 50,
+            icon: 'user-circle',
+            sizeIcon: 30,
             color: colors.red,
             navigation: 'ProfileScreen',
             accept: false,
@@ -82,10 +85,29 @@ export function AccountScreen({ navigation }: { navigation: any }) {
             // },
         },
         {
+            name: 'Về Chúng Tôi',
+            sizeName: 22,
+            icon: 'info-circle',
+            sizeIcon: 30,
+            color: colors.red,
+            navigation: 'DevelopScreen',
+            accept: false,
+        },
+        {
+            name: 'Quản Lý Dịch Vụ',
+            sizeName: 22,
+            icon: 'store',
+            sizeIcon: 30,
+            color: colors.red,
+            navigation: 'ManageStackNavigator',
+            accept: false,
+        },
+        {
             name: 'Đăng Xuất',
             sizeName: 22,
             icon: 'log-out',
             sizeIcon: 50,
+
             // color: colors.indigo,
             navigation: 'HomeScreen',
             accept: true,
@@ -108,6 +130,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
             navigation: 'DevelopScreen',
             accept: false,
         },
+
     ];
 
     return (
@@ -152,11 +175,13 @@ export function AccountScreen({ navigation }: { navigation: any }) {
                             <ListItem.Content>
                                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
                             </ListItem.Content>
+
                             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
                         </ListItem>)
                     } else if (l.name !== 'Đăng Xuất' && l.name !== 'Đăng Nhập') {
                         return(<ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
                             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
+
                             <ListItem.Content>
                                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
                             </ListItem.Content>
