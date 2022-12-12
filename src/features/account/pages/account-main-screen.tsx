@@ -63,10 +63,17 @@ export function AccountScreen({ navigation }: { navigation: any }) {
 
     function not_accept(site: String) {
         setModalVisible(!modalVisible)
-        setTimeout(() => {
+        setTimeout(async () => {
             setModalVisible(modalVisible)
+            if(site === "ProfileScreen") {
+                const userid = await AsyncStorage.getItem('@userid');
+                if (userid === null || userid === undefined) {
+                    navigation.navigate("Login");
+                    return;
+                }
+            }
             navigation.navigate(site);
-        }, 10);
+        }, 1000);
     }
 
     const list = [
@@ -86,7 +93,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
             sizeName: 22,
             icon: 'log-out',
             sizeIcon: 50,
-            // color: colors.indigo,
+            color: colors.gray1,
             navigation: 'HomeScreen',
             accept: true,
         },
@@ -95,7 +102,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
             sizeName: 22,
             icon: 'log-out',
             sizeIcon: 50,
-            // color: colors.indigo,
+            color: colors.gray1,
             navigation: 'Login',
             accept: false,
         },

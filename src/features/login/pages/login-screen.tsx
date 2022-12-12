@@ -7,66 +7,66 @@ import { LoginButton, AccessToken, LoginResult, Profile } from 'react-native-fbs
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
 
+// const currentProfile = Profile.getCurrentProfile().then(
+//     function (currentProfile) {
+//         if (currentProfile) {
+
+//             const urlGet = variables.host2 + "/api/v1/users/" + currentProfile.userID;
+//             const urlPost = variables.host2 + "/api/v1/users";
+//             fetch(urlGet)
+//                 .then((response) => response.json())
+//                 .then((data) => {
+//                     if (data.status === 'success') {
+//                         try {
+//                             AsyncStorage.removeItem('@userid')
+//                             AsyncStorage.setItem('@userid', data.data.id);
+//                             // login();
+//                         } catch (error) {
+//                             Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
+//                         }
+//                     } else {
+//                         let dataPost = {
+//                             "avatar": currentProfile.imageURL?.split("?")[0],
+//                             "firstName": currentProfile.firstName + " " + currentProfile.middleName,
+//                             "id": uuid.v4(),
+//                             "idSocial": currentProfile.userID,
+//                             "lastName": currentProfile.lastName,
+//                             "phone": "phone",
+//                             "platform": "facebook",
+//                             "sex": "Nam"
+//                         }
+
+//                         fetch(urlPost, {
+//                             method: "POST",
+//                             headers: { 'Content-Type': 'application/json' },
+//                             body: JSON.stringify(dataPost)
+//                         })
+//                             .then((res) => res.json())
+//                             .then((data) => {
+//                                 if (data.status === 'success') {
+//                                     try {
+//                                         AsyncStorage.removeItem('@userid')
+//                                         AsyncStorage.setItem('@userid', data.data.id);
+//                                         console.log("Login successfully: " + data.data.id)
+//                                     } catch (error) {
+//                                         Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
+//                                     }
+//                                 } else {
+//                                     Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
+//                                 }
+//                             })
+//                             .catch((error) => console.log(error));
+//                     }
+//                 });
+//         }
+//     }
+// );
+
 export function LoginScreen({ navigation }: { navigation: any }) {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-
-    const currentProfile = Profile.getCurrentProfile().then(
-        function (currentProfile) {
-            if (currentProfile) {
-
-                const urlGet = variables.host2 + "/api/v1/users/" + currentProfile.userID;
-                const urlPost = variables.host2 + "/api/v1/users";
-                fetch(urlGet)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.status === 'success') {
-                            try {
-                                AsyncStorage.removeItem('@userid')
-                                AsyncStorage.setItem('@userid', data.data.id);
-                                // login();
-                            } catch (error) {
-                                Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
-                            }
-                        } else {
-                            let dataPost = {
-                                "avatar": currentProfile.imageURL?.split("?")[0],
-                                "firstName": currentProfile.firstName + " " + currentProfile.middleName,
-                                "id": uuid.v4(),
-                                "idSocial": currentProfile.userID,
-                                "lastName": currentProfile.lastName,
-                                "phone": "phone",
-                                "platform": "facebook",
-                                "sex": "Nam"
-                            }
-
-                            fetch(urlPost, {
-                                method: "POST",
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(dataPost)
-                            })
-                                .then((res) => res.json())
-                                .then((data) => {
-                                    if (data.status === 'success') {
-                                        try {
-                                            AsyncStorage.removeItem('@userid')
-                                            AsyncStorage.setItem('@userid', data.data.id);
-                                            console.log("Login successfully: " + data.data.id)
-                                        } catch (error) {
-                                            Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
-                                        }
-                                    } else {
-                                        Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
-                                    }
-                                })
-                                .catch((error) => console.log(error));
-                        }
-                    });
-            }
-        }
-    );
 
     // async function loginHandler(id: string) {
     //     try {
@@ -165,8 +165,8 @@ export function LoginScreen({ navigation }: { navigation: any }) {
                             } else {
                                 AccessToken.getCurrentAccessToken().then(
                                     (data: any) => {
-                                        currentProfile;
-                                        // login();
+                                        // currentProfile;
+                                        login();
                                     }
                                 )
                             }
