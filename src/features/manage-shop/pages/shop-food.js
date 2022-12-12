@@ -4,7 +4,22 @@ import { Text } from "react-native-elements";
 import { StatusBar } from "react-native";
 import { colors } from "../../../common/constants/colors";
 import { styleView } from "../styles/style-shop-food";
+import store from "../../../redux/store";
+import { DishManage } from "../../../redux/action/ModifyDish";
+import { createRequest } from "../../food/services/get-data";
 export function ManageShopFood({ navigation }) {
+  (async function getData() {
+    const response = await createRequest(
+      "/api/v1/dishs/idfood/47477528-628c-11ed-9d10-3855030e3f14"
+    );
+    if (response.status == "success") {
+      store.dispatch(DishManage("CREATE_LIST_DISH", response.data));
+    }
+  })()
+    .then(data => {})
+    .catch(err => {
+      console.log(err);
+    });
   return (
     <View style={styleView.container}>
       <StatusBar
@@ -13,7 +28,7 @@ export function ManageShopFood({ navigation }) {
         barStyle={"light-content"}
         hidden={false}
       />
-      {renderItem({navigation})}
+      {renderItem({ navigation })}
       <View />
     </View>
   );
@@ -40,6 +55,7 @@ function renderItem({ navigation }) {
         onPress={() => {
           navigation.navigate(element.navigation);
         }}
+        key={index}
       >
         <Text>
           {element.title}
