@@ -71,7 +71,7 @@ function OrderDetailReducer(state=ListDetailOrder,action){
         case 'createDetail':
             return [...state,action.payload];
         case 'deleteDetail':
-           return [state]
+           return [...state]
         default:
             return state;
     }

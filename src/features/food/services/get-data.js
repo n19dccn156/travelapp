@@ -45,13 +45,13 @@ const getInfoShop = async (id) => {
     console.log('🚀 ~ file: getShopFood ~ line 16 ~ error', error);
   }
 };
-async function createRequest(url,type='get',body){
+async function createRequest(url,type='get',body={}){
   try {
-    const response = await fetch(`${host}/api/v1/foods/47477528-628c-11ed-9d10-3855030e3f14`);
+    const response = await fetch(`${host}${url}`);
     return response.json();
   } catch (error) {
     return{}
-    console.log('🚀 ~ file: getShopFood ~ line 16 ~ error', error);
+    console.log('🚀 ~ file: request failed ~ error', error);
   }
 }
 export {getListShop, getAllDishes,getInfoDish,getInfoShop,getDishByIdShop,createRequest};
