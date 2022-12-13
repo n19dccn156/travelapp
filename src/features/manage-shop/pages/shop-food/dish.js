@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -17,44 +17,71 @@ import {
 } from "../../../food/styles/styleHome/styles-home";
 import { variables } from "../../../../common/constants/const";
 import { ModalModifyDish } from "../../components/modalModifyDish";
+import { createRequest } from "../../../food/services/get-data";
 const host = variables.host;
 export function DishManage({ navigation }) {
-  let AllDish = [...store.getState().dishManage];
+  const [AllDish,setAllDish] = useState([])
+  useEffect(()=>{
+    getData().then((data)=>setAllDish([...data])).catch(err=>console.log(err))
+  },[])
+  const [modalVisible, setModalVisible] = useState(false);
   return (
     <View>
-      {/* <ScrollView>
+      <Ionicons></Ionicons>
+      <ScrollView>
         {renderItem()}
-      </ScrollView> */}
-      <ModalModifyDish></ModalModifyDish>
+      </ScrollView>
+      <ModalModifyDish
+        visible={modalVisible}
+        callbackClose={() => {
+          setModalVisible(false);
+        }}
+      />
     </View>
   );
   function renderItem() {
     return AllDish.map((item, index) => {
-      return ( AllDish.length !=0 ?
-        (<TouchableOpacity
-          style={stylesView.item}
-          key={`${item.id}food`}
-          onPress={() => {}}
-        >
-          <View>
-            <Image
-              source={{ uri: `${item.avatar}` }}
-              style={stylesImg.avatarShop}
-            />
-          </View>
-          <View style={stylesView.item_info}>
-            <Text style={stylesText.name_shop}>
-              {item.name}
-            </Text>
-            <Text style={{ justifyContent: "center" }}>
-              Giá: {item.price}
-            </Text>
-            <Text style={stylesText.distance}>
-              Đơn vị tính: {item.unit}
-            </Text>
-          </View>
-        </TouchableOpacity>) : <View></View>
-      );
+      return AllDish.length != 0
+        ? <TouchableOpacity
+            style={stylesView.item}
+            key={`${item.id}food`}
+            onPress={() =>{
+              store.dispatch({
+                type: "INSERT_DISH",
+                payload: {...item}
+              });
+              setModalVisible(true);
+            }
+             }
+          >
+            <View>
+              <Image
+                source={{ uri: `${item.avatar}` }}
+                style={stylesImg.avatarShop}
+              />
+            </View>
+            <View style={stylesView.item_info}>
+              <Text style={stylesText.name_shop}>
+                {item.name}
+              </Text>
+              <Text style={{ justifyContent: "center" }}>
+                Giá: {item.price}
+              </Text>
+              <Text style={stylesText.distance}>
+                Đơn vị tính: {item.unit}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        : <View />;
     });
   }
+}
+async function getData() {
+  const response = await createRequest(
+    "/api/v1/dishs/idfood/47477528-628c-11ed-9d10-3855030e3f14"
+  );
+  if (response.status == "success") {
+    return response.data
+  }
+  else return {}
 }

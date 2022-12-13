@@ -9,10 +9,14 @@ import { ListDish } from "../components/Dish/all-dishes";
 import { TestScreen } from "./test-redux";
 import ModalOrder from "../components/Dish/modal-oder";
 import { OrderScreen } from "./order-screen";
-export function FoodScreen({ navigation }) {
-  return (
-    <View>
-      <StatusBar
+import { connect } from "react-redux";
+import store from "../../../redux/store";
+function FoodScreen(props) {
+    console.log(props);
+    console.log(props.data.modal)
+    return (    
+      <View>
+        {/* <StatusBar
         animated={true}
         backgroundColor={colors.primary}
         barStyle={"light-content"}
@@ -30,7 +34,10 @@ export function FoodScreen({ navigation }) {
         <View style={{height:'89%'}}>
           <ListShopFood navigation={navigation} />
         </View>
-      </SafeAreaView>
-    </View>
-  );
+      </SafeAreaView> */}
+      </View>
+    );
 }
+export default connect(state=>{
+  return {data: state}
+})(FoodScreen);

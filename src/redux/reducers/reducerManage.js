@@ -16,10 +16,5 @@ function ModalDishManage(state={},action){
       return {...state};
   }
 }
-function visibleModalDish(state={isVisible:false},action){
-   return {
-    ...state,
-    isVisible: !state.isVisible
-   }
-}
-export { ManageDishReducer,ModalDishManage,visibleModalDish};
+
+export { ManageDishReducer,ModalDishManage};

@@ -1,58 +1,82 @@
 import { variables } from "../../../common/constants/const";
-var host =variables.host;
+var host = variables.host;
 const getListShop = async () => {
   try {
-    const response = await fetch(`${host}/api/v1/foods?_type=ALL&_sort=ALL&_page=0&_size=10`);
+    const response = await fetch(
+      `${host}/api/v1/foods?_type=ALL&_sort=ALL&_page=0&_size=10`
+    );
     return response.json();
   } catch (error) {
-    console.log('🚀 ~ file: getListShop ~ line 4 ~ error', error);
+    console.log("🚀 ~ file: getListShop ~ line 4 ~ error", error);
     return {};
   }
 };
-async function getDishByIdShop(id){
+async function getDishByIdShop(id) {
   try {
     const response = await fetch(`${host}/api/v1/dishs/idfood/${id}`);
     return response.json();
   } catch (error) {
-    console.log('🚀 ~ file: getListShop ~ line 4 ~ error', error);
+    console.log("🚀 ~ file: getListShop ~ line 4 ~ error", error);
     return {};
   }
 }
 const getAllDishes = async () => {
   try {
     const response = await fetch(`${host}/`);
-   
+
     return response.json();
   } catch (error) {
-    console.log('🚀 ~ file: getListShop ~ line 16 ~ error', error);
+    console.log("🚀 ~ file: getListShop ~ line 16 ~ error", error);
     return {};
   }
 };
-const getInfoDish = async (id) => {
+const getInfoDish = async id => {
   try {
     const response = await fetch(`${host}/api/v1/dishs/${id}`);
     return response.json();
   } catch (error) {
-    console.log('🚀 ~ file: getListShop ~ line 16 ~ error', error);
+    console.log("🚀 ~ file: getListShop ~ line 16 ~ error", error);
   }
 };
-const getInfoShop = async (id) => {
+const getInfoShop = async id => {
   try {
-    const response = await fetch(`${host}/api/v1/foods/47477528-628c-11ed-9d10-3855030e3f14`);
+    const response = await fetch(
+      `${host}/api/v1/foods/47477528-628c-11ed-9d10-3855030e3f14`
+    );
     return response.json();
   } catch (error) {
-    return{}
-    console.log('🚀 ~ file: getShopFood ~ line 16 ~ error', error);
+    return {};
+    console.log("🚀 ~ file: getShopFood ~ line 16 ~ error", error);
   }
 };
-async function createRequest(url,type='get',body={}){
+async function createRequest(url, type = "get", body = {}) {
   try {
-    const response = await fetch(`${host}${url}`);
-    return response.json();
+    if (type == "get") {
+      const response = await fetch(`${host}${url}`);
+      return response.json();
+    }
+     else {
+        const response = await fetch(`${host}${url}`,
+        {
+          method: type,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({...body})
+        });
+        return response.json();
+      }
   } catch (error) {
-    return{}
-    console.log('🚀 ~ file: request failed ~ error', error);
+    return {};
+    console.log("🚀 ~ file: request failed ~ error", error);
   }
 }
-export {getListShop, getAllDishes,getInfoDish,getInfoShop,getDishByIdShop,createRequest};
-
+export {
+  getListShop,
+  getAllDishes,
+  getInfoDish,
+  getInfoShop,
+  getDishByIdShop,
+  createRequest
+};

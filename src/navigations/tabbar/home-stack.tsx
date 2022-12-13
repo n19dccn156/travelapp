@@ -9,7 +9,7 @@ import { HotelStackNavigator } from '../hotel/hotel-main-stack';
 import { NotificationStackNavigator } from '../notification/notification-main-stack';
 import { ServiceStackNavigator } from '../service/service-main-stack';
 import { FoodStackNavigator } from '../food/food-main-stack';
-
+import { MainStackNavigator } from '../../features/service/navigations/StackNavigation';
 const HomeStack = createNativeStackNavigator();
 
 export function HomeStackNavigator() {
@@ -21,7 +21,7 @@ export function HomeStackNavigator() {
                 component={HomeScreen}
                 options={{ headerShown: false, animation: 'none' }}
             />
-            <HomeStack.Screen name="ServiceScreen" component={ServiceStackNavigator} options={{ headerShown: false }} />
+            <HomeStack.Screen name="ServiceScreen" component={MainStackNavigator} options={{ headerShown: false }} />
             <HomeStack.Screen name="HotelStack" component={HotelStackNavigator} options={{ headerShown: false }} />
             <HomeStack.Screen name="FoodStack" component={FoodStackNavigator} options={{ headerShown: false }} />
             <HomeStack.Screen
