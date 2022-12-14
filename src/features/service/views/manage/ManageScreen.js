@@ -97,9 +97,7 @@ function ManageScreen({ navigation }) {
                 }}
                 activeOpacity={0.8}
                 onPress={() =>
-                    navigation.navigate('OrderManageForCustomer', {
-                        idUser: '7055dcb1-67ce-4c5f-bf51-03863f7e5778',
-                    })
+                    navigation.navigate('OrderManageForCustomer')
                 }
             >
                 <View
