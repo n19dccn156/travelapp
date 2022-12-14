@@ -14,12 +14,12 @@ import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 import ListSheduleForService from './ListSheduleForService';
 import { ScrollView } from 'react-native-gesture-handler';
 import { BackgroundImage } from 'react-native-elements/dist/config';
+import store from '../../../../redux/store';
 
-function MyOrderWaitConfirmCard({ navigation, route }) {
-    const order = route.order;
-
-    const idState = route.idState;
-
+function MyOrderWaitConfirmCard(props) {
+    const order = props.route.order;
+    const idState = props.route.idState;
+    const navigation = props.navigation
     const [modalVisible, setModalVisible] = useState(false);
 
     const [service, setService] = useState('');
@@ -37,7 +37,6 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
         updateStateOrderById(order.id, idState)
             .then(function (res) {
                 if (res.status == 'success') {
-                    route.getOrderByIdUserAndStateAgain(order.idUser);
                     route.setShowedCancel(true);
                     console.log('showedCancel', route.showedCancel);
                 }
@@ -104,7 +103,6 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
         }
         return true;
     };
-
     const updateOrder = () => {
         if (checkData())
             updateOrderById(order, selectedShedule, selectedDate, number, service.price, phone)
@@ -114,7 +112,8 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
                             {
                                 text: 'Đóng',
                                 onPress: () => {
-                                    route.getOrderByIdUserAndStateAgain(order.idUser);
+                                    //route.getOrderByIdUserAndStateAgain(order.idUser);
+                                    //store.dispatch
                                     setModalVisible(false);
                                 },
                             },
@@ -145,7 +144,9 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             {
                 text: ' Chắc',
                 onPress: () => {
-                    upDateStateOrder('DAHUY');
+                  const data= {...order,idState:'DAHUY'}
+                  store.dispatch({type:'MODIFY_LIST_ORDER',payload:data})
+                //     upDateStateOrder('DAHUY');
                 },
             },
         ]);
@@ -156,7 +157,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
     }
 
     return (
-        <View style={{ borderBottomWidth: 1 }}>
+        <View style={{ borderBottomWidth: 1 }} key={service.id}>
             <View style={{ flexDirection: 'row', margin: 5 }}>
                 <Text style={{ fontWeight: 'bold', color: COLORS.dark }}>
                     Ngày đặt: {moment(order.dateNow).format('YYYY-MM-DD')}{' '}
