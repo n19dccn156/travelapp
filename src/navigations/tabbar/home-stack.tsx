@@ -1,21 +1,17 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { HomeScreen } from '../../features/home/page/home-screen';
-
-// import ServiceScreen from '../../features/service/views/ServiceScreen';
-
 import { DiscoveryStackNavigator } from '../discovery/discovery-main-stack';
 import { HotelStackNavigator } from '../hotel/hotel-main-stack';
 import { NotificationStackNavigator } from '../notification/notification-main-stack';
-import { ServiceStackNavigator } from '../service/service-main-stack';
 import { FoodStackNavigator } from '../food/food-main-stack';
-import { MainStackNavigator } from '../../features/service/navigations/StackNavigation';
+import {MainStackNavigator} from '../../features/service/navigations/StackNavigation'
+
 const HomeStack = createNativeStackNavigator();
 
 export function HomeStackNavigator() {
     return (
         <HomeStack.Navigator>
-
             <HomeStack.Screen
                 name="HomeScreen"
                 component={HomeScreen}
