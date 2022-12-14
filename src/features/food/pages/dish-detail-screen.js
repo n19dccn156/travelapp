@@ -108,7 +108,6 @@ export function DishScreen({ navigation, route }) {
         callbackClose={() => {
           setModalVisible(false);
         }}
-      
       />
     </View>
   );

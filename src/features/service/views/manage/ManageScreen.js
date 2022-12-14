@@ -21,22 +21,20 @@ function ManageScreen({ navigation }) {
                 setlistServiceForType([...res.data.content]);
             })
             .catch((err) => {
-                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+                console.log('🚀 ~ getServiceOfCaterogy ~ error', err);
             });
     };
     useEffect(() => {
         getAllCaterogy()
             .then(function (res) {
                 setListCategory([...res.data]);
-
                 setServiceType(res.data[0].id);
-                // getServiceOfType(res.data[0].id);
                 getServiceOfCaterogy(res.data[0].id)
                     .then(function (res) {
-                        setlistServiceForType([...res.data.content]);
+
                     })
                     .catch((err) => {
-                        console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+                        console.log('🚀 ~ getServiceOfCaterogy ~ error', err);
                     });
             })
             .catch((err) => {
