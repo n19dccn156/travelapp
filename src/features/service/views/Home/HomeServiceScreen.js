@@ -73,7 +73,9 @@ const HomeServiceScreen = ({ navigation, route }) => {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-
+                    onPress={() => {
+                        navigation.navigate('HomeStackNavigator');
+                    }}
                     // onPress={() => navigation.getParent('LeftDrawer').openDrawer()}
                 />
                 <AntDesign
@@ -81,7 +83,7 @@ const HomeServiceScreen = ({ navigation, route }) => {
                     size={28}
                     color={COLORS.white}
                     ProfileSceen
-                    onPress={() => navigation.navigate('ManageStackNavigator')}
+
                     // onPress={() => navigation.getParent('RightDrawer').openDrawer()}
                 />
             </View>

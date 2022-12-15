@@ -30,9 +30,7 @@ function ManageScreen({ navigation }) {
                 setListCategory([...res.data]);
                 setServiceType(res.data[0].id);
                 getServiceOfCaterogy(res.data[0].id)
-                    .then(function (res) {
-
-                    })
+                    .then(function (res) {})
                     .catch((err) => {
                         console.log('🚀 ~ getServiceOfCaterogy ~ error', err);
                     });
@@ -51,9 +49,9 @@ function ManageScreen({ navigation }) {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-                    onPress={() => navigation.navigate('HomeScreen')}
+                    onPress={() => navigation.navigate('AccountStackNavigator')}
                 />
-                <Text style={style.headerTitle}>Quản lý thông tin</Text>
+                <Text style={style.headerTitle}>Quản lý dịch vụ</Text>
             </View>
             <Image />
             {/* quan ly lich */}
@@ -86,7 +84,7 @@ function ManageScreen({ navigation }) {
                 </View>
             </TouchableOpacity>
 
-            {/* quan ly lich */}
+            {/* quan ly lich
             <TouchableOpacity
                 style={{
                     backgroundColor: COLORS.grey,
@@ -112,7 +110,7 @@ function ManageScreen({ navigation }) {
                     <Text>Lịch sử đơn đặt của khách hàng</Text>
                     <AntDesign name="right" size={20} />
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             {/* Quan ly loai dich vu */}
             <TouchableOpacity

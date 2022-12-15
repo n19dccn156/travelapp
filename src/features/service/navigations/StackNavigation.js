@@ -18,6 +18,10 @@ import ManageService from '../views/manage/ManageService';
 import ManageOrderForStaff from '../views/manage/ManageOrderForStaff';
 import ListServiceForOrderScreen from '../views/manage/ListServiceForOrderScreen';
 import OrderManageForCustomer from '../views/Order/OrderManageForCustomer';
+import { AccountStackNavigator } from '../../../navigations/tabbar/account-stack';
+import { MainNavigation } from '../../../navigations/main-navigation';
+import { TabBottomNavigation } from '../../../navigations/tabbar/tab-navigation';
+import { HomeStackNavigator } from '../../../navigations/tabbar/home-stack';
 
 const Stack = createStackNavigator();
 
@@ -40,8 +44,9 @@ const MainStackNavigator = ({ navigation, route }) => {
             <Stack.Screen name="AllTypeServices" component={AllTypeServices} />
             <Stack.Screen name="ServiceScreenForOneType" component={ListServiceForOneType} />
             <Stack.Screen name="OrderScreen" component={OrderScreen} />
-
             <Stack.Screen name="ManageStackNavigator" component={ManageStackNavigator} />
+            {/* home app*/}
+            <Stack.Screen name="HomeStackNavigator" component={HomeStackNavigator} />
         </Stack.Navigator>
     );
 };
@@ -72,6 +77,7 @@ const ManageStackNavigator = () => {
             <Stack.Screen name="ManageOrderForStaff" component={ManageOrderForStaff} />
             <Stack.Screen name="ListServiceForOrderScreen" component={ListServiceForOrderScreen} />
             <Stack.Screen name="OrderManageForCustomer" component={OrderManageForCustomer} />
+            <Stack.Screen name="AccountStackNavigator" component={AccountStackNavigator} />
         </Stack.Navigator>
     );
 };
