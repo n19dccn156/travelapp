@@ -1,47 +1,37 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Avatar, Icon, ListItem } from "@rneui/themed";
-import React, { useEffect, useState } from "react";
-import { View,Alert} from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
-import { colors } from "../../../common/constants/colors";
-import { sizeScale } from "../../../common/constants/const";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Avatar, Icon, ListItem } from '@rneui/themed';
+import React, { useEffect, useState } from 'react';
+import { View, Alert } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import { colors } from '../../../common/constants/colors';
+import { sizeScale } from '../../../common/constants/const';
 
 export function AccountScreen({ navigation }: { navigation: any }) {
-
-
     const [modalVisible, setModalVisible] = useState(false);
     const [logined, setLogined] = useState(false);
 
     function accept(site: String) {
-
-        Alert.alert(
-            "Thông Báo",
-            "Bạn có muốn đăng xuất",
-            [
-                {
-                    text: "Hủy",
-                    onPress: () => {
-
-                    },
-                    style: "destructive"
+        Alert.alert('Thông Báo', 'Bạn có muốn đăng xuất', [
+            {
+                text: 'Hủy',
+                onPress: () => {},
+                style: 'destructive',
+            },
+            {
+                text: 'Đồng ý',
+                onPress: () => {
+                    setModalVisible(!modalVisible);
+                    AsyncStorage.removeItem('@userid');
+                    setLogined(false);
+                    setTimeout(() => {
+                        setModalVisible(modalVisible);
+                        navigation.navigate(site);
+                    }, 1000);
                 },
-                {
-                    text: "Đồng ý",
-                    onPress: () => {
-                        setModalVisible(!modalVisible);
-                        AsyncStorage.removeItem('@userid');
-                        setLogined(false)
-                        setTimeout(() => {
-                            setModalVisible(modalVisible)
-                            navigation.navigate(site);
-                        }, 1000);
-                    },
-                    style: "default"
-                }
-            ]
-        );
+                style: 'default',
+            },
+        ]);
     }
 
     useEffect(() => {
@@ -62,12 +52,12 @@ export function AccountScreen({ navigation }: { navigation: any }) {
         }
 
         check();
-    })
+    });
 
     function not_accept(site: String) {
-        setModalVisible(!modalVisible)
+        setModalVisible(!modalVisible);
         setTimeout(() => {
-            setModalVisible(modalVisible)
+            setModalVisible(modalVisible);
             navigation.navigate(site);
         }, 10);
     }
@@ -76,7 +66,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
         {
             name: 'Thông Tin Cá Nhân',
             sizeName: 22,
-            icon: 'user-circle',
+            icon: 'person-circle',
             sizeIcon: 30,
             color: colors.red,
             navigation: 'ProfileScreen',
@@ -87,7 +77,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
         {
             name: 'Về Chúng Tôi',
             sizeName: 22,
-            icon: 'info-circle',
+            icon: 'information-circle',
             sizeIcon: 30,
             color: colors.red,
             navigation: 'DevelopScreen',
@@ -96,7 +86,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
         {
             name: 'Quản Lý Dịch Vụ',
             sizeName: 22,
-            icon: 'store',
+            icon: 'briefcase-sharp',
             sizeIcon: 30,
             color: colors.red,
             navigation: 'ManageStackNavigator',
@@ -115,22 +105,12 @@ export function AccountScreen({ navigation }: { navigation: any }) {
         {
             name: 'Đăng Nhập',
             sizeName: 22,
-            icon: 'log-out',
+            icon: 'log-in',
             sizeIcon: 50,
             // color: colors.indigo,
             navigation: 'Login',
             accept: false,
         },
-        {
-            name: 'Về chúng tôi',
-            sizeName: 22,
-            icon: 'information-circle',
-            sizeIcon: 50,
-            color: colors.indigo,
-            navigation: 'DevelopScreen',
-            accept: false,
-        },
-
     ];
 
     return (
@@ -138,61 +118,64 @@ export function AccountScreen({ navigation }: { navigation: any }) {
             {/* <Modal animationType="none" transparent={true} visible={modalVisible}>
                 <LoadingComponent/> 
             </Modal> */}
-            {
-                list.map((l, i) => {
-                    // return l.accept ?
-                    //     (
-                    //         <ListItem key={i} bottomDivider onPress={() => accept(l.navigation)}>
-                    //             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
-                    //             <ListItem.Content>
-                    //                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
-                    //             </ListItem.Content>
-                    //             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
-                    //         </ListItem>
-                    //     )
-                    //     :
-                    //     (
-                    //         <ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
-                    //             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
-                    //             <ListItem.Content>
-                    //                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
-                    //             </ListItem.Content>
-                    //             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
-                    //         </ListItem>
-                    //     )
+            {list.map((l, i) => {
+                // return l.accept ?
+                //     (
+                //         <ListItem key={i} bottomDivider onPress={() => accept(l.navigation)}>
+                //             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
+                //             <ListItem.Content>
+                //                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
+                //             </ListItem.Content>
+                //             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
+                //         </ListItem>
+                //     )
+                //     :
+                //     (
+                //         <ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
+                //             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
+                //             <ListItem.Content>
+                //                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
+                //             </ListItem.Content>
+                //             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
+                //         </ListItem>
+                //     )
 
-                    if (l.name === 'Đăng Xuất' && logined === true) {
-                        return (<ListItem key={i} bottomDivider onPress={() => accept(l.navigation)}>
+                if (l.name === 'Đăng Xuất' && logined === true) {
+                    return (
+                        <ListItem key={i} bottomDivider onPress={() => accept(l.navigation)}>
                             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
                             <ListItem.Content>
                                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
                             </ListItem.Content>
                             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
-                        </ListItem>)
-                    } else if (l.name === 'Đăng Nhập' && logined === false) {
-                        return(<ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
+                        </ListItem>
+                    );
+                } else if (l.name === 'Đăng Nhập' && logined === false) {
+                    return (
+                        <ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
                             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
                             <ListItem.Content>
                                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
                             </ListItem.Content>
 
                             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
-                        </ListItem>)
-                    } else if (l.name !== 'Đăng Xuất' && l.name !== 'Đăng Nhập') {
-                        return(<ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
+                        </ListItem>
+                    );
+                } else if (l.name !== 'Đăng Xuất' && l.name !== 'Đăng Nhập') {
+                    return (
+                        <ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
                             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
 
                             <ListItem.Content>
                                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
                             </ListItem.Content>
                             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
-                        </ListItem>)
-                    } else {
-                        return(null)
-                    }
-                })
-            }
+                        </ListItem>
+                    );
+                } else {
+                    return null;
+                }
+            })}
         </View>
-
     );
 }

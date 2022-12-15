@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import * as ImagePicker from 'react-native-image-picker';
 import {
     SafeAreaView,
     ScrollView,
@@ -108,6 +109,41 @@ function ListServiceScreen({ navigation, route }) {
             });
     };
 
+    const chooseImage = () => {
+        let options = {
+            title: 'Select Image',
+            customButtons: [{ name: 'customOptionKey', title: 'Choose Photo from Custom Option' }],
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+                Alert.alert(response.customButton);
+            } else {
+                const source = { uri: response.uri };
+
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+                // alert(JSON.stringify(response));s
+                console.log('response', JSON.stringify(response));
+                this.setState({
+                    filePath: response,
+                    fileData: response.data,
+                    fileUri: response.uri,
+                });
+            }
+        });
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
@@ -215,16 +251,26 @@ function ListServiceScreen({ navigation, route }) {
                             <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Mô tả(*)</Text>
                             <TextInput
                                 placeholder="Nhập mô tả dịch vụ vào đây"
-                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                                style={{ borderWidth: 1, borderRadius: 10, margin: 5, width: 300 }}
                                 onChangeText={(newText) => setDescription(newText)}
                             />
                         </View>
                         <View>
                             <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Hình minh họa(*)</Text>
-                            <TextInput
-                                placeholder="Chọn hình minh họa"
-                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
-                            />
+                            <TouchableOpacity onPress={() => chooseImage()}>
+                                <View
+                                    style={{
+                                        backgroundColor: COLORS.grey,
+                                        width: 100,
+                                        borderRadius: 5,
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        borderWidth: 1,
+                                    }}
+                                >
+                                    <Text>Chọn file ... </Text>
+                                </View>
+                            </TouchableOpacity>
                         </View>
 
                         <View style={{ flexDirection: 'row' }}>
@@ -275,10 +321,10 @@ const styles = StyleSheet.create({
         opacity: 0.9,
     },
     modalView: {
-        margin: 10,
+        // margin: 10,
         backgroundColor: 'white',
         borderRadius: 20,
-        padding: 10,
+        padding: 20,
         // alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
