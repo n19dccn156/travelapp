@@ -153,8 +153,8 @@ function ListServiceScreen({ navigation, route }) {
                     type: response.assets[0].type,
                     uri: Platform.OS === 'ios' ? response.assets[0].uri.replace('file://', '') : response.assets[0].uri,
                 });
-                upLoadImageToServer(data);
-                getImage('1');
+                // upLoadImageToServer(data);
+                getImage('d8d4b3c9-55b3-42e4-a29a-2a6490934cab');
             }
         });
     };
@@ -176,7 +176,7 @@ function ListServiceScreen({ navigation, route }) {
             .then(function (res) {
                 console.log('getImage: ', res);
 
-                Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
+                // Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: getImage ~ error', err);
