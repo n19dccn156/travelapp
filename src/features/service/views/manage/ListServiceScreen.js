@@ -22,7 +22,9 @@ import ListService from './ListService';
 import { getServiceOfCaterogy } from '../../services/getData';
 import { addServiceForType } from '../../services/service/postData';
 import { saveImage } from '../../services/Image/post';
-import { getImageById } from '../../services/Image/getData';
+import { variables } from '../../../../common/constants/const';
+
+var host = variables.host;
 function ListServiceScreen({ navigation, route }) {
     const [showedButtonCategory, setShowedButtonCategory] = useState(true);
     const [showedListService, setShowedListService] = useState(true);
@@ -39,6 +41,8 @@ function ListServiceScreen({ navigation, route }) {
     const [serviceType, setServiceType] = useState(listCategory[0].id);
     //load list service for type
     const [listServiceForType, setlistServiceForType] = useState([]);
+
+    const [linkAvatar, setLinkAvatar] = useState('');
 
     const getServiceOfType = (type) => {
         getServiceOfCaterogy(type)
@@ -63,56 +67,65 @@ function ListServiceScreen({ navigation, route }) {
             Alert.alert('Thông báo!', 'Không được để trống tên dịch vụ!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
         if (price.trim() == '') {
             Alert.alert('Thông báo!', 'Không được để trống giá dịch vụ!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
         if (number.trim() == '') {
             Alert.alert('Thông báo!', 'Không được để trống số lượng!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
         if (phone.trim() == '') {
             Alert.alert('Thông báo!', 'Không được để trống số điện thoại!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
 
         if (phone.trim().length != 10 || phone.trim()[0] != '0') {
             Alert.alert('Thông báo!', 'Số điện thoại không hợp lệ! ', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
         if (description.trim() == '') {
             Alert.alert('Thông báo!', 'Không được để trống mô tả dịch vụ!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
+        // if (linkAvatar.trim() == '') {
+        //     Alert.alert('Thông báo!', 'Không được để trống hình ảnh dịch vụ!', [
+        //         { text: 'OK', onPress: () => console.log('OK Pressed') },
+        //     ]);
+        //     return false;
+        // }
+        return true;
     };
 
     const addService = () => {
-        checkData();
-        addServiceForType(serviceType, name, price, number, phone, description)
+        if (checkData()) upLoadImageToServer();
+    };
+    const addServiceToServer = (linkAvatar) => {
+        addServiceForType(serviceType, name, price, number, phone, description, linkAvatar)
             .then(function (res) {
                 console.log(res);
-
+                setImgPath(`${host}/api/v1/images/1`);
                 Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
             });
     };
-    const [imgPath, setImgPath] = useState(
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png',
-    );
+    const [imgPath, setImgPath] = useState(`${host}/api/v1/images/1`);
+
+    const [responseImage, setResponseImage] = useState({});
     const chooseImage = () => {
         let options = {
             title: 'Select Image',
@@ -120,11 +133,10 @@ function ListServiceScreen({ navigation, route }) {
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
-                data: true,
             },
         };
         launchImageLibrary(options, (response) => {
-            console.log('Response = ', response);
+            // console.log('Response = ', response);
 
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -134,54 +146,44 @@ function ListServiceScreen({ navigation, route }) {
                 console.log('User tapped custom button: ', response.customButton);
                 Alert.alert(response.customButton);
             } else {
-                // const source = JSON.stringify(response);
+                // console.log('source', response.assets[0].uri);
 
-                // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.uri };
-                // alert(JSON.stringify(response));s
-
-                console.log('source', response.assets[0].uri);
-                // this.setState({
-                //     filePath: response,
-                //     fileData: response.data,
-                //     fileUri: response.uri,
-                // });
                 setImgPath(response.assets[0].uri);
-                const data = new FormData();
-                data.append('image', {
-                    name: response.assets[0].fileName,
-                    type: response.assets[0].type,
-                    uri: Platform.OS === 'ios' ? response.assets[0].uri.replace('file://', '') : response.assets[0].uri,
-                });
-                // upLoadImageToServer(data);
-                getImage('d8d4b3c9-55b3-42e4-a29a-2a6490934cab');
+                setResponseImage(response);
             }
         });
     };
 
-    const upLoadImageToServer = (data) => {
+    const upLoadImageToServer = () => {
+        const data = new FormData(); //save image mutipart file
+        data.append('image', {
+            name: responseImage.assets[0].fileName,
+            type: responseImage.assets[0].type,
+            uri:
+                Platform.OS === 'ios'
+                    ? responseImage.assets[0].uri.replace('file://', '')
+                    : responseImage.assets[0].uri,
+        });
+        console.log('data', data);
         saveImage(data)
             .then(function (res) {
                 console.log(res);
-
-                Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
+                // setLinkAvatar(res.data);
+                // console.log('res.data', res.data);
+                if (res.data != '' && res.data != null) {
+                    addServiceToServer(res.data);
+                } else {
+                    Alert.alert('Thông báo!', 'Không được để trống hình ảnh dịch vụ!', [
+                        { text: 'OK', onPress: () => console.log('OK Pressed') },
+                    ]);
+                }
+                // Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: upLoadImageToServer ~ error', err);
             });
     };
 
-    const getImage = (id) => {
-        getImageById(id)
-            .then(function (res) {
-                console.log('getImage: ', res);
-
-                // Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
-            })
-            .catch((err) => {
-                console.log('🚀 ~ file: getImage ~ error', err);
-            });
-    };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />

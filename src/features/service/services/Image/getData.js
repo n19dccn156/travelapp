@@ -1,16 +1,9 @@
 import { variables } from '../../../../common/constants/const';
 
-var host = variables.host2;
+var host = variables.host;
 
 const getImageById = async (id) => {
-    try {
-        const response = await fetch(`${host}/api/v1/images/${id}`);
-        // const response = await fetch(`https://phuquy-travel-app.herokuapp.com/api/v1/typeservices`);
-
-        return response;
-    } catch (error) {
-        console.log('🚀 ~ file: getImageById ~ error', error);
-    }
+    const response = await fetch(`${host}/api/v1/images/${id}`);
 };
 
 export { getImageById };
