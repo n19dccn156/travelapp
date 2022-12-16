@@ -1,6 +1,6 @@
 import uuid from 'react-native-uuid';
 import { variables } from '../../../../common/constants/const';
-var host = variables.host2;
+var host = variables.host;
 
 const saveImage = async (image) => {
     console.log('image: ', image);
