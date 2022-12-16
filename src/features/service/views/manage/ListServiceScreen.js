@@ -22,6 +22,7 @@ import ListService from './ListService';
 import { getServiceOfCaterogy } from '../../services/getData';
 import { addServiceForType } from '../../services/service/postData';
 import { saveImage } from '../../services/Image/post';
+import { getImageById } from '../../services/Image/getData';
 function ListServiceScreen({ navigation, route }) {
     const [showedButtonCategory, setShowedButtonCategory] = useState(true);
     const [showedListService, setShowedListService] = useState(true);
@@ -147,9 +148,13 @@ function ListServiceScreen({ navigation, route }) {
                 // });
                 setImgPath(response.assets[0].uri);
                 const data = new FormData();
-                data.append('name', 'Image Upload');
-                data.append('file_attachment', response);
+                data.append('image', {
+                    name: response.assets[0].fileName,
+                    type: response.assets[0].type,
+                    uri: Platform.OS === 'ios' ? response.assets[0].uri.replace('file://', '') : response.assets[0].uri,
+                });
                 upLoadImageToServer(data);
+                getImage('1');
             }
         });
     };
@@ -162,10 +167,21 @@ function ListServiceScreen({ navigation, route }) {
                 Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
             })
             .catch((err) => {
-                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+                console.log('🚀 ~ file: upLoadImageToServer ~ error', err);
             });
     };
 
+    const getImage = (id) => {
+        getImageById(id)
+            .then(function (res) {
+                console.log('getImage: ', res);
+
+                Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: getImage ~ error', err);
+            });
+    };
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
