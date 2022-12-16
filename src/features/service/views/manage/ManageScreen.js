@@ -153,11 +153,13 @@ function ManageScreen({ navigation }) {
                     padding: 10,
                 }}
                 activeOpacity={0.8}
-                onPress={() =>
-                    navigation.navigate('ListServiceScreen', {
-                        listCategory: listCategory,
-                    })
-                }
+                onPress={() => {
+                    if (listCategory.length != 0) {
+                        navigation.navigate('ListServiceScreen', {
+                            listCategory: listCategory,
+                        });
+                    }
+                }}
             >
                 <View
                     style={{

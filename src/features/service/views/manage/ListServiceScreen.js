@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import * as ImagePicker from 'react-native-image-picker';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {
     SafeAreaView,
     ScrollView,
@@ -11,7 +11,7 @@ import {
     Alert,
     ActivityIndicator,
 } from 'react-native';
-import { Text } from 'react-native-animatable';
+import { Image, Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
 import style from '../../style/Home/style';
@@ -21,6 +21,7 @@ import { TextInput } from 'react-native-gesture-handler';
 import ListService from './ListService';
 import { getServiceOfCaterogy } from '../../services/getData';
 import { addServiceForType } from '../../services/service/postData';
+import { saveImage } from '../../services/Image/post';
 function ListServiceScreen({ navigation, route }) {
     const [showedButtonCategory, setShowedButtonCategory] = useState(true);
     const [showedListService, setShowedListService] = useState(true);
@@ -108,7 +109,9 @@ function ListServiceScreen({ navigation, route }) {
                 console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
             });
     };
-
+    const [imgPath, setImgPath] = useState(
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png',
+    );
     const chooseImage = () => {
         let options = {
             title: 'Select Image',
@@ -116,9 +119,10 @@ function ListServiceScreen({ navigation, route }) {
             storageOptions: {
                 skipBackup: true,
                 path: 'images',
+                data: true,
             },
         };
-        ImagePicker.showImagePicker(options, (response) => {
+        launchImageLibrary(options, (response) => {
             console.log('Response = ', response);
 
             if (response.didCancel) {
@@ -129,19 +133,37 @@ function ListServiceScreen({ navigation, route }) {
                 console.log('User tapped custom button: ', response.customButton);
                 Alert.alert(response.customButton);
             } else {
-                const source = { uri: response.uri };
+                // const source = JSON.stringify(response);
 
                 // You can also display the image using data:
-                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+                // const source = { uri: 'data:image/jpeg;base64,' + response.uri };
                 // alert(JSON.stringify(response));s
-                console.log('response', JSON.stringify(response));
-                this.setState({
-                    filePath: response,
-                    fileData: response.data,
-                    fileUri: response.uri,
-                });
+
+                console.log('source', response.assets[0].uri);
+                // this.setState({
+                //     filePath: response,
+                //     fileData: response.data,
+                //     fileUri: response.uri,
+                // });
+                setImgPath(response.assets[0].uri);
+                const data = new FormData();
+                data.append('name', 'Image Upload');
+                data.append('file_attachment', response);
+                upLoadImageToServer(data);
             }
         });
+    };
+
+    const upLoadImageToServer = (data) => {
+        saveImage(data)
+            .then(function (res) {
+                console.log(res);
+
+                Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+            });
     };
 
     return (
@@ -204,107 +226,117 @@ function ListServiceScreen({ navigation, route }) {
             {/* modal them loai */}
 
             <Modal animationType="slide" transparent={true} visible={modalVisible}>
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 8, fontSize: 18 }}>
-                                Thêm dịch vụ
-                            </Text>
-                        </View>
-                        <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Tên dịch vụ(*)</Text>
-                            <TextInput
-                                placeholder="Nhập tên dịch vụ vào đây"
-                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
-                                onChangeText={(newText) => setName(newText)}
-                            />
-                        </View>
+                <ScrollView>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <View>
+                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 8, fontSize: 18 }}>
+                                    Thêm dịch vụ
+                                </Text>
+                            </View>
+                            <View>
+                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>
+                                    Tên dịch vụ(*)
+                                </Text>
+                                <TextInput
+                                    placeholder="Nhập tên dịch vụ vào đây"
+                                    style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                                    onChangeText={(newText) => setName(newText)}
+                                />
+                            </View>
 
-                        <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Giá(*)</Text>
-                            <TextInput
-                                placeholder="Nhập giá dịch vụ vào đây"
-                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
-                                onChangeText={(newText) => setPrice(newText)}
-                                keyboardType="numeric"
-                            />
-                        </View>
-                        <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Số lượng(*)</Text>
-                            <TextInput
-                                placeholder="Nhập số lượng vào đây"
-                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
-                                keyboardType="numeric"
-                                onChangeText={(newText) => setNumber(newText)}
-                            />
-                        </View>
-                        <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Số điện thoại(*)</Text>
-                            <TextInput
-                                placeholder="Nhập số điện thoại vào đây"
-                                style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
-                                keyboardType="numeric"
-                                onChangeText={(newText) => setPhone(newText)}
-                            />
-                        </View>
-                        <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Mô tả(*)</Text>
-                            <TextInput
-                                placeholder="Nhập mô tả dịch vụ vào đây"
-                                style={{ borderWidth: 1, borderRadius: 10, margin: 5, width: 300 }}
-                                onChangeText={(newText) => setDescription(newText)}
-                            />
-                        </View>
-                        <View>
-                            <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Hình minh họa(*)</Text>
-                            <TouchableOpacity onPress={() => chooseImage()}>
-                                <View
+                            <View>
+                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Giá(*)</Text>
+                                <TextInput
+                                    placeholder="Nhập giá dịch vụ vào đây"
+                                    style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                                    onChangeText={(newText) => setPrice(newText)}
+                                    keyboardType="numeric"
+                                />
+                            </View>
+                            <View>
+                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Số lượng(*)</Text>
+                                <TextInput
+                                    placeholder="Nhập số lượng vào đây"
+                                    style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                                    keyboardType="numeric"
+                                    onChangeText={(newText) => setNumber(newText)}
+                                />
+                            </View>
+                            <View>
+                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>
+                                    Số điện thoại(*)
+                                </Text>
+                                <TextInput
+                                    placeholder="Nhập số điện thoại vào đây"
+                                    style={{ borderWidth: 1, borderRadius: 10, margin: 5 }}
+                                    keyboardType="numeric"
+                                    onChangeText={(newText) => setPhone(newText)}
+                                />
+                            </View>
+                            <View>
+                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Mô tả(*)</Text>
+                                <TextInput
+                                    placeholder="Nhập mô tả dịch vụ vào đây"
+                                    style={{ borderWidth: 1, borderRadius: 10, margin: 5, width: 300 }}
+                                    onChangeText={(newText) => setDescription(newText)}
+                                />
+                            </View>
+                            <View>
+                                <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>
+                                    Hình minh họa(*)
+                                </Text>
+
+                                <TouchableOpacity onPress={() => chooseImage()}>
+                                    <View
+                                        style={{
+                                            backgroundColor: COLORS.grey,
+                                            width: 100,
+                                            borderRadius: 5,
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                            borderWidth: 1,
+                                        }}
+                                    >
+                                        <Text>Chọn file ... </Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <Image source={{ uri: `${imgPath}` }} style={{ height: 150, width: 150 }} />
+                            </View>
+
+                            <View style={{ flexDirection: 'row' }}>
+                                <TouchableOpacity
                                     style={{
-                                        backgroundColor: COLORS.grey,
-                                        width: 100,
-                                        borderRadius: 5,
+                                        backgroundColor: COLORS.primary,
+                                        margin: 20,
+                                        borderRadius: 15,
+                                        flexDirection: 'row',
+                                        padding: 10,
                                         justifyContent: 'center',
-                                        alignItems: 'center',
-                                        borderWidth: 1,
                                     }}
+                                    activeOpacity={0.8}
+                                    onPress={() => addService()}
                                 >
-                                    <Text>Chọn file ... </Text>
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-
-                        <View style={{ flexDirection: 'row' }}>
-                            <TouchableOpacity
-                                style={{
-                                    backgroundColor: COLORS.primary,
-                                    margin: 20,
-                                    borderRadius: 15,
-                                    flexDirection: 'row',
-                                    padding: 10,
-                                    justifyContent: 'center',
-                                }}
-                                activeOpacity={0.8}
-                                onPress={() => addService()}
-                            >
-                                <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Lưu</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={{
-                                    backgroundColor: COLORS.primary,
-                                    margin: 20,
-                                    borderRadius: 15,
-                                    flexDirection: 'row',
-                                    padding: 10,
-                                    justifyContent: 'center',
-                                }}
-                                activeOpacity={0.8}
-                                onPress={() => setModalVisible(!modalVisible)}
-                            >
-                                <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Hủy</Text>
-                            </TouchableOpacity>
+                                    <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Lưu</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: COLORS.primary,
+                                        margin: 20,
+                                        borderRadius: 15,
+                                        flexDirection: 'row',
+                                        padding: 10,
+                                        justifyContent: 'center',
+                                    }}
+                                    activeOpacity={0.8}
+                                    onPress={() => setModalVisible(!modalVisible)}
+                                >
+                                    <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Hủy</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
-                </View>
+                </ScrollView>
             </Modal>
 
             {/* </ScrollView> */}
