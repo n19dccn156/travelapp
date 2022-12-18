@@ -10,6 +10,7 @@ import { getAllCaterogy } from '../../services/getData';
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import { variables } from '../../../../common/constants/const';
 import { saveImage } from '../../services/Image/post';
+import { deleteImage } from '../../services/Image/getData';
 var host = variables.host;
 function EditService({ navigation, route }) {
     const service = route.params.service;
@@ -118,13 +119,14 @@ function EditService({ navigation, route }) {
                         ? responseImage.assets[0].uri.replace('file://', '')
                         : responseImage.assets[0].uri,
             });
-            console.log('data', data);
+
             saveImage(data)
                 .then(function (res) {
                     console.log(res);
                     // setLinkAvatar(res.data);
                     // console.log('res.data', res.data);
                     if (res.data != '' && res.data != null) {
+                        deleteImageOnServer(service.avatar);
                         updateServiceToServer(res.data);
                     } else {
                         Alert.alert('Thông báo!', 'Không được để trống hình ảnh dịch vụ!', [
@@ -139,6 +141,19 @@ function EditService({ navigation, route }) {
         } else {
             updateServiceToServer(`${service.avatar}`);
         }
+    };
+    const deleteImageOnServer = (image) => {
+        const data = new FormData(); //save image mutipart file
+        data.append('url', image);
+
+        deleteImage(data)
+            .then(function (res) {
+                // console.log('res', res);
+                // Alert.alert('Thông báo!', res.message, [{ text: 'OK', onPress: () => console.log('OK Pressed') }]);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+            });
     };
 
     return (
