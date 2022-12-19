@@ -88,7 +88,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
             name: 'Thông Tin Cá Nhân',
             sizeName: 22,
             icon: 'person-circle',
-            sizeIcon: 30,
+            sizeIcon: 50,
             color: colors.red,
             navigation: 'ProfileScreen',
             accept: false,
@@ -99,7 +99,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
             name: 'Về Chúng Tôi',
             sizeName: 22,
             icon: 'information-circle',
-            sizeIcon: 30,
+            sizeIcon: 50,
             color: colors.red,
             navigation: 'DevelopScreen',
             accept: false,
@@ -108,7 +108,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
             name: 'Quản Lý Dịch Vụ',
             sizeName: 22,
             icon: 'briefcase-sharp',
-            sizeIcon: 30,
+            sizeIcon: 50,
             color: colors.red,
             navigation: 'ManageStackNavigator',
             accept: false,
@@ -192,7 +192,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
                             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
                         </ListItem>
                     );
-                } else if (l.name !== 'Đăng Xuất' && l.name !== 'Đăng Nhập') {
+                } else if (l.name !== 'Đăng Xuất' && l.name !== 'Đăng Nhập'  && l.name !== 'Quản Lý Dịch Vụ') {
                     return (
                         <ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
                             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
