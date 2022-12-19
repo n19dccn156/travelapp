@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { colors } from "../../common/constants/colors";
 import { DishScreen } from "../../features/food/pages/dish-detail-screen";
-import { FoodScreen } from "../../features/food/pages/home-screen";
+import  FoodScreen  from "../../features/food/pages/home-screen";
 import { ShopFoodScreen } from "../../features/food/pages/shop-food-screen";
 import { OrderScreen } from "../../features/food/pages/order-screen";
 const FoodStack =  createStackNavigator();

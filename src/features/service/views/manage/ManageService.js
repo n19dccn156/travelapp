@@ -23,7 +23,11 @@ function ManageService({ navigation, route }) {
                 <Text style={style.headerTitle}>Quản lý dịch vụ</Text>
             </View>
             <TopTabServiceNavigation
-                route={{ service: route.params.service, listCategory: route.params.listCategory }}
+                route={{
+                    service: route.params.service,
+                    listCategory: route.params.listCategory,
+                    getServiceOfType: route.params.getServiceOfType,
+                }}
             />
         </SafeAreaView>
     );

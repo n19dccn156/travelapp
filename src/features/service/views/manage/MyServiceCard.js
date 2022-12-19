@@ -5,6 +5,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import style from '../../style/Home/style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity } from 'react-native';
+import { variables } from '../../../../common/constants/const';
+
+var host = variables.host;
 
 function MyServiceCard({ navigation, route }) {
     const service = route.service;
@@ -19,9 +22,15 @@ function MyServiceCard({ navigation, route }) {
             }}
             activeOpacity={0.8}
             key={service.id}
-            onPress={() => navigation.navigate('ManageService', { service: service, listCategory: route.listCategory })}
+            onPress={() =>
+                navigation.navigate('ManageService', {
+                    service: service,
+                    listCategory: route.listCategory,
+                    getServiceOfType: route.getServiceOfType,
+                })
+            }
         >
-            <Image style={style.myCardImage} source={{ uri: `${service.avatar}` }} />
+            <Image style={style.myCardImage} source={{ uri: `${host}${service.avatar}` }} />
 
             <View style={{ flexDirection: 'column' }}>
                 <View
@@ -38,8 +47,18 @@ function MyServiceCard({ navigation, route }) {
                         <AntDesign name="hearto" size={20} color={COLORS.white} />
                     </View>
                 </View>
-                <Text style={{ color: COLORS.white, fontSize: 20, fontWeight: 'bold', marginTop: 10 }}>
-                    {service.name}
+                <Text
+                    style={{
+                        color: COLORS.white,
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        marginTop: 10,
+                        width: 200,
+                    }}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                >
+                    {service.name} vcbvdfghdfgbdfh
                 </Text>
                 <View
                     style={{

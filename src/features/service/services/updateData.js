@@ -29,7 +29,7 @@ const addTypeService = async (id, name) => {
     }
 };
 
-const updateServiceById = async (service, name, description, price) => {
+const updateServiceById = async (service, name, description, price, linkAvatar) => {
     try {
         const response = await fetch(`${host}/api/v1/services/${service.id}`, {
             method: 'PATCH',
@@ -39,7 +39,7 @@ const updateServiceById = async (service, name, description, price) => {
             },
             body: JSON.stringify({
                 activity: true,
-                avatar: service.avatar,
+                avatar: linkAvatar,
                 description: description,
                 id: service.id,
                 idMembership: service.idMembership,

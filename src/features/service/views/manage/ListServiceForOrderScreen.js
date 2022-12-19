@@ -13,7 +13,7 @@ import ListServiceForOrder from './ListServiceForOrder';
 function ListServiceForOrderScreen({ navigation, route }) {
     const [showedButtonCategory, setShowedButtonCategory] = useState(true);
     const [showedListService, setShowedListService] = useState(true);
-
+    console.log('call list service')
     const listCategory = route.params.listCategory;
 
     const [serviceType, setServiceType] = useState(listCategory[0].id);

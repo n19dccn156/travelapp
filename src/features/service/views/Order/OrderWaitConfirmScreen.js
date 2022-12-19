@@ -14,32 +14,23 @@ import {
 import { Text } from 'react-native-animatable';
 import { BackgroundImage } from 'react-native-elements/dist/config';
 import { ScrollView } from 'react-native-gesture-handler';
+import store from '../../../../redux/store';
 import COLORS from '../../consts/colors';
-import { getOrderByIdAndState, getOrderByIdUserAndState } from '../../services/Order/getData';
 import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
+import {connect} from 'react-redux'
+function OrderWaitConfirmScreen(props) {
+    const navigation = props.navigation;
+    const idState = props.route.params.idState;
 
-function OrderWaitConfirmScreen({ navigation, route }) {
-    const [listOrder, setListOrder] = useState([]);
-    const idState = route.params.idState;
-    const [showed, setShowed] = useState(true);
-
-    const getOrderByIdUserAndStateAgain = (id) => {
-        getOrderByIdUserAndState(id, idState)
-            .then(function (res) {
-                setListOrder([...res.data.content]);
-                setShowed(false);
-            })
-            .catch((err) => {
-                setListOrder([]);
-                setShowed(false);
-
-                console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
-            });
+    const listOrder =props.list.listOrder.filter(element=>{
+     return element.idState==idState
+    })
+    let check = true;
+    const footerComponent = () => {
+        <View>
+            <ActivityIndicator size="large" color={COLORS.primary} animating={true} />
+        </View>;
     };
-
-    useEffect(() => {
-        getOrderByIdUserAndStateAgain(route.params.idUser);
-    }, [showed]);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
@@ -60,8 +51,7 @@ function OrderWaitConfirmScreen({ navigation, route }) {
                         style={{ height: 100 }}
                     ></BackgroundImage>
                 </View>
-                <ActivityIndicator size="large" color={COLORS.primary} animating={showed} />
-                {!showed ? (
+                <ActivityIndicator size="large" color={COLORS.primary} animating={false} />
                     <View>
                         <FlatList
                             contentContainerStyle={{
@@ -74,16 +64,17 @@ function OrderWaitConfirmScreen({ navigation, route }) {
                                 <MyOrderWaitConfirmCard
                                     route={{
                                         order: item,
-                                        getOrderByIdUserAndStateAgain: getOrderByIdUserAndStateAgain,
                                         idState: idState,
                                     }}
+                                    inedx
+                                    navigation={navigation}
                                 />
                             )}
+                            ListFooterComponent={footerComponent}
+                          
                         />
                     </View>
-                ) : (
-                    ''
-                )}
+            
             </ScrollView>
         </SafeAreaView>
     );
@@ -119,4 +110,8 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
 });
-export default OrderWaitConfirmScreen;
+export default  connect((state)=>{
+    return {
+        list: state
+    }
+})(OrderWaitConfirmScreen)

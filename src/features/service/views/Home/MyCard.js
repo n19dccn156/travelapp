@@ -23,6 +23,7 @@ function MyCard({ navigation, route }) {
                     flexDirection: 'row',
                     padding: 10,
                     backgroundColor: COLORS.primary,
+                    overflow: 'hidden',
                 }}
                 source={{ uri: `${service.avatar}` }}
             >
@@ -75,7 +76,7 @@ function MyCard({ navigation, route }) {
                                     textShadowRadius: 1,
                                 }}
                             >
-                                {service.star.toFixed(1)}
+                                {/* {service.star.toFixed(1)} */}
                             </Text>
                         </View>
                         <View style={{ flexDirection: 'row' }}>

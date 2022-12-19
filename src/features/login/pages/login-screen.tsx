@@ -98,6 +98,7 @@ export function LoginScreen({ navigation }: { navigation: any }) {
                 try {
                     AsyncStorage.removeItem('@userid')
                     AsyncStorage.setItem('@userid', data.data.id);
+                    AsyncStorage.setItem('@roleid', data.data.role);
                     login();
                 } catch (error) {
                     Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])

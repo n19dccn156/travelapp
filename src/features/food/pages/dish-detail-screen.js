@@ -102,13 +102,12 @@ export function DishScreen({ navigation, route }) {
         </TouchableOpacity>
       </View>
       <View style={{ flex: 1, backgroundColor: "white" }} />
-      <LoadComponent visible={loadVisible} />
+      {/* <LoadComponent visible={loadVisible} /> */}
       <ModalOrder
         visible={modalVisible}
         callbackClose={() => {
           setModalVisible(false);
         }}
-      
       />
     </View>
   );

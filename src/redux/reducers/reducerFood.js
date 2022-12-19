@@ -14,8 +14,9 @@ function createOrder(data){
         id:uuid.v4(),
         idFood:data.idFood,
         idUser:'7055dcb1-67ce-4c5f-bf51-03863f7e5778',
-        note:data.note,
         phone:'0341254325',
+        note:data.note? data.note:"",
+        comment:data.comment? data.comment:""
     }
 }
 function createDetailOrder(data){
@@ -26,7 +27,6 @@ function createDetailOrder(data){
         price: data.price,
         imgUrl: data.imgUrl,
         name: data.name
-
     }
 };
 function ModalReducer(state=InfoModal,action){
@@ -57,7 +57,9 @@ function OrderReducer(state=ListOrder,action){
                 idUser:'7055dcb1-67ce-4c5f-bf51-03863f7e5778',
                 note:data.note,
                 phone:'0341254325',
-                location: data.location,}
+                location: data.location,
+                note:data.note? data.note:"",
+                comment:data.comment? data.comment:""}
         case 'delete':
             return {}
         default:
@@ -69,7 +71,7 @@ function OrderDetailReducer(state=ListDetailOrder,action){
         case 'createDetail':
             return [...state,action.payload];
         case 'deleteDetail':
-           return [state]
+           return [...state]
         default:
             return state;
     }

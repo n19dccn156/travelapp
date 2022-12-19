@@ -21,22 +21,18 @@ function ManageScreen({ navigation }) {
                 setlistServiceForType([...res.data.content]);
             })
             .catch((err) => {
-                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+                console.log('🚀 ~ getServiceOfCaterogy ~ error', err);
             });
     };
     useEffect(() => {
         getAllCaterogy()
             .then(function (res) {
                 setListCategory([...res.data]);
-
                 setServiceType(res.data[0].id);
-                // getServiceOfType(res.data[0].id);
                 getServiceOfCaterogy(res.data[0].id)
-                    .then(function (res) {
-                        setlistServiceForType([...res.data.content]);
-                    })
+                    .then(function (res) {})
                     .catch((err) => {
-                        console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+                        console.log('🚀 ~ getServiceOfCaterogy ~ error', err);
                     });
             })
             .catch((err) => {
@@ -53,9 +49,9 @@ function ManageScreen({ navigation }) {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-                    onPress={() => navigation.navigate('HomeScreen')}
+                    onPress={() => navigation.navigate('AccountStackNavigator')}
                 />
-                <Text style={style.headerTitle}>Quản lý thông tin</Text>
+                <Text style={style.headerTitle}>Quản lý dịch vụ</Text>
             </View>
             <Image />
             {/* quan ly lich */}
@@ -88,7 +84,7 @@ function ManageScreen({ navigation }) {
                 </View>
             </TouchableOpacity>
 
-            {/* quan ly lich */}
+            {/* quan ly lich
             <TouchableOpacity
                 style={{
                     backgroundColor: COLORS.grey,
@@ -99,9 +95,7 @@ function ManageScreen({ navigation }) {
                 }}
                 activeOpacity={0.8}
                 onPress={() =>
-                    navigation.navigate('OrderManageForCustomer', {
-                        idUser: '7055dcb1-67ce-4c5f-bf51-03863f7e5778',
-                    })
+                    navigation.navigate('OrderManageForCustomer')
                 }
             >
                 <View
@@ -116,7 +110,7 @@ function ManageScreen({ navigation }) {
                     <Text>Lịch sử đơn đặt của khách hàng</Text>
                     <AntDesign name="right" size={20} />
                 </View>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
 
             {/* Quan ly loai dich vu */}
             <TouchableOpacity
@@ -159,11 +153,13 @@ function ManageScreen({ navigation }) {
                     padding: 10,
                 }}
                 activeOpacity={0.8}
-                onPress={() =>
-                    navigation.navigate('ListServiceScreen', {
-                        listCategory: listCategory,
-                    })
-                }
+                onPress={() => {
+                    if (listCategory.length != 0) {
+                        navigation.navigate('ListServiceScreen', {
+                            listCategory: listCategory,
+                        });
+                    }
+                }}
             >
                 <View
                     style={{

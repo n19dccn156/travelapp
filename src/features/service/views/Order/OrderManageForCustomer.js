@@ -7,22 +7,29 @@ import style from '../../style/Home/style';
 import TopTabOrderForStaff from '../../navigations/TopTabOrderForStaff';
 import { getOrderByIdAndState } from '../../services/Order/getData';
 import TopTabOrderForCustomer from '../../navigations/TopTabOrderForCustomer';
-
-function OrderManageForCustomer({ navigation, route }) {
-    const idUser = route.params.idUser;
-
+import { getOrderByIdUserAndState, getOrderByIdUserAndStateForPage } from '../../services/Order/getData';
+import store from '../../../../redux/store';
+function OrderManageForCustomer(props) {
+    const idUser = '7055dcb1-67ce-4c5f-bf51-03863f7e5778';
+    const navigation = props.navigation;
+    const listState = ['XACNHAN', 'THANHCONG', 'DAHUY', 'HOANTHANH'];
+    useEffect(() => {
+        listState.forEach((element) =>
+            getOrderByIdUserAndState(idUser, element)
+                .then((res) => {
+                    store.dispatch({ type: 'ADD_LIST_ORDER', payload: res.data.content });
+                })
+                .catch((err) => {
+                    console.log('🚀 ~ file: getOrderByIdAndState ~ error', err);
+                }),
+        );
+    }, []);
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
-
             <View style={styles.header}>
-                <Icon
-                    name="arrow-back"
-                    size={28}
-                    color={COLORS.white}
-                    onPress={() => navigation.navigate('ManageScreen')}
-                />
-                <Text style={style.headerTitle}>Quản lý đơn đặt</Text>
+                <Icon name="arrow-back" size={28} color={COLORS.white} onPress={() => navigation.navigate('HomeTab')} />
+                <Text style={style.headerTitle}>Lịch sử đặt</Text>
             </View>
 
             <TopTabOrderForCustomer route={{ idUser: idUser }} />

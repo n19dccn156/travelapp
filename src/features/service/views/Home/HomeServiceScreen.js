@@ -17,7 +17,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import ListCategories from './ListCategories';
 import style from '../../style/Home/style';
-import { getAllCaterogy, getServiceOfCaterogy } from '../../services/getData';
+import { getAllCaterogy, getListServicesForPage, getServiceOfCaterogy } from '../../services/getData';
 import ListButtonCategory from './ListButtonCategory';
 import MyCard from './MyCard';
 import Swiper from 'react-native-swiper';
@@ -33,6 +33,7 @@ const HomeServiceScreen = ({ navigation, route }) => {
 
     //load list service for type
     const [listServiceForType, setlistServiceForType] = useState([]);
+
     const getServiceOfType = (type) => {
         getServiceOfCaterogy(type)
             .then(function (res) {
@@ -72,7 +73,9 @@ const HomeServiceScreen = ({ navigation, route }) => {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-
+                    onPress={() => {
+                        navigation.navigate('HomeStackNavigator');
+                    }}
                     // onPress={() => navigation.getParent('LeftDrawer').openDrawer()}
                 />
                 <AntDesign
@@ -80,7 +83,7 @@ const HomeServiceScreen = ({ navigation, route }) => {
                     size={28}
                     color={COLORS.white}
                     ProfileSceen
-                    onPress={() => navigation.navigate('ManageStackNavigator')}
+
                     // onPress={() => navigation.getParent('RightDrawer').openDrawer()}
                 />
             </View>
@@ -103,29 +106,31 @@ const HomeServiceScreen = ({ navigation, route }) => {
                     </View>
                 </View>
 
-                <Swiper autoplay style={{ backgroundColor: COLORS.dark, height: 100, flex: 1, marginTop: 80 }}>
-                    <Image
-                        index={1}
-                        style={{ height: 100 }}
-                        source={{
-                            uri: `https://boxdesign.vn/wp-content/uploads/2022/06/T%E1%BB%95ng-Th%E1%BB%83-2.jpg`,
-                        }}
-                    />
-                    <Image
-                        index={2}
-                        style={{ height: 100 }}
-                        source={{
-                            uri: `https://viettourist.com//resources/images/KHACH-DOAN/trong%20nuoc/team-buildingKD/KD-B-15.jpg`,
-                        }}
-                    />
-
-                    <Image
-                        index={3}
-                        style={{ height: 100 }}
-                        source={{
-                            uri: `https://vietrektravel.com/ckeditor/plugins/fileman/Uploads/cheo-sup/cheo-sup-da-nang-5.jpg`,
-                        }}
-                    />
+                <Swiper style={{ height: 100, marginTop: 80 }} autoplay>
+                    <View testID="1">
+                        <Image
+                            style={{ height: 100 }}
+                            source={{
+                                uri: `https://boxdesign.vn/wp-content/uploads/2022/06/T%E1%BB%95ng-Th%E1%BB%83-2.jpg`,
+                            }}
+                        />
+                    </View>
+                    <View testID="2">
+                        <Image
+                            style={{ height: 100 }}
+                            source={{
+                                uri: `https://viettourist.com//resources/images/KHACH-DOAN/trong%20nuoc/team-buildingKD/KD-B-15.jpg`,
+                            }}
+                        />
+                    </View>
+                    <View testID="3">
+                        <Image
+                            style={{ height: 100 }}
+                            source={{
+                                uri: `https://vietrektravel.com/ckeditor/plugins/fileman/Uploads/cheo-sup/cheo-sup-da-nang-5.jpg`,
+                            }}
+                        />
+                    </View>
                 </Swiper>
 
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 30 }}>

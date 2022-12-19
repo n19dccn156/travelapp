@@ -23,6 +23,7 @@ import {
   createDetailOrder
 } from "../../../../redux/reducers/reducerFood";
 import removeDuplicate from "../../services/handle_order";
+import { IsObjectEmpty } from "../../../../utility/handler";
 export default function ModalOrder(props) {
   const visibleModal = props.visible;
   const [count, setCount] = useState(1);
@@ -151,25 +152,25 @@ export default function ModalOrder(props) {
     });
   }
 function Order() {
-    const listOrder = store.getState().order;
+  let Order = store.getState().order;
     const listOrderDetail = store.getState().detailOrder;
     const dataOrder = {
-      idFood: data.idFood,
-      note: "Cho em xin thêm ít đá",
-      location:'Tăng Nhơn Phú B'
+      idFood: data.idFood
     };
-     let order= {...createOrder(dataOrder)};
+     if(IsObjectEmpty(Order))
+     {
+      Order= {...createOrder(dataOrder)};
+      store.dispatch(modifyOrder('create',Order));
+     }
      let  detailOrder = {...createDetailOrder({
       idDish:data.id,
-      idOrder:order.id,
+      idOrder:Order.id,
       number:count,
       price: data.price,
       name:data.name,
       imgUrl:data.imgUrl
      })};
-      store.dispatch(modifyOrder('create',order));
       store.dispatch(modifyDetailOrder('createDetail',detailOrder));
       console.log(store.getState())
-      removeDuplicate();
   }
 }

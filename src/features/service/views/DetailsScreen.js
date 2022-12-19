@@ -16,11 +16,12 @@ import COLORS from '../consts/colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-swiper';
+import { Image } from 'react-native-elements';
 
 const DetailsScreen = ({ navigation, route }) => {
     const service = route.params;
     const [modalVisible, setModalVisible] = useState(false);
-    const [listImg, setListImg] = useState([{ url: '' }]);
+    const [listImg, setListImg] = useState([]);
     const pictures = service.pictures;
 
     const list = pictures.split(',');
@@ -42,7 +43,12 @@ const DetailsScreen = ({ navigation, route }) => {
             <Swiper style={{ flex: 1 }}>
                 {listImg.map((data, index) => {
                     return (
-                        <TouchableOpacity key={index} style={{ flex: 1 }} onPress={() => setModalVisible(true)}>
+                        <TouchableOpacity
+                            key={index}
+                            testID={index + ''}
+                            style={{ flex: 1 }}
+                            onPress={() => setModalVisible(true)}
+                        >
                             <ImageBackground style={{ flex: 1 }} source={{ uri: `${data.url}` }}>
                                 <View style={style.header}>
                                     <Icon

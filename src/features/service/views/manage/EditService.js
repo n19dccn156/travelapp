@@ -7,31 +7,40 @@ import style from '../../style/Home/style';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import { deleteServiceById, updateServiceById, updateTypeServiceById } from '../../services/updateData';
 import { getAllCaterogy } from '../../services/getData';
-
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { variables } from '../../../../common/constants/const';
+import { saveImage } from '../../services/Image/post';
+import { deleteImage } from '../../services/Image/getData';
+var host = variables.host;
 function EditService({ navigation, route }) {
-    console.log('route EditService', route);
     const service = route.params.service;
     const [name, setName] = useState(service.name);
     const [description, setDescription] = useState(service.description);
     const [price, setPrice] = useState(service.price + '');
+
+    const [imgPath, setImgPath] = useState(
+        service.avatar != '' ? `${host}${service.avatar}` : `${host}/api/v1/images/1`,
+    );
+
     const checkData = () => {
         if (name.trim() == '' || description.trim() == '' || price.trim() == '') {
             Alert.alert('Thông báo!', 'Không được để trống trường nào!', [
                 { text: 'OK', onPress: () => console.log('OK Pressed') },
             ]);
-            return;
+            return false;
         }
+        return true;
     };
     const updateService = () => {
-        checkData();
+        if (checkData()) upLoadImageToServer();
+    };
 
-        updateServiceById(service, name, description, price)
+    const updateServiceToServer = (linkAvatar) => {
+        updateServiceById(service, name, description, price, linkAvatar)
             .then(function (res) {
                 console.log('res', res);
                 if (res.status == 'success') {
-                    // setTypeService(res.data);
-                    // // setText(res.data.name);
-                    // getAllCaterogyAgain();
+                    route.params.getServiceOfType(service.idTypeService);
                 }
 
                 Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
@@ -69,21 +78,86 @@ function EditService({ navigation, route }) {
                 console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
             });
     };
+
+    const [responseImage, setResponseImage] = useState('');
+    const chooseImage = () => {
+        let options = {
+            title: 'Select Image',
+            customButtons: [{ name: 'customOptionKey', title: 'Choose Photo from Custom Option' }],
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        };
+        launchImageLibrary(options, (response) => {
+            // console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+                Alert.alert(response.customButton);
+            } else {
+                // console.log('source', response.assets[0].uri);
+
+                setImgPath(response.assets[0].uri);
+                setResponseImage(response);
+            }
+        });
+    };
+
+    const upLoadImageToServer = () => {
+        if (responseImage != '' && responseImage != null) {
+            const data = new FormData(); //save image mutipart file
+            data.append('image', {
+                name: responseImage.assets[0].fileName,
+                type: responseImage.assets[0].type,
+                uri:
+                    Platform.OS === 'ios'
+                        ? responseImage.assets[0].uri.replace('file://', '')
+                        : responseImage.assets[0].uri,
+            });
+
+            saveImage(data)
+                .then(function (res) {
+                    console.log(res);
+                    // setLinkAvatar(res.data);
+                    // console.log('res.data', res.data);
+                    if (res.data != '' && res.data != null) {
+                        deleteImageOnServer(service.avatar);
+                        updateServiceToServer(res.data);
+                    } else {
+                        Alert.alert('Thông báo!', 'Không được để trống hình ảnh dịch vụ!', [
+                            { text: 'OK', onPress: () => console.log('OK Pressed') },
+                        ]);
+                    }
+                    // Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => setModalVisible(false) }]);
+                })
+                .catch((err) => {
+                    console.log('🚀 ~ file: upLoadImageToServer ~ error', err);
+                });
+        } else {
+            updateServiceToServer(`${service.avatar}`);
+        }
+    };
+    const deleteImageOnServer = (image) => {
+        const data = new FormData(); //save image mutipart file
+        data.append('url', image);
+
+        deleteImage(data)
+            .then(function (res) {
+                // console.log('res', res);
+                // Alert.alert('Thông báo!', res.message, [{ text: 'OK', onPress: () => console.log('OK Pressed') }]);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: listCategory-screen ~ line 17 ~ error', err);
+            });
+    };
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
-            {/* <StatusBar translucent={false} backgroundColor={COLORS.primary} />
-
-            <View style={styles.header}>
-                <Icon
-                    name="arrow-back"
-                    size={28}
-                    color={COLORS.white}
-                    onPress={() =>
-                        navigation.navigate('ListServiceScreen', { listCategory: route.params.listCategory })
-                    }
-                />
-                <Text style={style.headerTitle}>Cập nhật dịch vụ</Text>
-            </View> */}
             <ScrollView>
                 <View>
                     <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Loại dịch vụ</Text>
@@ -93,6 +167,25 @@ function EditService({ navigation, route }) {
                         style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
                         editable={false}
                     />
+                </View>
+                <View>
+                    <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 5 }}>Hình minh họa(*)</Text>
+
+                    <TouchableOpacity onPress={() => chooseImage()}>
+                        <View
+                            style={{
+                                backgroundColor: COLORS.grey,
+                                width: 100,
+                                borderRadius: 5,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                borderWidth: 1,
+                            }}
+                        >
+                            <Text>Chọn file ... </Text>
+                        </View>
+                    </TouchableOpacity>
+                    <Image source={{ uri: `${imgPath}` }} style={{ height: 150, width: 150 }} />
                 </View>
                 <View>
                     <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Tên dịch vụ (*)</Text>
@@ -106,6 +199,8 @@ function EditService({ navigation, route }) {
                 <View>
                     <Text style={{ color: COLORS.dark, fontWeight: 'bold', margin: 10 }}>Mô tả (*)</Text>
                     <TextInput
+                        multiline={true}
+                        numberOfLines={3}
                         placeholder="Nhập mô tả dịch vụ vào đây"
                         style={{ borderWidth: 1, borderRadius: 10, margin: 10 }}
                         defaultValue={service.description}
