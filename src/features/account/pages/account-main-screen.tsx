@@ -9,16 +9,16 @@ import { sizeScale } from '../../../common/constants/const';
 import { useDispatch, useSelector } from 'react-redux';
 
 export function AccountScreen({ navigation, route }: { navigation: any, route: any }) {
-    useEffect(() => {
-        if (route.params?.userid) {
-            // Post updated, do something with `route.params.post`
-            // For example, send the post to the server
-        }
-    }, [route.params?.userid]);
-    const login = useSelector((state: any) => {return state.logined})
+    // useEffect(() => {
+    //     if (route.params?.userid) {
+    //         // Post updated, do something with `route.params.post`
+    //         // For example, send the post to the server
+    //     }
+    // }, [route.params?.userid]);
+    const logined = useSelector((state: any) => {return state.logined})
     const dispatch = useDispatch()
     const [modalVisible, setModalVisible] = useState(false);
-    const [logined, setLogined] = useState(false);
+    // const [logined, setLogined] = useState(false);
     const [role, setRole] = useState("");
 
     function accept(site: String) {
@@ -35,7 +35,7 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
                     AsyncStorage.removeItem('@userid');
                     AsyncStorage.removeItem('@roleid');
                     setRole("")
-                    setLogined(false);
+                    dispatch({"type": "logout"})
                     setTimeout(() => {
                         setModalVisible(modalVisible);
                         navigation.navigate({
@@ -43,7 +43,6 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
                             params: {userid: ""},
                             merge: true,
                         })
-                        dispatch({"type": "logout"})
                     }, 1000);
                 },
                 style: 'default',
@@ -51,11 +50,7 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
         ]);
     }
 
-    useEffect(() => {
-        console.log(login)
-    }, [login])
-
-    useEffect(() => {
+    useEffect( () => {
         async function check() {
             try {
                 const userid = await AsyncStorage.getItem('@userid');
@@ -71,21 +66,14 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
                     setRole(roleid);
                 }
 
-                if (userid === null || userid === undefined) {
-                    // return false;
-                    setLogined(false);
-                    return;
-                }
-                setLogined(true);
                 return;
             } catch (error) {
                 return false;
                 // Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
             }
         }
-
-        check();
-    }, [login]);
+        check()
+    }, []);
 
     function not_accept(site: String) {
         setModalVisible(!modalVisible)

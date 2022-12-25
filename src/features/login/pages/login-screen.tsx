@@ -121,7 +121,7 @@ export function LoginScreen({ navigation }: { navigation: any }) {
                                                     try {
                                                         AsyncStorage.removeItem('@userid')
                                                         AsyncStorage.setItem('@userid', data.data.id);
-                                                        dispatch({"type": "login"})
+                                                        AsyncStorage.setItem('@roleid', "CUSTOMER");
                                                     } catch (error) {
                                                         Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
                                                     }
@@ -148,6 +148,7 @@ export function LoginScreen({ navigation }: { navigation: any }) {
                                                             try {
                                                                 AsyncStorage.removeItem('@userid')
                                                                 AsyncStorage.setItem('@userid', data.data.id);
+                                                                dispatch({"type": "login"})
                                                                 console.log("Login successfully: " + data.data.id)
                                                             } catch (error) {
                                                                 Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
