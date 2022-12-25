@@ -43,6 +43,7 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
                             params: {userid: ""},
                             merge: true,
                         })
+                        dispatch({"type": "logout"})
                     }, 1000);
                 },
                 style: 'default',
