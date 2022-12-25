@@ -22,8 +22,11 @@ import ListSheduleForService from './ListSheduleForService';
 import { orderService } from '../../services/Order/postData';
 import moment from 'moment';
 import { BackgroundImage } from 'react-native-elements/dist/config';
+import { useDispatch, useSelector } from 'react-redux';
 
 function OrderScreen({ navigation, route }) {
+    const logined = useSelector((state) => {state.logined})
+    const dispatch = useDispatch()
     console.log('route', route);
     const service = route.params.service;
     const state = route.params.state;
@@ -45,6 +48,12 @@ function OrderScreen({ navigation, route }) {
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
             });
     }, []);
+
+    useEffect(() => {
+        if(logined === false) {
+            navigation.navigate('Login')
+        }
+    }, [logined])
 
     const checkData = () => {
         if (selectedDate.trim() == '') {

@@ -9,9 +9,39 @@ import { getOrderByIdAndState } from '../../services/Order/getData';
 import TopTabOrderForCustomer from '../../navigations/TopTabOrderForCustomer';
 import { getOrderByIdUserAndState, getOrderByIdUserAndStateForPage } from '../../services/Order/getData';
 import store from '../../../../redux/store';
-function OrderManageForCustomer(props) {
-    const idUser = '7055dcb1-67ce-4c5f-bf51-03863f7e5778';
-    const navigation = props.navigation;
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+
+function OrderManageForCustomer({navigation, route}) {
+    const logined = useSelector((state) => {state.logined})
+    const dispatch = useDispatch()
+    const [idUser, setIdUser] = useState('');
+    // const idUser = '7055dcb1-67ce-4c5f-bf51-03863f7e5778';
+    useEffect(() => {
+        if(route.params?.userid === "" || route.params?.userid === undefined || route.params?.userid === null) {
+            navigation.navigate('Login')
+        }
+        if (route.params?.userid) {
+            // Post updated, do something with `route.params.post`
+            // For example, send the post to the server
+            console.log(route.params?.userid)
+            setUserid(route.params?.userid)
+        }
+    }, [route.params?.userid]);
+
+    useEffect( () => {
+        const userRole = AsyncStorage.getItem('@roleid');
+
+        if(logined === false && (userRole === undefined || userRole === null)) {
+            navigation.navigate('Login')
+        }
+    })
+
+    useEffect( () => {
+        const userid = AsyncStorage.getItem('@userid');
+        setIdUser(userid)
+    })
+
     const listState = ['XACNHAN', 'THANHCONG', 'DAHUY', 'HOANTHANH'];
     useEffect(() => {
         listState.forEach((element) =>
@@ -24,13 +54,14 @@ function OrderManageForCustomer(props) {
                 }),
         );
     }, []);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
-            <View style={styles.header}>
+            {/* <View style={styles.header}>
                 <Icon name="arrow-back" size={28} color={COLORS.white} onPress={() => navigation.navigate('HomeTab')} />
                 <Text style={style.headerTitle}>Lịch sử đặt</Text>
-            </View>
+            </View> */}
 
             <TopTabOrderForCustomer route={{ idUser: idUser }} />
         </SafeAreaView>

@@ -4,8 +4,9 @@ import { MainNavigation } from "./src/navigations/main-navigation";
 import allReducers from "./src/redux";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-import store from "./src/redux/store";
+// import store from "./src/redux/store";
 import modifyModalFood from "./src/redux/action/modifyModal";
+import store from "./src/store/store";
 const MyTheme = {
   ...DefaultTheme,
   colors: {
@@ -22,6 +23,7 @@ const Main = () => {
     </Provider>
   );
 };
+store.subscribe(Main)
 export default function App() {
   return <Main/>;
 }
