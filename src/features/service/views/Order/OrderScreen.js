@@ -50,10 +50,47 @@ function OrderScreen({ navigation, route }) {
     }, []);
 
     useEffect(() => {
-        if(logined === false) {
-            navigation.navigate('Login')
+        async function check() {
+            const userRole = await AsyncStorage.getItem('@roleid');
+            console.log(logined)
+            console.log(userRole)
+    
+            if(logined === false ) {
+                navigation.navigate('Login')
+            }
+            if(userRole !== "CUSTOMER" ) {
+                console.log('login')
+                Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
+                    {
+                        text: 'Hủy',
+                        onPress: () => {navigation.goBack()},
+                        style: 'destructive',
+                    },
+                    {
+                        text: 'Đồng ý',
+                        onPress: () => {
+                            setModalVisible(!modalVisible);
+                            AsyncStorage.removeItem('@userid');
+                            AsyncStorage.removeItem('@roleid');
+                            setRole("")
+                            dispatch({"type": "logout"})
+                            setTimeout(() => {
+                                setModalVisible(modalVisible);
+                                navigation.navigate({
+                                    name: 'Login',
+                                    params: {userid: ""},
+                                    merge: true,
+                                })
+                            }, 1000);
+                        },
+                        style: 'default',
+                    },
+                ]);
+            }
+            // setIdUser(userid)
         }
-    }, [logined])
+        check()
+    }, [])
 
     const checkData = () => {
         if (selectedDate.trim() == '') {

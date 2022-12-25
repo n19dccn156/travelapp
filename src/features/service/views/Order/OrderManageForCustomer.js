@@ -3,51 +3,66 @@ import { Alert, Image, SafeAreaView, StatusBar, StyleSheet, TouchableOpacity, Vi
 import { Text } from 'react-native-animatable';
 import { Icon } from 'react-native-elements';
 import COLORS from '../../consts/colors';
-import style from '../../style/Home/style';
-import TopTabOrderForStaff from '../../navigations/TopTabOrderForStaff';
-import { getOrderByIdAndState } from '../../services/Order/getData';
 import TopTabOrderForCustomer from '../../navigations/TopTabOrderForCustomer';
 import { getOrderByIdUserAndState, getOrderByIdUserAndStateForPage } from '../../services/Order/getData';
-import store from '../../../../redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 
 function OrderManageForCustomer({navigation, route}) {
     const logined = useSelector((state) => {state.logined})
     const dispatch = useDispatch()
-    const [idUser, setIdUser] = useState('');
-    // const idUser = '7055dcb1-67ce-4c5f-bf51-03863f7e5778';
+    // const [idUser, setIdUser] = useState('7055dcb1-67ce-4c5f-bf51-03863f7e5778');
+    const idUser = AsyncStorage.getItem('@userid')
+
     useEffect(() => {
-        if(route.params?.userid === "" || route.params?.userid === undefined || route.params?.userid === null) {
-            navigation.navigate('Login')
+        async function check() {
+            const userRole = await AsyncStorage.getItem('@roleid');
+            console.log(logined)
+            console.log(userRole)
+    
+            if(logined === false ) {
+                navigation.navigate('Login')
+            }
+            if(userRole !== "CUSTOMER" ) {
+                console.log('login')
+                Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
+                    {
+                        text: 'Hủy',
+                        onPress: () => {navigation.goBack()},
+                        style: 'destructive',
+                    },
+                    {
+                        text: 'Đồng ý',
+                        onPress: () => {
+                            setModalVisible(!modalVisible);
+                            AsyncStorage.removeItem('@userid');
+                            AsyncStorage.removeItem('@roleid');
+                            setRole("")
+                            dispatch({"type": "logout"})
+                            setTimeout(() => {
+                                setModalVisible(modalVisible);
+                                navigation.navigate({
+                                    name: 'Login',
+                                    params: {userid: ""},
+                                    merge: true,
+                                })
+                            }, 1000);
+                        },
+                        style: 'default',
+                    },
+                ]);
+            }
+            // setIdUser(userid)
         }
-        if (route.params?.userid) {
-            // Post updated, do something with `route.params.post`
-            // For example, send the post to the server
-            console.log(route.params?.userid)
-            setUserid(route.params?.userid)
-        }
-    }, [route.params?.userid]);
-
-    useEffect( () => {
-        const userRole = AsyncStorage.getItem('@roleid');
-
-        if(logined === false && (userRole === undefined || userRole === null)) {
-            navigation.navigate('Login')
-        }
-    })
-
-    useEffect( () => {
-        const userid = AsyncStorage.getItem('@userid');
-        setIdUser(userid)
-    })
+        check()
+    }, [])
 
     const listState = ['XACNHAN', 'THANHCONG', 'DAHUY', 'HOANTHANH'];
     useEffect(() => {
         listState.forEach((element) =>
             getOrderByIdUserAndState(idUser, element)
                 .then((res) => {
-                    store.dispatch({ type: 'ADD_LIST_ORDER', payload: res.data.content });
+                    dispatch({ type: 'ADD_LIST_ORDER', payload: res.data.content });
                 })
                 .catch((err) => {
                     console.log('🚀 ~ file: getOrderByIdAndState ~ error', err);
