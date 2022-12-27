@@ -17,7 +17,7 @@ export const textSize = {
 export const variables = {
     width: ScreenWidth,
     height: ScreenHeight,
-    host: 'http://192.168.1.16:8080',
+    host: 'http://172.168.95.208:8080',
     host2: 'http://192.168.10.101:8080',
 
 };

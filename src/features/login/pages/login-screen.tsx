@@ -150,6 +150,11 @@ export function LoginScreen({ navigation }: { navigation: any }) {
                         <Text style={{ color: colors.white, textAlign: "center", textAlignVertical: "center", fontSize: 18, fontWeight: "bold" }}>Đăng nhập</Text>
                     </View>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => {}}>
+                    <View style={styles.buttonLogin}>
+                        <Text style={{ color: colors.white, textAlign: "center", textAlignVertical: "center", fontSize: 18, fontWeight: "bold" }}>Quên mật khẩu</Text>
+                    </View>
+                </TouchableOpacity>
                 <View style={styles.or}>
                     <Text style={{ textAlign: "center", textAlignVertical: "center", fontSize: 14 }}>---  hoặc  ---</Text>
                 </View>
