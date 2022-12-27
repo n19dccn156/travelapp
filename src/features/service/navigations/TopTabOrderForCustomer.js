@@ -11,7 +11,6 @@ function TopTabOrderForCustomer({ navigation, route }) {
                 name="Chờ xác nhận"
                 component={OrderWaitConfirmScreen}
                 initialParams={{
-
                     idState: 'XACNHAN',
                 }}
             />
@@ -19,14 +18,13 @@ function TopTabOrderForCustomer({ navigation, route }) {
                 name="Đã xác nhận"
                 component={OrderWaitConfirmScreen}
                 initialParams={{
-                  
                     idState: 'THANHCONG',
                 }}
             />
             <Tab.Screen
                 name="Đã hủy"
                 component={OrderWaitConfirmScreen}
-                initialParams={{   
+                initialParams={{
                     idState: 'DAHUY',
                 }}
             />

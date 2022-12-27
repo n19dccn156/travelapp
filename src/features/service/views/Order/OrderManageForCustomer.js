@@ -8,27 +8,36 @@ import { getOrderByIdUserAndState, getOrderByIdUserAndStateForPage } from '../..
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 
-function OrderManageForCustomer({navigation, route}) {
-    const logined = useSelector((state) => {state.logined})
-    const dispatch = useDispatch()
+function OrderManageForCustomer({ navigation, route }) {
+    const logined = useSelector((state) => {
+        state.logined;
+    });
+    const dispatch = useDispatch();
     // const [idUser, setIdUser] = useState('7055dcb1-67ce-4c5f-bf51-03863f7e5778');
-    const idUser = AsyncStorage.getItem('@userid')
 
     useEffect(() => {
         async function check() {
             const userRole = await AsyncStorage.getItem('@roleid');
-            console.log(logined)
-            console.log(userRole)
-    
-            if(logined === false ) {
-                navigation.navigate('Login')
+            console.log(logined);
+            console.log(userRole);
+
+            if (logined === false || logined === null || logined === undefined) {
+                navigation.navigate('Login');
             }
-            if(userRole !== "CUSTOMER" ) {
-                console.log('login')
+            if (
+                userRole == 'ADMIN' ||
+                userRole == 'STAFF' ||
+                userRole == 'BUSINESS_PARTNER_HOTEL' ||
+                userRole == 'BUSINESS_PARTNER_SERVICE' ||
+                userRole == 'BUSINESS_PARTNER_FOOD'
+            ) {
+                console.log('login');
                 Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
                     {
                         text: 'Hủy',
-                        onPress: () => {navigation.goBack()},
+                        onPress: () => {
+                            navigation.goBack();
+                        },
                         style: 'destructive',
                     },
                     {
@@ -37,15 +46,15 @@ function OrderManageForCustomer({navigation, route}) {
                             setModalVisible(!modalVisible);
                             AsyncStorage.removeItem('@userid');
                             AsyncStorage.removeItem('@roleid');
-                            setRole("")
-                            dispatch({"type": "logout"})
+                            setRole('');
+                            dispatch({ type: 'logout' });
                             setTimeout(() => {
                                 setModalVisible(modalVisible);
                                 navigation.navigate({
                                     name: 'Login',
-                                    params: {userid: ""},
+                                    params: { userid: '' },
                                     merge: true,
-                                })
+                                });
                             }, 1000);
                         },
                         style: 'default',
@@ -54,20 +63,23 @@ function OrderManageForCustomer({navigation, route}) {
             }
             // setIdUser(userid)
         }
-        check()
-    }, [])
+        check();
+    }, []);
 
     const listState = ['XACNHAN', 'THANHCONG', 'DAHUY', 'HOANTHANH'];
+    // const idUser = AsyncStorage.getItem('@userid');
     useEffect(() => {
-        listState.forEach((element) =>
-            getOrderByIdUserAndState(idUser, element)
-                .then((res) => {
-                    dispatch({ type: 'ADD_LIST_ORDER', payload: res.data.content });
-                })
-                .catch((err) => {
-                    console.log('🚀 ~ file: getOrderByIdAndState ~ error', err);
-                }),
-        );
+        AsyncStorage.getItem('@userid').then((userId) => {
+            listState.forEach((element) =>
+                getOrderByIdUserAndState(userId, element)
+                    .then((res) => {
+                        dispatch({ type: 'ADD_LIST_ORDER', payload: res.data.content });
+                    })
+                    .catch((err) => {
+                        console.log('🚀 ~ file: getOrderByIdAndState ~ error', err);
+                    }),
+            );
+        });
     }, []);
 
     return (
@@ -78,7 +90,7 @@ function OrderManageForCustomer({navigation, route}) {
                 <Text style={style.headerTitle}>Lịch sử đặt</Text>
             </View> */}
 
-            <TopTabOrderForCustomer route={{ idUser: idUser }} />
+            <TopTabOrderForCustomer />
         </SafeAreaView>
     );
 }
