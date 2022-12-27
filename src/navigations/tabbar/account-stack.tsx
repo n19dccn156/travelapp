@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AccountScreen } from '../../features/account/pages/account-main-screen';
 import { ProfileScreen } from '../../features/account/pages/profile-screen';
@@ -8,7 +8,17 @@ import { ManageStackNavigator } from '../../features/service/navigations/StackNa
 
 const AccountStack = createNativeStackNavigator();
 
-export function AccountStackNavigator() {
+export function AccountStackNavigator({route} : {route: any}) {
+    // const [userid, setUserid] = useState('0')
+    // useEffect(() => {
+    //     if (route.params?.userid) {
+    //         // Post updated, do something with `route.params.post`
+    //         // For example, send the post to the server
+    //         console.log(route.params?.userid)
+    //         setUserid(route.params?.userid)
+    //     }
+    // }, [route.params?.userid]);
+
     return (
         <AccountStack.Navigator>
             <AccountStack.Screen

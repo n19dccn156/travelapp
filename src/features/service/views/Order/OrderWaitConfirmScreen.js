@@ -17,15 +17,15 @@ import { ScrollView } from 'react-native-gesture-handler';
 import store from '../../../../redux/store';
 import COLORS from '../../consts/colors';
 import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux';
 function OrderWaitConfirmScreen(props) {
     const navigation = props.navigation;
     const idState = props.route.params.idState;
 
-    const listOrder =props.list.listOrder.filter(element=>{
-     return element.idState==idState
-    })
-    let check = true;
+    const listOrder = props.list.listOrder.filter((element) => {
+        return element.idState == idState;
+    });
+    // let check = true;
     const footerComponent = () => {
         <View>
             <ActivityIndicator size="large" color={COLORS.primary} animating={true} />
@@ -52,29 +52,26 @@ function OrderWaitConfirmScreen(props) {
                     ></BackgroundImage>
                 </View>
                 <ActivityIndicator size="large" color={COLORS.primary} animating={false} />
-                    <View>
-                        <FlatList
-                            contentContainerStyle={{
-                                flexDirection: 'column',
-                            }}
-                            horizontal
-                            showsHorizontalScrollIndicator={true}
-                            data={listOrder}
-                            renderItem={({ item }) => (
-                                <MyOrderWaitConfirmCard
-                                    route={{
-                                        order: item,
-                                        idState: idState,
-                                    }}
-                                    inedx
-                                    navigation={navigation}
-                                />
-                            )}
-                            ListFooterComponent={footerComponent}
-                          
-                        />
-                    </View>
-            
+                <View>
+                    <FlatList
+                        contentContainerStyle={{
+                            flexDirection: 'column',
+                        }}
+                        horizontal
+                        showsHorizontalScrollIndicator={true}
+                        data={listOrder}
+                        renderItem={({ item }) => (
+                            <MyOrderWaitConfirmCard
+                                route={{
+                                    order: item,
+                                    idState: idState,
+                                }}
+                                navigation={navigation}
+                            />
+                        )}
+                        ListFooterComponent={footerComponent}
+                    />
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -110,8 +107,8 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
 });
-export default  connect((state)=>{
+export default connect((state) => {
     return {
-        list: state
-    }
-})(OrderWaitConfirmScreen)
+        list: state,
+    };
+})(OrderWaitConfirmScreen);

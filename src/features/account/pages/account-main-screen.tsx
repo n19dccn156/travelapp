@@ -6,14 +6,23 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { colors } from '../../../common/constants/colors';
 import { sizeScale } from '../../../common/constants/const';
+import { useDispatch, useSelector } from 'react-redux';
 
-export function AccountScreen({ navigation }: { navigation: any }) {
+export function AccountScreen({ navigation, route }: { navigation: any, route: any }) {
+    // useEffect(() => {
+    //     if (route.params?.userid) {
+    //         // Post updated, do something with `route.params.post`
+    //         // For example, send the post to the server
+    //     }
+    // }, [route.params?.userid]);
+    const logined = useSelector((state: any) => {return state.logined})
+    const dispatch = useDispatch()
     const [modalVisible, setModalVisible] = useState(false);
-    const [logined, setLogined] = useState(false);
+    // const [logined, setLogined] = useState(false);
     const [role, setRole] = useState("");
 
     function accept(site: String) {
-        Alert.alert('Thông Báo', 'Bạn có muốn đăng xuất', [
+        Alert.alert('Thông Báo', 'Bạn có muốn đăng xuất ?', [
             {
                 text: 'Hủy',
                 onPress: () => {},
@@ -25,10 +34,15 @@ export function AccountScreen({ navigation }: { navigation: any }) {
                     setModalVisible(!modalVisible);
                     AsyncStorage.removeItem('@userid');
                     AsyncStorage.removeItem('@roleid');
-                    setLogined(false);
+                    setRole("")
+                    dispatch({"type": "logout"})
                     setTimeout(() => {
                         setModalVisible(modalVisible);
-                        navigation.navigate(site);
+                        navigation.navigate({
+                            name: 'HomeApp',
+                            params: {userid: ""},
+                            merge: true,
+                        })
                     }, 1000);
                 },
                 style: 'default',
@@ -36,7 +50,7 @@ export function AccountScreen({ navigation }: { navigation: any }) {
         ]);
     }
 
-    useEffect(() => {
+    useEffect( () => {
         async function check() {
             try {
                 const userid = await AsyncStorage.getItem('@userid');
@@ -52,21 +66,14 @@ export function AccountScreen({ navigation }: { navigation: any }) {
                     setRole(roleid);
                 }
 
-                if (userid === null || userid === undefined) {
-                    // return false;
-                    setLogined(false);
-                    return;
-                }
-                setLogined(true);
                 return;
             } catch (error) {
                 return false;
                 // Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
             }
         }
-
-        check();
-    });
+        check()
+    }, []);
 
     function not_accept(site: String) {
         setModalVisible(!modalVisible)
@@ -118,10 +125,10 @@ export function AccountScreen({ navigation }: { navigation: any }) {
             sizeName: 22,
             icon: 'log-out',
             sizeIcon: 50,
-
             // color: colors.indigo,
-            navigation: 'HomeScreen',
+            navigation: 'AccountTab',
             accept: true,
+            params: {userid:"1"}
         },
         {
             name: 'Đăng Nhập',
@@ -140,27 +147,6 @@ export function AccountScreen({ navigation }: { navigation: any }) {
                 <LoadingComponent/> 
             </Modal> */}
             {list.map((l, i) => {
-                // return l.accept ?
-                //     (
-                //         <ListItem key={i} bottomDivider onPress={() => accept(l.navigation)}>
-                //             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
-                //             <ListItem.Content>
-                //                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
-                //             </ListItem.Content>
-                //             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
-                //         </ListItem>
-                //     )
-                //     :
-                //     (
-                //         <ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
-                //             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
-                //             <ListItem.Content>
-                //                 <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
-                //             </ListItem.Content>
-                //             <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
-                //         </ListItem>
-                //     )
-
                 if (l.name === 'Đăng Xuất' && logined === true) {
                     return (
                         <ListItem key={i} bottomDivider onPress={() => accept(l.navigation)}>
