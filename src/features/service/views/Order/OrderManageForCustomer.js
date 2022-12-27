@@ -13,22 +13,23 @@ function OrderManageForCustomer({navigation, route}) {
     const dispatch = useDispatch()
     // const [idUser, setIdUser] = useState('7055dcb1-67ce-4c5f-bf51-03863f7e5778');
     const idUser = AsyncStorage.getItem('@userid')
+    const reset = useSelector((state) => {return state.render})
 
     useEffect(() => {
         async function check() {
             const userRole = await AsyncStorage.getItem('@roleid');
-            console.log(logined)
-            console.log(userRole)
+            // console.log(logined)
+            // console.log(userRole)
     
             if(logined === false ) {
                 navigation.navigate('Login')
             }
             if(userRole !== "CUSTOMER" ) {
-                console.log('login')
+                // console.log('login')
                 Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
                     {
                         text: 'Hủy',
-                        onPress: () => {navigation.goBack()},
+                        onPress: () => {navigation.navigate('HomeScreen')},
                         style: 'destructive',
                     },
                     {
@@ -55,7 +56,7 @@ function OrderManageForCustomer({navigation, route}) {
             // setIdUser(userid)
         }
         check()
-    }, [])
+    }, [reset])
 
     const listState = ['XACNHAN', 'THANHCONG', 'DAHUY', 'HOANTHANH'];
     useEffect(() => {

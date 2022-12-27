@@ -121,11 +121,8 @@ export function LoginScreen({ navigation }: { navigation: any }) {
                                                     try {
                                                         AsyncStorage.removeItem('@userid')
                                                         AsyncStorage.setItem('@userid', data.data.id);
-<<<<<<< HEAD
-                                                        dispatch({"type": "login"})
-=======
                                                         AsyncStorage.setItem('@roleid', "CUSTOMER");
->>>>>>> 7bab28055963ba462d1bb1d81d8807c84bbdcfc1
+                                                         dispatch({"type": "login"})
                                                     } catch (error) {
                                                         Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
                                                     }
@@ -152,6 +149,7 @@ export function LoginScreen({ navigation }: { navigation: any }) {
                                                             try {
                                                                 AsyncStorage.removeItem('@userid')
                                                                 AsyncStorage.setItem('@userid', data.data.id);
+                                                                AsyncStorage.setItem('@roleid', "CUSTOMER");
                                                                 dispatch({"type": "login"})
                                                                 console.log("Login successfully: " + data.data.id)
                                                             } catch (error) {

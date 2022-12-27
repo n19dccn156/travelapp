@@ -1,4 +1,5 @@
 import loginReducer from "./reducers/LoginReducer";
+import renderReducer from "./reducers/RenderReducer";
 import { ReducerListCategory, ReducerListOrder, ReducerState } from "./reducers/reducerService";
 
 const { configureStore } = require("@reduxjs/toolkit");
@@ -9,7 +10,8 @@ const store = configureStore({
         "logined": loginReducer,
         "listOrder": ReducerListOrder,
         "listCategory": ReducerListCategory,
-        "idState": ReducerState
+        "idState": ReducerState,
+        "render": renderReducer
     }
 })
 

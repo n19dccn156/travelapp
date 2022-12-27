@@ -31,6 +31,7 @@ function OrderScreen({ navigation, route }) {
     const service = route.params.service;
     const state = route.params.state;
     const order = route.params.order;
+    const reset = useSelector((state) => {return state.render})
     const [selectedDate, setSelectedDate] = useState(state == 'update' ? order.dateStart : '');
     const [number, setNumber] = useState(state == 'update' ? order.number : '');
     const [phone, setPhone] = useState(state == 'update' ? order.phone : '');
@@ -90,7 +91,7 @@ function OrderScreen({ navigation, route }) {
             // setIdUser(userid)
         }
         check()
-    }, [])
+    }, [reset])
 
     const checkData = () => {
         if (selectedDate.trim() == '') {

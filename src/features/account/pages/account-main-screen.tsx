@@ -122,6 +122,15 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
             accept: false,
         },
         {
+            name: 'Quản Lý Của Admin',
+            sizeName: 22,
+            icon: 'briefcase-sharp',
+            sizeIcon: 50,
+            color: colors.red,
+            navigation: 'ManageStackNavigator',
+            accept: false,
+        },
+        {
             name: 'Đăng Xuất',
             sizeName: 22,
             icon: 'log-out',
