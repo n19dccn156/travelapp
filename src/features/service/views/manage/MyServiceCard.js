@@ -5,6 +5,9 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import style from '../../style/Home/style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity } from 'react-native';
+import { variables } from '../../../../common/constants/const';
+
+var host = variables.host;
 
 function MyServiceCard({ navigation, route }) {
     const service = route.service;
@@ -27,7 +30,7 @@ function MyServiceCard({ navigation, route }) {
                 })
             }
         >
-            <Image style={style.myCardImage} source={{ uri: `${service.avatar}` }} />
+            <Image style={style.myCardImage} source={{ uri: `${host}${service.avatar}` }} />
 
             <View style={{ flexDirection: 'column' }}>
                 <View

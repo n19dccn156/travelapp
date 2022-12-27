@@ -35,7 +35,6 @@ const getServiceOfCaterogy = async (type) => {
     try {
         const response = await fetch(`${host}/api/v1/services?_type=${type}&_sort=ALL&_page=0&_size=10`);
         // const response = await fetch(`https://phuquy-travel-app.herokuapp.com/api/v1/typeservices`);
-
         return response.json();
     } catch (error) {
         console.log('🚀 ~ file: getAllCaterogy ~ line 16 ~ error', error);

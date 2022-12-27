@@ -6,86 +6,15 @@ import { height, sizeScale, variables, width } from "../../../common/constants/c
 import { LoginButton, AccessToken, LoginResult, Profile } from 'react-native-fbsdk-next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
+import { useDispatch, useSelector } from "react-redux";
 
 export function LoginScreen({ navigation }: { navigation: any }) {
 
+    const logined = useSelector((state: any) => {return state.logined})
+    const dispatch = useDispatch()
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-
-    const currentProfile = Profile.getCurrentProfile().then(
-        function (currentProfile) {
-            if (currentProfile) {
-
-                const urlGet = variables.host2 + "/api/v1/users/" + currentProfile.userID;
-                const urlPost = variables.host2 + "/api/v1/users";
-                fetch(urlGet)
-                    .then((response) => response.json())
-                    .then((data) => {
-                        if (data.status === 'success') {
-                            try {
-                                AsyncStorage.removeItem('@userid')
-                                AsyncStorage.setItem('@userid', data.data.id);
-                                // login();
-                            } catch (error) {
-                                Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
-                            }
-                        } else {
-                            let dataPost = {
-                                "avatar": currentProfile.imageURL?.split("?")[0],
-                                "firstName": currentProfile.firstName + " " + currentProfile.middleName,
-                                "id": uuid.v4(),
-                                "idSocial": currentProfile.userID,
-                                "lastName": currentProfile.lastName,
-                                "phone": "phone",
-                                "platform": "facebook",
-                                "sex": "Nam"
-                            }
-
-                            fetch(urlPost, {
-                                method: "POST",
-                                headers: { 'Content-Type': 'application/json' },
-                                body: JSON.stringify(dataPost)
-                            })
-                                .then((res) => res.json())
-                                .then((data) => {
-                                    if (data.status === 'success') {
-                                        try {
-                                            AsyncStorage.removeItem('@userid')
-                                            AsyncStorage.setItem('@userid', data.data.id);
-                                            console.log("Login successfully: " + data.data.id)
-                                        } catch (error) {
-                                            Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
-                                        }
-                                    } else {
-                                        Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
-                                    }
-                                })
-                                .catch((error) => console.log(error));
-                        }
-                    });
-            }
-        }
-    );
-
-    // async function loginHandler(id: string) {
-    //     try {
-    //         AsyncStorage.removeItem('@userid')
-    //         AsyncStorage.setItem('@userid', id);
-    //     } catch (error) {
-    //         Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
-    //     }
-    // }
-
-    const login = () => {
-
-        setModalVisible(!modalVisible)
-
-        setTimeout(() => {
-            setModalVisible(modalVisible)
-            navigation.navigate('HomeApp');
-        }, 1000);
-    }
 
     const submit = () => {
         const urlGet = variables.host2 + "/api/v1/memberships/login?_username=" + username + "&_password=" + password;
@@ -98,7 +27,18 @@ export function LoginScreen({ navigation }: { navigation: any }) {
                 try {
                     AsyncStorage.removeItem('@userid')
                     AsyncStorage.setItem('@userid', data.data.id);
-                    login();
+                    AsyncStorage.setItem('@roleid', data.data.role);
+                    setModalVisible(!modalVisible)
+
+                    setTimeout(() => {
+                        setModalVisible(modalVisible)
+                        navigation.navigate({
+                            name: 'HomeApp', 
+                            params: {userid: data.data.id},
+                            merge: true,
+                        });
+                        dispatch({"type": "login"})
+                    }, 1000);
                 } catch (error) {
                     Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
                 }
@@ -107,8 +47,14 @@ export function LoginScreen({ navigation }: { navigation: any }) {
             }
         })
         .catch((error) => console.log(error));
-
     }
+
+    useEffect(() => {
+        console.log(logined)
+        if(logined === false) {
+            navigation.navigate('Login');
+        }
+    }, [logined])
 
     return (
         <SafeAreaView style={styles.container}>
@@ -149,6 +95,11 @@ export function LoginScreen({ navigation }: { navigation: any }) {
                         <Text style={{ color: colors.white, textAlign: "center", textAlignVertical: "center", fontSize: 18, fontWeight: "bold" }}>Đăng nhập</Text>
                     </View>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => {}}>
+                    <View style={styles.buttonLogin}>
+                        <Text style={{ color: colors.white, textAlign: "center", textAlignVertical: "center", fontSize: 18, fontWeight: "bold" }}>Quên mật khẩu</Text>
+                    </View>
+                </TouchableOpacity>
                 <View style={styles.or}>
                     <Text style={{ textAlign: "center", textAlignVertical: "center", fontSize: 14 }}>---  hoặc  ---</Text>
                 </View>
@@ -164,15 +115,73 @@ export function LoginScreen({ navigation }: { navigation: any }) {
                                 console.log("login is cancelled.");
                             } else {
                                 AccessToken.getCurrentAccessToken().then(
-                                    (data: any) => {
-                                        currentProfile;
-                                        // login();
+                                    (currentProfile: any) => {
+                                        if (currentProfile) {
+                                            const urlGet = variables.host2 + "/api/v1/users/" + currentProfile.userID;
+                                            const urlPost = variables.host2 + "/api/v1/users";
+                                            fetch(urlGet)
+                                            .then((response) => response.json())
+                                            .then((data) => {
+                                                if (data.status === 'success') {
+                                                    try {
+                                                        AsyncStorage.removeItem('@userid')
+                                                        AsyncStorage.setItem('@userid', data.data.id);
+                                                        dispatch({"type": "login"})
+                                                    } catch (error) {
+                                                        Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
+                                                    }
+                                                } else {
+                                                    let dataPost = {
+                                                        "avatar": currentProfile.imageURL?.split("?")[0],
+                                                        "firstName": currentProfile.firstName + " " + currentProfile.middleName,
+                                                        "id": uuid.v4(),
+                                                        "idSocial": currentProfile.userID,
+                                                        "lastName": currentProfile.lastName,
+                                                        "phone": "phone",
+                                                        "platform": "facebook",
+                                                        "sex": "Nam"
+                                                    }
+                                
+                                                    fetch(urlPost, {
+                                                        method: "POST",
+                                                        headers: { 'Content-Type': 'application/json' },
+                                                        body: JSON.stringify(dataPost)
+                                                    })
+                                                    .then((res) => res.json())
+                                                    .then((data) => {
+                                                        if (data.status === 'success') {
+                                                            try {
+                                                                AsyncStorage.removeItem('@userid')
+                                                                AsyncStorage.setItem('@userid', data.data.id);
+                                                                dispatch({"type": "login"})
+                                                                console.log("Login successfully: " + data.data.id)
+                                                            } catch (error) {
+                                                                Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
+                                                            }
+                                                        } else {
+                                                            Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
+                                                        }
+                                                    })
+                                                    .catch((error) => console.log(error));
+                                                }
+                                            });
+                                        }
                                     }
                                 )
                             }
                         })
                     }
-                    onLogoutFinished={() => login()} />
+                    onLogoutFinished={() => {
+                        setModalVisible(!modalVisible)
+                        setTimeout(() => {
+                            setModalVisible(modalVisible)
+                            navigation.navigate({
+                                name: 'AccountTab', 
+                                params: {userid: username},
+                                merge: true,
+                            });
+                        }, 1000);
+                    }} />
 
             </View>
         </SafeAreaView>

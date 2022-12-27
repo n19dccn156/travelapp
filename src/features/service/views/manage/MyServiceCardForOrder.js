@@ -8,6 +8,7 @@ import { TouchableOpacity } from 'react-native';
 
 function MyServiceCardForOrder({ navigation, route }) {
     const service = route.service;
+
     return (
         <TouchableOpacity
             style={{

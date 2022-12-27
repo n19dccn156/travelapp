@@ -8,18 +8,6 @@ import store from "../../../redux/store";
 import { DishManage } from "../../../redux/action/ModifyDish";
 import { createRequest } from "../../food/services/get-data";
 export function ManageShopFood({ navigation }) {
-  (async function getData() {
-    const response = await createRequest(
-      "/api/v1/dishs/idfood/47477528-628c-11ed-9d10-3855030e3f14"
-    );
-    if (response.status == "success") {
-      store.dispatch(DishManage("CREATE_LIST_DISH", response.data));
-    }
-  })()
-    .then(data => {})
-    .catch(err => {
-      console.log(err);
-    });
   return (
     <View style={styleView.container}>
       <StatusBar

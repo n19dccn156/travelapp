@@ -14,12 +14,14 @@ import DatePicker, { getFormatedDate } from 'react-native-modern-datepicker';
 import ListSheduleForService from './ListSheduleForService';
 import { ScrollView } from 'react-native-gesture-handler';
 import { BackgroundImage } from 'react-native-elements/dist/config';
+import store from '../../../../redux/store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { orderService } from '../../services/Order/postData';
 
-function MyOrderWaitConfirmCard({ navigation, route }) {
-    const order = route.order;
-
-    const idState = route.idState;
-
+function MyOrderWaitConfirmCard(props) {
+    const order = props.route.order;
+    const idState = props.route.idState;
+    const navigation = props.navigation;
     const [modalVisible, setModalVisible] = useState(false);
 
     const [service, setService] = useState('');
@@ -37,9 +39,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
         updateStateOrderById(order.id, idState)
             .then(function (res) {
                 if (res.status == 'success') {
-                    route.getOrderByIdUserAndStateAgain(order.idUser);
-                    route.setShowedCancel(true);
-                    console.log('showedCancel', route.showedCancel);
+                    // route.setShowedCancel(true);
                 }
                 Alert.alert('Thông báo!', res.message, [
                     {
@@ -49,12 +49,14 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
                 ]);
             })
             .catch((err) => {
-                console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
+                console.log('🚀 ~ file: upDateStateOrder ', err);
             });
     };
 
-    const [selectedDate, setSelectedDate] = useState(order.dateStart);
-    const [number, setNumber] = useState(order.number);
+    const [selectedDate, setSelectedDate] = useState(
+        idState == 'THANHCONG' || idState == 'XACNHAN' ? order.dateStart : moment().format('YYYY-MM-DD'),
+    );
+    const [number, setNumber] = useState(order.number + '');
     const [phone, setPhone] = useState(order.phone);
 
     const [listShedule, setListShedule] = useState([]);
@@ -105,6 +107,27 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
         return true;
     };
 
+    const bookService = async () => {
+        if (checkData()) {
+            const userId = await AsyncStorage.getItem('@userid');
+
+            orderService(userId, selectedShedule, selectedDate, number, phone, service)
+                .then(function (res) {
+                    console.log('res', res);
+                    if (res.status == 'success') {
+                        Alert.alert('Thông báo!', res.message, [
+                            { text: 'Đóng', onPress: () => navigation.navigate('HomeScreen') },
+                        ]);
+                    } else {
+                        Alert.alert('Thông báo!', res.message, [{ text: 'Đóng', onPress: () => {} }]);
+                    }
+                })
+                .catch((err) => {
+                    console.log('🚀 ~ file: bookService ~ line 17 ~ error', err);
+                });
+        }
+    };
+
     const updateOrder = () => {
         if (checkData())
             updateOrderById(order, selectedShedule, selectedDate, number, service.price, phone)
@@ -114,7 +137,8 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
                             {
                                 text: 'Đóng',
                                 onPress: () => {
-                                    route.getOrderByIdUserAndStateAgain(order.idUser);
+                                    // route.getOrderByIdUserAndStateAgain(order.idUser);
+                                    // store.dispatch;
                                     setModalVisible(false);
                                 },
                             },
@@ -145,6 +169,8 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             {
                 text: ' Chắc',
                 onPress: () => {
+                    const data = { ...order, idState: 'DAHUY' };
+                    store.dispatch({ type: 'MODIFY_LIST_ORDER', payload: data });
                     upDateStateOrder('DAHUY');
                 },
             },
@@ -156,7 +182,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
     }
 
     return (
-        <View style={{ borderBottomWidth: 1 }}>
+        <View style={{ borderBottomWidth: 1 }} key={service.id}>
             <View style={{ flexDirection: 'row', margin: 5 }}>
                 <Text style={{ fontWeight: 'bold', color: COLORS.dark }}>
                     Ngày đặt: {moment(order.dateNow).format('YYYY-MM-DD')}{' '}
@@ -230,7 +256,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             <View style={{ flexDirection: 'row', margin: 5 }}>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={{ color: COLORS.dark }}>Giá: </Text>
-                    <Text>{currencyFormat(order.price)}</Text>
+                    <Text>{currencyFormat(service.price == undefined ? 0 : service.price)}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginLeft: 10 }}>
                     <Text style={{ color: COLORS.dark }}>Số lượng: </Text>
@@ -239,7 +265,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             </View>
             <View style={{ margin: 5 }}>
                 <Text style={{ fontWeight: 'bold', color: COLORS.dark }}>
-                    Thành tiền: {currencyFormat(order.price * order.number)}
+                    Thành tiền: {currencyFormat(service.price == undefined ? 0 : service.price * order.number)}
                 </Text>
             </View>
             {idState == 'XACNHAN' ? (
@@ -266,7 +292,17 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
 
             {idState == 'THANHCONG' ? (
                 <View style={{ flexDirection: 'row' }}>
-                    <View style={{ backgroundColor: COLORS.oranbge, padding: 5, borderRadius: 10, margin: 10 }}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setModalVisible(true);
+                            getListSchedule();
+                        }}
+                    >
+                        <View style={{ backgroundColor: COLORS.oranbge, padding: 5, borderRadius: 10, margin: 10 }}>
+                            <Text style={{ color: COLORS.white }}>Chi tiết</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <View style={{ backgroundColor: COLORS.green, padding: 5, borderRadius: 10, margin: 10 }}>
                         <Text style={{ color: COLORS.white }}>Đã xác nhận</Text>
                     </View>
                 </View>
@@ -275,6 +311,16 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             )}
             {idState == 'DAHUY' ? (
                 <View style={{ flexDirection: 'row' }}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            setModalVisible(true);
+                            getListSchedule();
+                        }}
+                    >
+                        <View style={{ backgroundColor: COLORS.oranbge, padding: 5, borderRadius: 10, margin: 10 }}>
+                            <Text style={{ color: COLORS.white }}>Đặt lại</Text>
+                        </View>
+                    </TouchableOpacity>
                     <View style={{ backgroundColor: COLORS.red, padding: 5, borderRadius: 10, margin: 10 }}>
                         <Text style={{ color: COLORS.white }}>Đã hủy</Text>
                     </View>
@@ -312,7 +358,7 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
                             <View>
                                 <Text style={styles.textStyle}>Chọn ngày(*)</Text>
                                 <DatePicker
-                                    selected={order.dateStart}
+                                    selected={selectedDate}
                                     // current={moment(order.dateStart).format('YYYY-MM-DD')}
                                     minimumDate={moment().format('YYYY-MM-DD')}
                                     // maximumDate="2020-07-25"
@@ -356,14 +402,31 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
                                     <Text style={styles.textStyle}>{currencyFormat(order.price * number)}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row' }}>
-                                    <TouchableOpacity
-                                        style={styles.btnDatStyle}
-                                        onPress={() => {
-                                            updateOrder();
-                                        }}
-                                    >
-                                        <Text style={styles.txtDatStyle}>Cập nhật</Text>
-                                    </TouchableOpacity>
+                                    {idState == 'XACNHAN' ? (
+                                        <TouchableOpacity
+                                            style={styles.btnDatStyle}
+                                            onPress={() => {
+                                                updateOrder();
+                                            }}
+                                        >
+                                            <Text style={styles.txtDatStyle}>Cập nhật</Text>
+                                        </TouchableOpacity>
+                                    ) : (
+                                        ''
+                                    )}
+                                    {idState == 'HOANTHANH' || idState == 'DAHUY' ? (
+                                        <TouchableOpacity
+                                            style={styles.btnDatStyle}
+                                            onPress={() => {
+                                                bookService();
+                                            }}
+                                        >
+                                            <Text style={styles.txtDatStyle}>Thanh toán</Text>
+                                        </TouchableOpacity>
+                                    ) : (
+                                        ''
+                                    )}
+
                                     <TouchableOpacity
                                         style={{
                                             backgroundColor: COLORS.red,

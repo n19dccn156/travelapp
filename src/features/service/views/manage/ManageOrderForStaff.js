@@ -6,9 +6,9 @@ import COLORS from '../../consts/colors';
 import style from '../../style/Home/style';
 import TopTabOrderForStaff from '../../navigations/TopTabOrderForStaff';
 
-function ManageOrderForStaff({ navigation, route }) {
-    const service = route.params.service;
-
+function ManageOrderForStaff(props) {
+    const navigation = props.navigation;
+    const service = props.route.params.service;
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />

@@ -11,7 +11,6 @@ function TopTabOrderForCustomer({ navigation, route }) {
                 name="Chờ xác nhận"
                 component={OrderWaitConfirmScreen}
                 initialParams={{
-                    idUser: route.idUser,
                     idState: 'XACNHAN',
                 }}
             />
@@ -19,7 +18,6 @@ function TopTabOrderForCustomer({ navigation, route }) {
                 name="Đã xác nhận"
                 component={OrderWaitConfirmScreen}
                 initialParams={{
-                    idUser: route.idUser,
                     idState: 'THANHCONG',
                 }}
             />
@@ -27,7 +25,6 @@ function TopTabOrderForCustomer({ navigation, route }) {
                 name="Đã hủy"
                 component={OrderWaitConfirmScreen}
                 initialParams={{
-                    idUser: route.idUser,
                     idState: 'DAHUY',
                 }}
             />
@@ -35,7 +32,6 @@ function TopTabOrderForCustomer({ navigation, route }) {
                 name="Hoàn thành"
                 component={OrderWaitConfirmScreen}
                 initialParams={{
-                    idUser: route.idUser,
                     idState: 'HOANTHANH',
                 }}
             />

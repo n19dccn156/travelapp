@@ -14,67 +14,21 @@ import {
 import { Text } from 'react-native-animatable';
 import { BackgroundImage } from 'react-native-elements/dist/config';
 import { ScrollView } from 'react-native-gesture-handler';
+import store from '../../../../redux/store';
 import COLORS from '../../consts/colors';
-import {
-    getOrderByIdAndState,
-    getOrderByIdUserAndState,
-    getOrderByIdUserAndStateForPage,
-} from '../../services/Order/getData';
 import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
+import { connect } from 'react-redux';
+function OrderWaitConfirmScreen(props) {
+    const navigation = props.navigation;
+    const idState = props.route.params.idState;
 
-function OrderWaitConfirmScreen({ navigation, route }) {
-    const [listOrder, setListOrder] = useState([]);
-    const idState = route.params.idState;
-    const [showed, setShowed] = useState(true);
-    const [showedFooter, setShowedFooter] = useState(false);
-    const [page, setPage] = useState(0);
-
-    let check = true;
-    const listTemp = [];
-
-    const getOrderByIdUserAndStateAgain = (id) => {
-        getOrderByIdUserAndState(id, idState)
-            .then(function (res) {
-                setListOrder([...res.data.content]);
-                listTemp.push([...res.data.content]);
-                setShowed(false);
-            })
-            .catch((err) => {
-                setListOrder([]);
-                setShowed(false);
-
-                console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
-            });
-    };
-
-    const getOrderByIdUserAndStateForPageAgain = (id) => {
-        console.log('listOrder: ' + listOrder);
-
-        if (listOrder.length != 0 && check == true) {
-            setPage(page + 1);
-            console.log('page: ' + page);
-            setShowedFooter(true);
-            getOrderByIdUserAndStateForPage(id, idState, page)
-                .then(function (res) {
-                    listTemp.push([...res.data.content]);
-                    setListOrder(listTemp);
-                    setShowedFooter(false);
-                })
-                .catch((err) => {
-                    setShowedFooter(false);
-                    check = false;
-                    console.log('🚀 ~ file: getOrderByIdAndState-screen ~ line 17 ~ error', err);
-                });
-        }
-    };
-
-    useEffect(() => {
-        getOrderByIdUserAndStateAgain(route.params.idUser);
-    }, [showed]);
-
+    const listOrder = props.list.listOrder.filter((element) => {
+        return element.idState == idState;
+    });
+    // let check = true;
     const footerComponent = () => {
         <View>
-            <ActivityIndicator size="large" color={COLORS.primary} animating={showedFooter} />
+            <ActivityIndicator size="large" color={COLORS.primary} animating={true} />
         </View>;
     };
 
@@ -97,33 +51,27 @@ function OrderWaitConfirmScreen({ navigation, route }) {
                         style={{ height: 100 }}
                     ></BackgroundImage>
                 </View>
-                <ActivityIndicator size="large" color={COLORS.primary} animating={showed} />
-                {!showed ? (
-                    <View>
-                        <FlatList
-                            contentContainerStyle={{
-                                flexDirection: 'column',
-                            }}
-                            horizontal
-                            showsHorizontalScrollIndicator={true}
-                            data={listOrder}
-                            renderItem={({ item }) => (
-                                <MyOrderWaitConfirmCard
-                                    route={{
-                                        order: item,
-                                        getOrderByIdUserAndStateAgain: getOrderByIdUserAndStateAgain,
-                                        idState: idState,
-                                    }}
-                                />
-                            )}
-                            ListFooterComponent={footerComponent}
-                            onEndReached={getOrderByIdUserAndStateForPageAgain}
-                            onEndReachedThreshold={0}
-                        />
-                    </View>
-                ) : (
-                    ''
-                )}
+                <ActivityIndicator size="large" color={COLORS.primary} animating={false} />
+                <View>
+                    <FlatList
+                        contentContainerStyle={{
+                            flexDirection: 'column',
+                        }}
+                        horizontal
+                        showsHorizontalScrollIndicator={true}
+                        data={listOrder}
+                        renderItem={({ item }) => (
+                            <MyOrderWaitConfirmCard
+                                route={{
+                                    order: item,
+                                    idState: idState,
+                                }}
+                                navigation={navigation}
+                            />
+                        )}
+                        ListFooterComponent={footerComponent}
+                    />
+                </View>
             </ScrollView>
         </SafeAreaView>
     );
@@ -159,4 +107,8 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
 });
-export default OrderWaitConfirmScreen;
+export default connect((state) => {
+    return {
+        list: state,
+    };
+})(OrderWaitConfirmScreen);
