@@ -3,7 +3,7 @@ import { variables } from '../../../../common/constants/const';
 import moment from 'moment';
 var host = variables.host;
 
-const orderService = async (idSchedule, dateStart, number, phone, service) => {
+const orderService = async (idUser, idSchedule, dateStart, number, phone, service) => {
     try {
         const response = await fetch(`${host}/api/v1/orderservice`, {
             method: 'POST',
@@ -12,7 +12,7 @@ const orderService = async (idSchedule, dateStart, number, phone, service) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                idUser: '7055dcb1-67ce-4c5f-bf51-03863f7e5778',
+                idUser: idUser, //'7055dcb1-67ce-4c5f-bf51-03863f7e5778',
                 idState: 'XACNHAN',
                 idSchedule: idSchedule,
                 dateNow: moment().format('YYYY-MM-DDThh:mm:ss.sss'),
