@@ -6,44 +6,50 @@ import COLORS from '../../consts/colors';
 import TopTabOrderForCustomer from '../../navigations/TopTabOrderForCustomer';
 import { getOrderByIdUserAndState, getOrderByIdUserAndStateForPage } from '../../services/Order/getData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useDispatch, useSelector } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
-
-function OrderManageForCustomer({navigation, route}) {
-    const logined = useSelector((state) => {state.logined})
-    const dispatch = useDispatch()
+function OrderManageForCustomer({ navigation, route }) {
+    const logined = useSelector((state) => {
+        state.logined;
+    });
+    const dispatch = useDispatch();
     // const [idUser, setIdUser] = useState('7055dcb1-67ce-4c5f-bf51-03863f7e5778');
-    const idUser = AsyncStorage.getItem('@userid')
-    const reset = useSelector((state) => {return state.render})
+    // const idUser = AsyncStorage.getItem('@userid');
+    const reset = useSelector((state) => {
+        return state.render;
+    });
 
     useEffect(() => {
-        async function check() {
-            const userRole = await AsyncStorage.getItem('@roleid');
+        function check() {
+            const userRole = AsyncStorage.getItem('@roleid');
             // console.log(logined)
             // console.log(userRole)
-    
-            if(logined === false ) {
-                navigation.navigate('Login')
+
+            if (logined === false) {
+                navigation.navigate('Login');
             }
-            if(userRole !== "CUSTOMER" ) {
+            if (userRole !== 'CUSTOMER') {
                 // console.log('login')
                 Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
                     {
                         text: 'Hủy',
-                        onPress: () => {navigation.navigate('HomeScreen')},
+                        onPress: () => {
+                            navigation.navigate('HomeScreen');
+                        },
 
                         style: 'destructive',
                     },
                     {
                         text: 'Đồng ý',
                         onPress: () => {
-                            setModalVisible(!modalVisible);
+                            // setModalVisible(!modalVisible);
                             AsyncStorage.removeItem('@userid');
                             AsyncStorage.removeItem('@roleid');
-                            setRole('');
+                            // setRole('');
                             dispatch({ type: 'logout' });
+                            // dispatch({ type: 'reset' });
                             setTimeout(() => {
-                                setModalVisible(modalVisible);
+                                // setModalVisible(modalVisible);
                                 navigation.navigate({
                                     name: 'Login',
                                     params: { userid: '' },
@@ -58,30 +64,30 @@ function OrderManageForCustomer({navigation, route}) {
             // setIdUser(userid)
         }
 
-        check()
-    }, [reset])
-
+        check();
+    }, [reset]);
 
     const listState = ['XACNHAN', 'THANHCONG', 'DAHUY', 'HOANTHANH'];
     useEffect(() => {
-        AsyncStorage.getItem('@userid').then((userId) => {    
-            console.log(userId)
-            const a =  getOrderByIdUserAndState(userId, 'XACNHAN');
+        AsyncStorage.getItem('@userid').then((userId) => {
+            console.log(userId);
+            const a = getOrderByIdUserAndState(userId, 'XACNHAN');
             const b = getOrderByIdUserAndState(userId, 'THANHCONG');
-            const c= getOrderByIdUserAndState(userId, 'DAHUY');
-            const d=  getOrderByIdUserAndState(userId, 'HOANTHANH');
-            Promise.all([a,b,c,d]).then((value)=>{
-                let list = [];
-                value.forEach(element=>{
-                    list=[...list,...element.data.content]
+            const c = getOrderByIdUserAndState(userId, 'DAHUY');
+            const d = getOrderByIdUserAndState(userId, 'HOANTHANH');
+            Promise.all([a, b, c, d])
+                .then((value) => {
+                    let list = [];
+                    value.forEach((element) => {
+                        list = [...list, ...element.data.content];
+                    });
+                    dispatch({ type: 'ADD_LIST_ORDER', payload: list });
                 })
-                dispatch({ type: 'ADD_LIST_ORDER', payload: list });
-            }).catch((err)=>{
-                console.log(err)
-            }).finally(()=>{    
-            })
+                .catch((err) => {
+                    console.log(err);
+                })
+                .finally(() => {});
         });
-       
     }, [1]);
 
     return (
