@@ -33,7 +33,7 @@ const screenOptionStyle = {
     headerBackTitle: 'Back',
 };
 
-const MainStackNavigator = ({ navigation, route }) => {
+const MainStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="HomeScreen" component={HomeServiceScreen} />
@@ -43,7 +43,7 @@ const MainStackNavigator = ({ navigation, route }) => {
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="AllTypeServices" component={AllTypeServices} />
             <Stack.Screen name="ServiceScreenForOneType" component={ListServiceForOneType} />
-            <Stack.Screen name="OrderScreen" component={OrderScreen} />d
+            <Stack.Screen name="OrderScreen" component={OrderScreen} />
             <Stack.Screen name="ManageStackNavigator" component={ManageStackNavigator} />
             {/* home app*/}
             <Stack.Screen name="HomeStackNavigator" component={HomeStackNavigator} />

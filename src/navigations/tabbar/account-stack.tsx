@@ -10,7 +10,7 @@ import { AdminManageStackNavigator } from '../admin-manage/admin-manage-naviagto
 
 const AccountStack = createNativeStackNavigator();
 
-export function AccountStackNavigator({route} : {route: any}) {
+export function AccountStackNavigator({ route }: { route: any }) {
     // const [userid, setUserid] = useState('0')
     // useEffect(() => {
     //     if (route.params?.userid) {
