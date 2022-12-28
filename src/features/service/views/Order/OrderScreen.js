@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useId } from 'react';
 import {
     SafeAreaView,
     StatusBar,
@@ -23,11 +23,14 @@ import { orderService } from '../../services/Order/postData';
 import moment from 'moment';
 import { BackgroundImage } from 'react-native-elements/dist/config';
 import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 function OrderScreen({ navigation }) {
     const logined = useSelector((state) => {state.logined})
     const dispatch = useDispatch()
     console.log('route', route);
+
     const service = route.params.service;
     const state = route.params.state;
     const order = route.params.order;
@@ -43,7 +46,7 @@ function OrderScreen({ navigation }) {
         getSheduleByServiceId(service.id)
             .then(function (res) {
                 setListShedule(res.data);
-                console.log('res', res);
+                // console.log('res', res);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
@@ -53,18 +56,25 @@ function OrderScreen({ navigation }) {
     useEffect(() => {
         async function check() {
             const userRole = await AsyncStorage.getItem('@roleid');
-            console.log(logined)
-            console.log(userRole)
-    
-            if(logined === false ) {
-                navigation.navigate('Login')
-            }
-            if(userRole !== "CUSTOMER" ) {
-                console.log('login')
+            console.log('logined: ', logined);
+            console.log(userRole);
+
+            if (logined === false || logined === null || logined === undefined) {
+                navigation.navigate('Login');
+            } else if (
+                userRole == 'ADMIN' ||
+                userRole == 'STAFF' ||
+                userRole == 'BUSINESS_PARTNER_HOTEL' ||
+                userRole == 'BUSINESS_PARTNER_SERVICE' ||
+                userRole == 'BUSINESS_PARTNER_FOOD'
+            ) {
+                console.log('login');
                 Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
                     {
                         text: 'Hủy',
-                        onPress: () => {navigation.goBack()},
+                        onPress: () => {
+                            navigation.goBack();
+                        },
                         style: 'destructive',
                     },
                     {
@@ -73,15 +83,15 @@ function OrderScreen({ navigation }) {
                             setModalVisible(!modalVisible);
                             AsyncStorage.removeItem('@userid');
                             AsyncStorage.removeItem('@roleid');
-                            setRole("")
-                            dispatch({"type": "logout"})
+                            setRole('');
+                            dispatch({ type: 'logout' });
                             setTimeout(() => {
-                                setModalVisible(modalVisible);
+                                // setModalVisible(modalVisible);
                                 navigation.navigate({
                                     name: 'Login',
-                                    params: {userid: ""},
+                                    params: { userid: '' },
                                     merge: true,
-                                })
+                                });
                             }, 1000);
                         },
                         style: 'default',
@@ -90,8 +100,10 @@ function OrderScreen({ navigation }) {
             }
             // setIdUser(userid)
         }
+
         check()
     }, [reset])
+
 
     const checkData = () => {
         if (selectedDate.trim() == '') {
@@ -128,9 +140,11 @@ function OrderScreen({ navigation }) {
         return true;
     };
 
-    const bookService = () => {
-        if (checkData())
-            orderService(selectedShedule, selectedDate, number, phone, service)
+    const bookService = async () => {
+        if (checkData()) {
+            const userId = await AsyncStorage.getItem('@userid');
+
+            orderService(userId, selectedShedule, selectedDate, number, phone, service)
                 .then(function (res) {
                     console.log('res', res);
                     if (res.status == 'success') {
@@ -144,6 +158,7 @@ function OrderScreen({ navigation }) {
                 .catch((err) => {
                     console.log('🚀 ~ file: bookService ~ line 17 ~ error', err);
                 });
+        }
     };
 
     function currencyFormat(num) {

@@ -8,6 +8,7 @@ import { getOrderByIdUserAndState, getOrderByIdUserAndStateForPage } from '../..
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 
+
 function OrderManageForCustomer({navigation, route}) {
     const logined = useSelector((state) => {state.logined})
     const dispatch = useDispatch()
@@ -30,6 +31,7 @@ function OrderManageForCustomer({navigation, route}) {
                     {
                         text: 'Hủy',
                         onPress: () => {navigation.navigate('HomeScreen')},
+
                         style: 'destructive',
                     },
                     {
@@ -38,15 +40,15 @@ function OrderManageForCustomer({navigation, route}) {
                             setModalVisible(!modalVisible);
                             AsyncStorage.removeItem('@userid');
                             AsyncStorage.removeItem('@roleid');
-                            setRole("")
-                            dispatch({"type": "logout"})
+                            setRole('');
+                            dispatch({ type: 'logout' });
                             setTimeout(() => {
                                 setModalVisible(modalVisible);
                                 navigation.navigate({
                                     name: 'Login',
-                                    params: {userid: ""},
+                                    params: { userid: '' },
                                     merge: true,
-                                })
+                                });
                             }, 1000);
                         },
                         style: 'default',
@@ -55,31 +57,40 @@ function OrderManageForCustomer({navigation, route}) {
             }
             // setIdUser(userid)
         }
+
         check()
     }, [reset])
 
+
     const listState = ['XACNHAN', 'THANHCONG', 'DAHUY', 'HOANTHANH'];
     useEffect(() => {
-        listState.forEach((element) =>
-            getOrderByIdUserAndState(idUser, element)
-                .then((res) => {
-                    dispatch({ type: 'ADD_LIST_ORDER', payload: res.data.content });
+        AsyncStorage.getItem('@userid').then((userId) => {    
+            console.log(userId)
+            const a =  getOrderByIdUserAndState(userId, 'XACNHAN');
+            const b = getOrderByIdUserAndState(userId, 'THANHCONG');
+            const c= getOrderByIdUserAndState(userId, 'DAHUY');
+            const d=  getOrderByIdUserAndState(userId, 'HOANTHANH');
+            Promise.all([a,b,c,d]).then((value)=>{
+                let list = [];
+                value.forEach(element=>{
+                    list=[...list,...element.data.content]
                 })
-                .catch((err) => {
-                    console.log('🚀 ~ file: getOrderByIdAndState ~ error', err);
-                }),
-        );
-    }, []);
+                dispatch({ type: 'ADD_LIST_ORDER', payload: list });
+            }).catch((err)=>{
+                console.log(err)
+            }).finally(()=>{    
+            })
+        });
+       
+    }, [1]);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
             <StatusBar translucent={false} backgroundColor={COLORS.primary} />
-            {/* <View style={styles.header}>
-                <Icon name="arrow-back" size={28} color={COLORS.white} onPress={() => navigation.navigate('HomeTab')} />
-                <Text style={style.headerTitle}>Lịch sử đặt</Text>
+            {/* <View style={{height:50,width:'100%',backgroundColor:COLORS.primary}}>
+                <Icon name="arrow-back" size={28} color={COLORS.white} style={{left:0}} onPress={() => navigation.navigate('HomeTab')} />
             </View> */}
-
-            <TopTabOrderForCustomer route={{ idUser: idUser }} />
+            <TopTabOrderForCustomer />
         </SafeAreaView>
     );
 }
@@ -91,4 +102,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.primary,
     },
 });
-export default OrderManageForCustomer;
+export default connect((state) => {
+    return {
+        state: state,
+    };
+})(OrderManageForCustomer);
