@@ -5,6 +5,8 @@ import { ProfileScreen } from '../../features/account/pages/profile-screen';
 import { colors } from '../../common/constants/colors';
 import { DevelopInfoScreen } from '../../features/account/pages/develop-info-screen';
 import { ManageStackNavigator } from '../../features/service/navigations/StackNavigation';
+import { ListManageForAdmin } from '../../features/admin/page/ListManageForAdmin';
+import { AdminManageStackNavigator } from '../admin-manage/admin-manage-naviagtor';
 
 const AccountStack = createNativeStackNavigator();
 
@@ -44,6 +46,16 @@ export function AccountStackNavigator({route} : {route: any}) {
             <AccountStack.Screen
                 name="ManageStackNavigator"
                 component={ManageStackNavigator}
+                options={{
+                    headerShown: false,
+                    headerTintColor: colors.white,
+                    headerTitleAlign: 'center',
+                    headerStyle: { backgroundColor: colors.primary },
+                }}
+            />
+            <AccountStack.Screen
+                name="AdminManageStackNavigator"
+                component={AdminManageStackNavigator}
                 options={{
                     headerShown: false,
                     headerTintColor: colors.white,

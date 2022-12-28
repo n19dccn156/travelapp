@@ -7,33 +7,31 @@ import TopTabOrderForCustomer from '../../navigations/TopTabOrderForCustomer';
 import { getOrderByIdUserAndState, getOrderByIdUserAndStateForPage } from '../../services/Order/getData';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
-import { connect } from 'react-redux';
-function OrderManageForCustomer(props) {
-    const logined = props.state.logined;
-    const dispatch = useDispatch();
-    const navigation = props.navigation;
+
+
+function OrderManageForCustomer({navigation, route}) {
+    const logined = useSelector((state) => {state.logined})
+    const dispatch = useDispatch()
+    // const [idUser, setIdUser] = useState('7055dcb1-67ce-4c5f-bf51-03863f7e5778');
+    const idUser = AsyncStorage.getItem('@userid')
+    const reset = useSelector((state) => {return state.render})
+
     useEffect(() => {
         async function check() {
             const userRole = await AsyncStorage.getItem('@roleid');
-            console.log(logined);
-            console.log(userRole);
-            if (logined === false || logined === null || logined === undefined) {
-                navigation.navigate('Login');
+            // console.log(logined)
+            // console.log(userRole)
+    
+            if(logined === false ) {
+                navigation.navigate('Login')
             }
-            if (
-                userRole == 'ADMIN' ||
-                userRole == 'STAFF' ||
-                userRole == 'BUSINESS_PARTNER_HOTEL' ||
-                userRole == 'BUSINESS_PARTNER_SERVICE' ||
-                userRole == 'BUSINESS_PARTNER_FOOD'
-            ) {
-                console.log('login');
+            if(userRole !== "CUSTOMER" ) {
+                // console.log('login')
                 Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
                     {
                         text: 'Hủy',
-                        onPress: () => {
-                            navigation.goBack();
-                        },
+                        onPress: () => {navigation.navigate('HomeScreen')},
+
                         style: 'destructive',
                     },
                     {
@@ -59,8 +57,10 @@ function OrderManageForCustomer(props) {
             }
             // setIdUser(userid)
         }
-        check();
-    }, []);
+
+        check()
+    }, [reset])
+
 
     const listState = ['XACNHAN', 'THANHCONG', 'DAHUY', 'HOANTHANH'];
     useEffect(() => {
