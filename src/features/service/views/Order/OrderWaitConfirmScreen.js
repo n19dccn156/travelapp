@@ -21,7 +21,7 @@ import { connect } from 'react-redux';
 function OrderWaitConfirmScreen(props) {
     const navigation = props.navigation;
     const idState = props.route.params.idState;
-
+    console.log(idState)
     const listOrder = props.list.listOrder.filter((element) => {
         return element.idState == idState;
     });

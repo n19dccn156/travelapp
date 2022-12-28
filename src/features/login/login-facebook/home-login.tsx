@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { LoginButton, AccessToken, LoginResult } from 'react-native-fbsdk-next';
 import { Profile } from "react-native-fbsdk-next";
+import { useDispatch, useSelector } from 'react-redux';
 const currentProfile = Profile.getCurrentProfile().then(
   function(currentProfile) {
     if (currentProfile) {
@@ -14,6 +15,7 @@ const currentProfile = Profile.getCurrentProfile().then(
   }
 );
 export function Login()  {
+  const dispatch= useDispatch();
     return (
       <View>
         <LoginButton
