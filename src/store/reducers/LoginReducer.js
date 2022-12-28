@@ -1,13 +1,15 @@
 const loginReducer = (state=false, action) => {
-    
     switch(action.type) {
         case "login":
             return true
+            break
         case "logout":
             return false
-        default: return state
+            break
+        default:
+            return state
+            break
     }
-
     return state
 }
 

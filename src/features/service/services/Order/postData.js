@@ -2,8 +2,9 @@ import uuid from 'react-native-uuid';
 import { variables } from '../../../../common/constants/const';
 import moment from 'moment';
 var host = variables.host;
-
-const orderService = async (idSchedule, dateStart, number, phone, service) => {
+import { useDispatch } from 'react-redux';
+const dispatch= useDispatch();
+const orderService = async (idUser, idSchedule, dateStart, number, phone, service) => {
     try {
         const response = await fetch(`${host}/api/v1/orderservice`, {
             method: 'POST',
@@ -12,7 +13,7 @@ const orderService = async (idSchedule, dateStart, number, phone, service) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                idUser: '7055dcb1-67ce-4c5f-bf51-03863f7e5778',
+                idUser: idUser, //'7055dcb1-67ce-4c5f-bf51-03863f7e5778',
                 idState: 'XACNHAN',
                 idSchedule: idSchedule,
                 dateNow: moment().format('YYYY-MM-DDThh:mm:ss.sss'),
@@ -25,8 +26,10 @@ const orderService = async (idSchedule, dateStart, number, phone, service) => {
                 comment: '',
             }),
         });
-
+      
+       dispatch({type:'DELETE_LIST_ORDER'})
         return response.json();
+
     } catch (error) {
         console.log('orderService ~ error', error);
     }

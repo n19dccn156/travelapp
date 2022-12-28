@@ -7,20 +7,21 @@ import { AccountStackNavigator } from './account-stack';
 import { WeatherStackNavigator } from './weather-stack';
 import { HomeStackNavigator } from './home-stack';
 import { colors } from '../../common/constants/colors';
-import OrderManageForCustomer from '../../features/service/views/Order/OrderManageForCustomer';
 import { OrderHistoryStackNavigator } from './order-history-stack';
 import { useDispatch, useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
+
 export function TabBottomNavigation({route}:{route: any}) {
     const dispatch = useDispatch()
+
 
     useEffect(() => {
         if (route.params?.userid) {
             // Post updated, do something with `route.params.post`
             // For example, send the post to the server
-            console.log(route.params?.userid)
+            console.log(route.params?.userid);
         }
     }, [route.params?.userid]);
     return (
@@ -64,13 +65,13 @@ export function TabBottomNavigation({route}:{route: any}) {
                 name="HistoryOrderTab"
                 component={OrderHistoryStackNavigator}
                 options={{ headerTitle: 'Lịch sử', tabBarLabel: 'Lịch sử', headerShown: false }}
-                initialParams={{params: {userid: route.params?.userid}}}
+                initialParams={{ params: { userid: route.params?.userid } }}
             />
             <Tab.Screen
                 name="AccountTab"
                 component={AccountStackNavigator}
                 options={{ headerTitle: 'Tài Khoản', tabBarLabel: 'Tài Khoản', headerShown: false }}
-                initialParams={{params: {userid: route.params?.userid}}}
+                initialParams={{ params: { userid: route.params?.userid } }}
             />
         </Tab.Navigator>
     );
