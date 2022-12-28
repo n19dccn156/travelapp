@@ -74,7 +74,7 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
             }
         }
         check()
-    }, []);
+    }, [logined]);
 
     function not_accept(site: String) {
         setModalVisible(!modalVisible)
@@ -127,7 +127,7 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
             icon: 'briefcase-sharp',
             sizeIcon: 50,
             color: colors.red,
-            navigation: 'ManageStackNavigator',
+            navigation: 'AdminManageStackNavigator',
             accept: false,
         },
         {
@@ -179,6 +179,16 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
                         </ListItem>
                     );
                 } else if (l.name === 'Quản Lý Dịch Vụ' && role === 'BUSINESS_PARTNER_SERVICE') {
+                    return (
+                        <ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
+                            <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />
+                            <ListItem.Content>
+                                <ListItem.Title style={{ fontSize: sizeScale(l.sizeName) }}>{l.name}</ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Chevron size={sizeScale(l.sizeIcon / 2)} />
+                        </ListItem>
+                    );
+                } else if (l.name === 'Quản Lý Của Admin' && role === 'ADMIN') {
                     return (
                         <ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
                             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />

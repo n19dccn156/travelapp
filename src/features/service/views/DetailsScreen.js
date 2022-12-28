@@ -17,13 +17,14 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Swiper from 'react-native-swiper';
 import { Image } from 'react-native-elements';
+import { useDispatch } from 'react-redux';
 
 const DetailsScreen = ({ navigation, route }) => {
     const service = route.params;
     const [modalVisible, setModalVisible] = useState(false);
     const [listImg, setListImg] = useState([]);
     const pictures = service.pictures;
-
+    const dispatch = useDispatch();
     const list = pictures.split(',');
     const listImg1 = [];
     useEffect(() => {
@@ -131,7 +132,12 @@ const DetailsScreen = ({ navigation, route }) => {
                 </View>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('OrderScreen', { service: service, state: 'order', order: '' })}
+                    onPress={() => 
+                        {
+                            dispatch({ "type": "reset"})
+                            navigation.navigate('OrderScreen', { service: service, state: 'order', order: '' })}
+                            
+                        }
                 >
                     <View style={style.bookNowBtn}>
                         <Text style={{ color: COLORS.primary, fontSize: 16, fontWeight: 'bold' }}>Đặt ngay</Text>

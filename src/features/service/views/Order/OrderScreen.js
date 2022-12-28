@@ -24,7 +24,7 @@ import moment from 'moment';
 import { BackgroundImage } from 'react-native-elements/dist/config';
 import { useDispatch, useSelector } from 'react-redux';
 
-function OrderScreen({ navigation, route }) {
+function OrderScreen({ navigation }) {
     const logined = useSelector((state) => {state.logined})
     const dispatch = useDispatch()
     console.log('route', route);
