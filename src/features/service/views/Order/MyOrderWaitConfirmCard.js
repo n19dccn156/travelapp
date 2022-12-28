@@ -17,13 +17,14 @@ import { BackgroundImage } from 'react-native-elements/dist/config';
 import store from '../../../../redux/store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { orderService } from '../../services/Order/postData';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 function MyOrderWaitConfirmCard(props) {
     const order = props.route.order;
     const idState = props.route.idState;
     const navigation = props.navigation;
     const [modalVisible, setModalVisible] = useState(false);
-
+    const dispatch = useDispatch();
     const [service, setService] = useState('');
     useEffect(() => {
         getServiceById(order.idService)
@@ -137,8 +138,7 @@ function MyOrderWaitConfirmCard(props) {
                             {
                                 text: 'Đóng',
                                 onPress: () => {
-                                    // route.getOrderByIdUserAndStateAgain(order.idUser);
-                                    // store.dispatch;
+                                
                                     setModalVisible(false);
                                 },
                             },
@@ -163,14 +163,13 @@ function MyOrderWaitConfirmCard(props) {
         Alert.alert('Cảnh báo!', 'Bạn có chắc chắn muốn hủy đơn đặt này không!', [
             {
                 text: 'Không',
-
                 style: 'cancel',
             },
             {
                 text: ' Chắc',
                 onPress: () => {
                     const data = { ...order, idState: 'DAHUY' };
-                    store.dispatch({ type: 'MODIFY_LIST_ORDER', payload: data });
+                    dispatch({ type: 'MODIFY_LIST_ORDER', payload: data });
                     upDateStateOrder('DAHUY');
                 },
             },
@@ -498,4 +497,8 @@ const styles = StyleSheet.create({
         color: COLORS.white,
     },
 });
-export default MyOrderWaitConfirmCard;
+export default connect((state) => {
+    return {
+        list: state,
+    };
+})(MyOrderWaitConfirmCard);
