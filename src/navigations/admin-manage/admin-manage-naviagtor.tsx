@@ -4,7 +4,6 @@ import { AccountScreen } from '../../features/account/pages/account-main-screen'
 import { ProfileScreen } from '../../features/account/pages/profile-screen';
 import { colors } from '../../common/constants/colors';
 import { DevelopInfoScreen } from '../../features/account/pages/develop-info-screen';
-import { ManageStackNavigator } from '../../features/service/navigations/StackNavigation';
 import { ListManageForAdmin } from '../../features/admin/page/ListManageForAdmin';
 import { ListManageAccountNavigator } from './Account/list-manage-account-stack';
 import { ListManageServiceNavigator } from './Service/list-manage-service';

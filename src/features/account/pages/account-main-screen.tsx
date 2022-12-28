@@ -138,17 +138,7 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
             // color: colors.indigo,
             navigation: 'AccountTab',
             accept: true,
-            params: {userid:"1"}
-        },
-        {
-            name: 'Đăng Nhập',
-            sizeName: 22,
-            icon: 'log-in',
-            sizeIcon: 50,
-            color: colors.gray1,
-            navigation: 'Login',
-            accept: false,
-        },
+          },
     ];
 
     return (

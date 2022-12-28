@@ -20,7 +20,7 @@ export function FeaturesComponent({ navigation }: { navigation: any }) {
                             <View
                                 style={{ height: variables.width / 4, justifyContent: 'center', alignItems: 'center' }}
                             >
-                                <TouchableOpacity onPress={() => navigation.navigate('ServiceScreen')}>
+                                <TouchableOpacity onPress={() => navigation.navigate('ServiceStack')}>
                                     <View
                                         style={{
                                             height: variables.width / 7,

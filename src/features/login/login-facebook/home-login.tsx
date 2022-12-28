@@ -6,14 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 const currentProfile = Profile.getCurrentProfile().then(
   function(currentProfile) {
     if (currentProfile) {
-      console.log("The current logged user is: " +
-        currentProfile.name
-        + ". His profile id is: " +
-        currentProfile.userID
+      console.log(
+        // currentProfile.email + "_\n" +
+        // currentProfile.firstName + "_\n" +
+        // currentProfile.middleName + "_\n" +
+        // currentProfile.lastName + "_\n" +
+        currentProfile.imageURL + "_\n"
+        // currentProfile.userID + "_\n"
       );
     }
   }
 );
+
 export function Login()  {
   const dispatch= useDispatch();
     return (

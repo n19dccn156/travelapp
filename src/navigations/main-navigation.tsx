@@ -13,8 +13,8 @@ export function MainNavigation() {
     return (
         <RootStack.Navigator>
             <RootStack.Screen name="HomeApp" component={TabBottomNavigation} options={{headerShown: false}}/>
-
             <RootStack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}/>
+            {/* <RootStack.Screen name="LoginFacebook" component={Login} options={{headerShown: false}}/> */}
 
         </RootStack.Navigator>
     );
