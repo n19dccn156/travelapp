@@ -8,10 +8,15 @@ import { WeatherStackNavigator } from './weather-stack';
 import { HomeStackNavigator } from './home-stack';
 import { colors } from '../../common/constants/colors';
 import { OrderHistoryStackNavigator } from './order-history-stack';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Tab = createBottomTabNavigator();
 
-export function TabBottomNavigation({ route }: { route: any }) {
+
+export function TabBottomNavigation({route}:{route: any}) {
+    const dispatch = useDispatch()
+
+
     useEffect(() => {
         if (route.params?.userid) {
             // Post updated, do something with `route.params.post`
@@ -28,7 +33,7 @@ export function TabBottomNavigation({ route }: { route: any }) {
                     } else if (route.name === 'WeatherTab') {
                         return <Ionicons name="partly-sunny" size={sizeScale(26)} color={color} />;
                     } else if (route.name === 'HistoryOrderTab') {
-                        return <Ionicons name="cart" size={sizeScale(26)} color={color} />;
+                        return <Ionicons name="cart" size={sizeScale(26)} color={color} onPress={() => {dispatch({"type" : "reset"})}}/>;
                     } else if (route.name === 'AccountTab') {
                         return <Ionicons name="person" size={sizeScale(26)} color={color} />;
                     }

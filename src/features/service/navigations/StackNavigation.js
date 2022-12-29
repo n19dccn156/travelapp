@@ -33,7 +33,7 @@ const screenOptionStyle = {
     headerBackTitle: 'Back',
 };
 
-const MainStackNavigator = ({ navigation, route }) => {
+const MainStackNavigator = () => {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="HomeScreen" component={HomeServiceScreen} />

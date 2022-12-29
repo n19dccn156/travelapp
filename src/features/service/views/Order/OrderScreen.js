@@ -30,10 +30,13 @@ function OrderScreen({ navigation, route }) {
         state.logined;
     });
     const dispatch = useDispatch();
-    // console.log('route', route);
+
     const service = route.params.service;
     const state = route.params.state;
     const order = route.params.order;
+    const reset = useSelector((state) => {
+        return state.render;
+    });
     const [selectedDate, setSelectedDate] = useState(state == 'update' ? order.dateStart : '');
     const [number, setNumber] = useState(state == 'update' ? order.number : '');
     const [phone, setPhone] = useState(state == 'update' ? order.phone : '');
@@ -53,37 +56,34 @@ function OrderScreen({ navigation, route }) {
     }, []);
 
     useEffect(() => {
-        async function check() {
-            const userRole = await AsyncStorage.getItem('@roleid');
-            console.log('logined: ', logined);
-            console.log(userRole);
+        function check() {
+            const userRole = AsyncStorage.getItem('@roleid');
+            console.log('OrderScreen logined: ', logined);
+            console.log('OrderScreen userRole: ', userRole);
 
-            if (logined === false || logined === null || logined === undefined) {
+            if (logined === false) {
                 navigation.navigate('Login');
-            } else if (
-                userRole == 'ADMIN' ||
-                userRole == 'STAFF' ||
-                userRole == 'BUSINESS_PARTNER_HOTEL' ||
-                userRole == 'BUSINESS_PARTNER_SERVICE' ||
-                userRole == 'BUSINESS_PARTNER_FOOD'
-            ) {
-                console.log('login');
+            }
+            if (userRole !== 'CUSTOMER') {
+                // console.log('login')
                 Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
                     {
                         text: 'Hủy',
                         onPress: () => {
-                            navigation.goBack();
+                            navigation.navigate('HomeScreen');
                         },
+
                         style: 'destructive',
                     },
                     {
                         text: 'Đồng ý',
                         onPress: () => {
-                            setModalVisible(!modalVisible);
+                            // setModalVisible(!modalVisible);
                             AsyncStorage.removeItem('@userid');
                             AsyncStorage.removeItem('@roleid');
-                            setRole('');
+                            // setRole('');
                             dispatch({ type: 'logout' });
+                            // dispatch({ type: 'reset' });
                             setTimeout(() => {
                                 // setModalVisible(modalVisible);
                                 navigation.navigate({
@@ -99,8 +99,9 @@ function OrderScreen({ navigation, route }) {
             }
             // setIdUser(userid)
         }
+
         check();
-    }, []);
+    }, [reset]);
 
     const checkData = () => {
         if (selectedDate.trim() == '') {
