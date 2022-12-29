@@ -5,6 +5,7 @@ import { ListAccountScreen } from "../../../features/admin/page/account/ListAcco
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { sizeScale } from "../../../common/constants/const";
 import { AddAccountScreen } from "../../../features/admin/page/account/AddAccountScreen";
+import { ProfileAccountScreen } from "../../../features/admin/page/account/ProfileAccountScreen";
 
 const ManageAccount = createNativeStackNavigator();
 
@@ -36,6 +37,16 @@ export function ListManageAccountNavigator({navigation} : {navigation : any}) {
                     headerTitleAlign: "center", 
                     headerStyle: {backgroundColor: colors.primary}, 
                     headerTitle: "Thêm Tài Khoản",
+                }}/>
+            <ManageAccount.Screen 
+                name="ProfileAccountScreen" 
+                component={ProfileAccountScreen} 
+                // initialParams={{id: "0"}}
+                options={{
+                    headerTintColor: colors.white, 
+                    headerTitleAlign: "center", 
+                    headerStyle: {backgroundColor: colors.primary}, 
+                    headerTitle: "Thông tin Tài Khoản",
                 }}/>
         </ManageAccount.Navigator>
     );
