@@ -1,16 +1,11 @@
 const loginReducer = (state=false, action) => {
     switch(action.type) {
         case "login":
-            return true
-            break
-        case "logout":
-            return false
-            break
+            return action.payload
+            break;
         default:
-            return state
-            break
+            return state;
     }
-    return state
 }
 
 export default loginReducer

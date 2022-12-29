@@ -56,15 +56,13 @@ function OrderScreen({ navigation, route }) {
     }, []);
 
     useEffect(() => {
-        function check() {
-            const userRole = AsyncStorage.getItem('@roleid');
-            console.log('OrderScreen logined: ', logined);
-            console.log('OrderScreen userRole: ', userRole);
-
+     (async function check() {
+            const userRole = await AsyncStorage.getItem('@roleid');
+            console.log(userRole)
             if (logined === false) {
                 navigation.navigate('Login');
             }
-            if (userRole !== 'CUSTOMER') {
+            if (userRole != 'CUSTOMER') {
                 // console.log('login')
                 Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
                     {
@@ -99,8 +97,7 @@ function OrderScreen({ navigation, route }) {
             }
             // setIdUser(userid)
         }
-
-        check();
+     )()
     }, [reset]);
 
     const checkData = () => {
@@ -141,7 +138,7 @@ function OrderScreen({ navigation, route }) {
     const bookService = async () => {
         if (checkData()) {
             const userId = await AsyncStorage.getItem('@userid');
-
+            dispatch({type:'DELETE_LIST_ORDER'})
             orderService(userId, selectedShedule, selectedDate, number, phone, service)
                 .then(function (res) {
                     console.log('res', res);
