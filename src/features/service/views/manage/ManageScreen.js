@@ -24,20 +24,21 @@ function ManageScreen({ navigation }) {
                 console.log('🚀 ~ getServiceOfCaterogy ~ error', err);
             });
     };
-    useEffect(() => {
+
+    const getAllCaterogyAgain = () => {
         getAllCaterogy()
             .then(function (res) {
                 setListCategory([...res.data]);
                 setServiceType(res.data[0].id);
-                getServiceOfCaterogy(res.data[0].id)
-                    .then(function (res) {})
-                    .catch((err) => {
-                        console.log('🚀 ~ getServiceOfCaterogy ~ error', err);
-                    });
+                getServiceOfType(res.data[0].id);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
             });
+    };
+
+    useEffect(() => {
+        getAllCaterogyAgain();
     }, []);
 
     return (
@@ -127,6 +128,7 @@ function ManageScreen({ navigation }) {
                         listCategory: listCategory,
                         getServiceOfType: getServiceOfType,
                         setListCategory: setListCategory,
+                        getAllCaterogyAgain: getAllCaterogyAgain,
                     })
                 }
             >

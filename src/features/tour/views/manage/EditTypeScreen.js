@@ -9,20 +9,16 @@ import { updateTypeServiceById } from '../../services/updateData';
 import { getAllCaterogy } from '../../services/getData';
 
 function EditTypeScreen({ navigation, route }) {
-    console.log('route', route);
-    const categories = route.params.categories;
-    const [typeService, setTypeService] = useState(categories);
-    const [text, setText] = useState(typeService.name);
-
-    const updateTypeService = (id, name) => {
         updateTypeServiceById(id, name)
             .then(function (res) {
                 console.log('res', res);
                 if (res.status == 'success') {
                     setTypeService(res.data);
 
-                    // setText(res.data.name);
                     getAllCaterogyAgain();
+                    // getAllCaterogyAgain();
+                    console.log('updateTypeServiceById ', route.params.listCategory);
+                    route.params.getAllCaterogyAgain();
                 }
 
                 Alert.alert('Thông báo!', res.message, [
@@ -38,6 +34,7 @@ function EditTypeScreen({ navigation, route }) {
         getAllCaterogy()
             .then(function (res) {
                 route.params.setListCategory([...res.data]);
+                console.log('getAllCaterogy', route.params.listCategory);
             })
             .catch((err) => {
                 console.log('🚀 ~ file: listCategory-screen home ~ line 17 ~ error', err);
@@ -121,7 +118,7 @@ function EditTypeScreen({ navigation, route }) {
                 >
                     <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Cập nhật</Text>
                 </TouchableOpacity>
-                <TouchableOpacity
+                {/* <TouchableOpacity
                     style={{
                         backgroundColor: COLORS.primary,
                         margin: 20,
@@ -135,12 +132,12 @@ function EditTypeScreen({ navigation, route }) {
                     onPress={() => confirmDelete()}
                 >
                     <Text style={{ color: COLORS.white, fontWeight: 'bold' }}>Xóa</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
             </View>
         </SafeAreaView>
     );
-}
-const styles = StyleSheet.create({
+
+    const styles = StyleSheet.create({
     header: {
         paddingVertical: 20,
         paddingHorizontal: 20,
