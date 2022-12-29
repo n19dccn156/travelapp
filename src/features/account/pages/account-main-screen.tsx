@@ -179,6 +179,7 @@ export function AccountScreen({ navigation, route }: { navigation: any, route: a
                         </ListItem>
                     );
                 } else if (l.name === 'Quản Lý Dịch Vụ' && role === 'BUSINESS_PARTNER_SERVICE') {
+                   // && 
                     return (
                         <ListItem key={i} bottomDivider onPress={() => not_accept(l.navigation)}>
                             <Ionicons name={l.icon} color={l.color} size={sizeScale(l.sizeIcon)} />

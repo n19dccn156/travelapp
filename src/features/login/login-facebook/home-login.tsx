@@ -15,7 +15,6 @@ const currentProfile = Profile.getCurrentProfile().then(
   }
 );
 export function Login()  {
-  const dispatch= useDispatch();
     return (
       <View>
         <LoginButton
