@@ -6,7 +6,9 @@ import moment from 'moment';
 import { getSheduleBySheduleId } from '../../services/Shedule/getData';
 import { updateStateOrderById } from '../../services/Order/updateData';
 import { getUserById } from '../../services/User/getData';
+import { variables } from '../../../../common/constants/const';
 
+var host = variables.host;
 function MyOrderWaitConfirmCard({ navigation, route }) {
     const order = route.order;
     const idState = route.idState;
@@ -137,7 +139,10 @@ function MyOrderWaitConfirmCard({ navigation, route }) {
             {/* nut xác nhan và huy */}
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
-                    <Image source={{ uri: `${user.avatar}` }} style={{ height: 50, width: 50, borderRadius: 50 }} />
+                    <Image
+                        source={{ uri: `${host}${user.avatar}` }}
+                        style={{ height: 50, width: 50, borderRadius: 50 }}
+                    />
                 </View>
                 {idState == 'XACNHAN' ? (
                     <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'center', alignItems: 'center' }}>

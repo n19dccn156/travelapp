@@ -24,7 +24,8 @@ import moment from 'moment';
 import { BackgroundImage } from 'react-native-elements/dist/config';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { variables } from '../../../../common/constants/const';
+var host = variables.host;
 function OrderScreen({ navigation, route }) {
     const logined = useSelector((state) => {
         state.logined;
@@ -56,9 +57,9 @@ function OrderScreen({ navigation, route }) {
     }, []);
 
     useEffect(() => {
-     (async function check() {
+        (async function check() {
             const userRole = await AsyncStorage.getItem('@roleid');
-            console.log(userRole)
+            console.log(userRole);
             if (logined === false) {
                 navigation.navigate('Login');
             }
@@ -96,8 +97,7 @@ function OrderScreen({ navigation, route }) {
                 ]);
             }
             // setIdUser(userid)
-        }
-     )()
+        })();
     }, [reset]);
 
     const checkData = () => {
@@ -138,7 +138,7 @@ function OrderScreen({ navigation, route }) {
     const bookService = async () => {
         if (checkData()) {
             const userId = await AsyncStorage.getItem('@userid');
-            dispatch({type:'DELETE_LIST_ORDER'})
+            dispatch({ type: 'DELETE_LIST_ORDER' });
             orderService(userId, selectedShedule, selectedDate, number, phone, service)
                 .then(function (res) {
                     console.log('res', res);
@@ -175,7 +175,7 @@ function OrderScreen({ navigation, route }) {
             </View>
             <ScrollView>
                 <View>
-                    <BackgroundImage source={{ uri: `${service.avatar}` }} style={{ height: 100 }}>
+                    <BackgroundImage source={{ uri: `${host}${service.avatar}` }} style={{ height: 100 }}>
                         <Text style={{ color: COLORS.white, fontWeight: 'bold', margin: 10 }}>{service.name}</Text>
                     </BackgroundImage>
                 </View>

@@ -94,6 +94,7 @@ function LoginScreen(props) {
                     onChangeText={(username) => setUsername(username)}
                 />
                 <TextInput
+                    secureTextEntry={true}
                     style={styles.input}
                     placeholder="Mật khẩu"
                     onChangeText={(password) => setPassword(password)}

@@ -5,7 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import style from '../../style/Home/style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { TouchableOpacity } from 'react-native';
-
+import { variables } from '../../../../common/constants/const';
+var host = variables.host;
 function MyServiceCardForOrder({ navigation, route }) {
     const service = route.service;
 
@@ -24,7 +25,7 @@ function MyServiceCardForOrder({ navigation, route }) {
                 navigation.navigate('ManageOrderForStaff', { service: service, listCategory: route.listCategory })
             }
         >
-            <Image style={style.myCardImage} source={{ uri: `${service.avatar}` }} />
+            <Image style={style.myCardImage} source={{ uri: `${host}${service.avatar}` }} />
 
             <View style={{ flexDirection: 'column' }}>
                 <View

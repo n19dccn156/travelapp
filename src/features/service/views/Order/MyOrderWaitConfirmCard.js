@@ -19,6 +19,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { orderService } from '../../services/Order/postData';
 import { useDispatch, useSelector } from 'react-redux';
 import { connect } from 'react-redux';
+import { variables } from '../../../../common/constants/const';
+
+var host = variables.host;
 function MyOrderWaitConfirmCard(props) {
     const order = props.route.order;
     const idState = props.route.idState;
@@ -138,7 +141,6 @@ function MyOrderWaitConfirmCard(props) {
                             {
                                 text: 'Đóng',
                                 onPress: () => {
-                                
                                     setModalVisible(false);
                                 },
                             },
@@ -200,7 +202,7 @@ function MyOrderWaitConfirmCard(props) {
                 key={service.id}
                 onPress={() => navigation.navigate('DetailsScreen', service)}
             >
-                <Image style={style.myCardImage} source={{ uri: `${service.avatar}` }} />
+                <Image style={style.myCardImage} source={{ uri: `${host}${service.avatar}` }} />
 
                 <View style={{ flexDirection: 'column' }}>
                     <View
@@ -348,7 +350,7 @@ function MyOrderWaitConfirmCard(props) {
                                 </Text>
                             </View>
                             <View>
-                                <BackgroundImage source={{ uri: `${service.avatar}` }} style={{ height: 100 }}>
+                                <BackgroundImage source={{ uri: `${host}${service.avatar}` }} style={{ height: 100 }}>
                                     <Text style={{ color: COLORS.white, fontWeight: 'bold', margin: 10 }}>
                                         {service.name}
                                     </Text>
