@@ -5,7 +5,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import style from '../../style/Home/style';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { ImageBackground, TouchableOpacity } from 'react-native';
-
+import { variables } from '../../../../common/constants/const';
+var host = variables.host;
 function MyCard({ navigation, route }) {
     const service = route.service;
     return (
@@ -25,7 +26,7 @@ function MyCard({ navigation, route }) {
                     backgroundColor: COLORS.primary,
                     overflow: 'hidden',
                 }}
-                source={{ uri: `${service.avatar}` }}
+                source={{ uri: `${host}${service.avatar}` }}
             >
                 {/* <Image style={style.myCardImage} source={{ uri: `${service.avatar}` }} /> */}
 

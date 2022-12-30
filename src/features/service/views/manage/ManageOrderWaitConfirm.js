@@ -14,10 +14,12 @@ import {
 import { Text } from 'react-native-animatable';
 import { BackgroundImage } from 'react-native-elements/dist/config';
 import { ScrollView } from 'react-native-gesture-handler';
+import { variables } from '../../../../common/constants/const';
 import COLORS from '../../consts/colors';
 import { getOrderByIdAndState } from '../../services/Order/getData';
 import MyOrderWaitConfirmCard from './MyOrderWaitConfirmCard';
 
+var host = variables.host;
 function ManageOrderWaitConfirm({ navigation, route }) {
     const [listOrder, setListOrder] = useState([]);
     const [showed, setShowed] = useState(true);
@@ -55,7 +57,7 @@ function ManageOrderWaitConfirm({ navigation, route }) {
                         </Text>
                     </View>
                     <View>
-                        <BackgroundImage source={{ uri: `${service.avatar}` }} style={{ height: 100 }}>
+                        <BackgroundImage source={{ uri: `${host}${service.avatar}` }} style={{ height: 100 }}>
                             <Text style={{ color: COLORS.white, fontWeight: 'bold', margin: 10 }}>{service.name}</Text>
                         </BackgroundImage>
                     </View>

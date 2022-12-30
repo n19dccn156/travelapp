@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import  AccountScreen  from '../../features/account/pages/account-main-screen';
+import AccountScreen from '../../features/account/pages/account-main-screen';
 import { ProfileScreen } from '../../features/account/pages/profile-screen';
 import { colors } from '../../common/constants/colors';
 import { DevelopInfoScreen } from '../../features/account/pages/develop-info-screen';

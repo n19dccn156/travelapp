@@ -3,20 +3,19 @@ import { Avatar, Icon, ListItem } from '@rneui/themed';
 import React, { useEffect, useState } from 'react';
 import { View, Alert } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { colors } from '../../../common/constants/colors';
 import { sizeScale } from '../../../common/constants/const';
-import { useDispatch, useSelector,connect } from 'react-redux';
+import { useDispatch, useSelector, connect } from 'react-redux';
 
- function AccountScreen(props) {
+function AccountScreen(props) {
     const navigation = props.navigation;
     const route = props.route;
-    const logined= props.state.logined
+    const logined = props.state.logined;
     const dispatch = useDispatch();
     const [modalVisible, setModalVisible] = useState(false);
     // const [logined, setLogined] = useState(false);
     const [role, setRole] = useState('');
-    
+
     function accept(site: String) {
         Alert.alert('Thông Báo', 'Bạn có muốn đăng xuất ?', [
             {
@@ -219,6 +218,6 @@ import { useDispatch, useSelector,connect } from 'react-redux';
         </View>
     );
 }
-export default connect(state=>{
-    return {state: state}
-  })(AccountScreen);
+export default connect((state) => {
+    return { state: state };
+})(AccountScreen);
