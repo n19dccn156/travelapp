@@ -6,25 +6,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { colors } from '../../../common/constants/colors';
 import { sizeScale } from '../../../common/constants/const';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector,connect } from 'react-redux';
 
-export function AccountScreen({ navigation, route }: { navigation: any; route: any }) {
-    // useEffect(() => {
-    //     if (route.params?.userid) {
-    //         // Post updated, do something with `route.params.post`
-    //         // For example, send the post to the server
-    //     }
-    // }, [route.params?.userid]);
-    const logined = useSelector((state: any) => {
-        console.log('AccountScreen state: ', state);
-
-        return state.logined;
-    });
+ function AccountScreen(props) {
+    const navigation = props.navigation;
+    const route = props.route;
+    const logined= props.state.logined
     const dispatch = useDispatch();
     const [modalVisible, setModalVisible] = useState(false);
     // const [logined, setLogined] = useState(false);
     const [role, setRole] = useState('');
-
+    
     function accept(site: String) {
         Alert.alert('Thông Báo', 'Bạn có muốn đăng xuất ?', [
             {
@@ -227,3 +219,6 @@ export function AccountScreen({ navigation, route }: { navigation: any; route: a
         </View>
     );
 }
+export default connect(state=>{
+    return {state: state}
+  })(AccountScreen);
