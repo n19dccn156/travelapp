@@ -16,6 +16,8 @@ export function AccountScreen({ navigation, route }: { navigation: any; route: a
     //     }
     // }, [route.params?.userid]);
     const logined = useSelector((state: any) => {
+        console.log('AccountScreen state: ', state);
+
         return state.logined;
     });
     const dispatch = useDispatch();
