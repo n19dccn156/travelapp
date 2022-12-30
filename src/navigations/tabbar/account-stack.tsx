@@ -4,7 +4,10 @@ import { AccountScreen } from '../../features/account/pages/account-main-screen'
 import { ProfileScreen } from '../../features/account/pages/profile-screen';
 import { colors } from '../../common/constants/colors';
 import { DevelopInfoScreen } from '../../features/account/pages/develop-info-screen';
-import { ManageStackNavigator } from '../../features/service/navigations/StackNavigation';
+import {
+    ManageStackNavigator,
+    ManageStackNavigatorForBussiness,
+} from '../../features/service/navigations/StackNavigation';
 import { ListManageForAdmin } from '../../features/admin/page/ListManageForAdmin';
 import { AdminManageStackNavigator } from '../admin-manage/admin-manage-naviagtor';
 
@@ -38,6 +41,16 @@ export function AccountStackNavigator({ route }: { route: any }) {
                 component={DevelopInfoScreen}
                 options={{
                     headerTitle: 'Về chúng tôi',
+                    headerTintColor: colors.white,
+                    headerTitleAlign: 'center',
+                    headerStyle: { backgroundColor: colors.primary },
+                }}
+            />
+            <AccountStack.Screen
+                name="ManageStackNavigatorForBussiness"
+                component={ManageStackNavigatorForBussiness}
+                options={{
+                    headerShown: false,
                     headerTintColor: colors.white,
                     headerTitleAlign: 'center',
                     headerStyle: { backgroundColor: colors.primary },

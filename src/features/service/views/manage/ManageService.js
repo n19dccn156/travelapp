@@ -16,17 +16,21 @@ function ManageService({ navigation, route }) {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-                    onPress={() =>
-                        navigation.navigate('ListServiceScreen', { listCategory: route.params.listCategory })
-                    }
+                    onPress={() => {
+                        if (route.params?.type === 'bussiness') {
+                            navigation.navigate('MangeServiceForBussiness');
+                        } else {
+                            navigation.navigate('ListServiceScreen', { listCategory: route.params?.listCategory });
+                        }
+                    }}
                 />
                 <Text style={style.headerTitle}>Quản lý dịch vụ</Text>
             </View>
             <TopTabServiceNavigation
                 route={{
-                    service: route.params.service,
-                    listCategory: route.params.listCategory,
-                    getServiceOfType: route.params.getServiceOfType,
+                    service: route.params?.service,
+                    listCategory: route.params?.listCategory,
+                    getServiceOfType: route.params?.getServiceOfType,
                 }}
             />
         </SafeAreaView>

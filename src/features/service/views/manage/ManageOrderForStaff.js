@@ -18,7 +18,13 @@ function ManageOrderForStaff(props) {
                     name="arrow-back"
                     size={28}
                     color={COLORS.white}
-                    onPress={() => navigation.navigate('ManageScreen')}
+                    onPress={() => {
+                        if (props.route.params?.type === 'bussiness') {
+                            navigation.navigate('MangeServiceForBussiness');
+                        } else {
+                            navigation.navigate('ManageScreen');
+                        }
+                    }}
                 />
                 <Text style={style.headerTitle}>Quản lý đơn đặt</Text>
             </View>
