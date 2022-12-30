@@ -33,7 +33,7 @@
 //                     setTimeout(() => {
 //                         setModalVisible(modalVisible)
 //                         navigation.navigate({
-//                             name: 'HomeApp', 
+//                             name: 'HomeApp',
 //                             params: {userid: data.data.id},
 //                             merge: true,
 //                         });
@@ -96,7 +96,7 @@
 //                     </View>
 //                 </TouchableOpacity>
 //                 <TouchableOpacity onPress={() => { navigation.navigate({
-//                             name: 'Forgot', 
+//                             name: 'Forgot',
 //                             merge: true,
 //                         });}}>
 //                     <View style={styles.buttonLogin}>
@@ -110,79 +110,79 @@
 
 //             <View style={styles.login}>
 //                 <LoginButton
-//                     onLoginFinished={
-//                         ((error: Record<string, unknown>, result: LoginResult) => {
-//                             if (error) {
-//                                 console.log("login has error: " + error);
-//                             } else if (result.isCancelled) {
-//                                 console.log("login is cancelled.");
+// onLoginFinished={
+//     ((error: Record<string, unknown>, result: LoginResult) => {
+//         if (error) {
+//             console.log("login has error: " + error);
+//         } else if (result.isCancelled) {
+//             console.log("login is cancelled.");
+//         } else {
+//             AccessToken.getCurrentAccessToken().then(
+//                 (currentProfile: any) => {
+//                     if (currentProfile) {
+
+//                         fetch(urlGet)
+//                         .then((response) => response.json())
+//                         .then((data) => {
+//                             if (data.status === 'success') {
+//                                 try {
+//                                     AsyncStorage.removeItem('@userid')
+//                                     AsyncStorage.setItem('@userid', data.data.id);
+
+//                                     AsyncStorage.setItem('@roleid', "CUSTOMER");
+//                                      dispatch({"type": "login"})
+
+//                                 } catch (error) {
+//                                     Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
+//                                 }
 //                             } else {
-//                                 AccessToken.getCurrentAccessToken().then(
-//                                     (currentProfile: any) => {
-//                                         if (currentProfile) {
-//                                             
-//                                             fetch(urlGet)
-//                                             .then((response) => response.json())
-//                                             .then((data) => {
-//                                                 if (data.status === 'success') {
-//                                                     try {
-//                                                         AsyncStorage.removeItem('@userid')
-//                                                         AsyncStorage.setItem('@userid', data.data.id);
+//                                 let dataPost = {
+//                                     "avatar": currentProfile.imageURL?.split("?")[0],
+//                                     "firstName": currentProfile.firstName + " " + currentProfile.middleName,
+//                                     "id": uuid.v4(),
+//                                     "idSocial": currentProfile.userID,
+//                                     "lastName": currentProfile.lastName,
+//                                     "phone": "phone",
+//                                     "platform": "facebook",
+//                                     "sex": "Nam"
+//                                 }
 
-//                                                         AsyncStorage.setItem('@roleid', "CUSTOMER");
-//                                                          dispatch({"type": "login"})
-
-//                                                     } catch (error) {
-//                                                         Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
-//                                                     }
-//                                                 } else {
-//                                                     let dataPost = {
-//                                                         "avatar": currentProfile.imageURL?.split("?")[0],
-//                                                         "firstName": currentProfile.firstName + " " + currentProfile.middleName,
-//                                                         "id": uuid.v4(),
-//                                                         "idSocial": currentProfile.userID,
-//                                                         "lastName": currentProfile.lastName,
-//                                                         "phone": "phone",
-//                                                         "platform": "facebook",
-//                                                         "sex": "Nam"
-//                                                     }
-                                
-//                                                     fetch(urlPost, {
-//                                                         method: "POST",
-//                                                         headers: { 'Content-Type': 'application/json' },
-//                                                         body: JSON.stringify(dataPost)
-//                                                     })
-//                                                     .then((res) => res.json())
-//                                                     .then((data) => {
-//                                                         if (data.status === 'success') {
-//                                                             try {
-//                                                                 AsyncStorage.removeItem('@userid')
-//                                                                 AsyncStorage.setItem('@userid', data.data.id);
-//                                                                 AsyncStorage.setItem('@roleid', "CUSTOMER");
-//                                                                 dispatch({"type": "login"})
-//                                                                 console.log("Login successfully: " + data.data.id)
-//                                                             } catch (error) {
-//                                                                 Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
-//                                                             }
-//                                                         } else {
-//                                                             Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
-//                                                         }
-//                                                     })
-//                                                     .catch((error) => console.log(error));
-//                                                 }
-//                                             });
+//                                 fetch(urlPost, {
+//                                     method: "POST",
+//                                     headers: { 'Content-Type': 'application/json' },
+//                                     body: JSON.stringify(dataPost)
+//                                 })
+//                                 .then((res) => res.json())
+//                                 .then((data) => {
+//                                     if (data.status === 'success') {
+//                                         try {
+//                                             AsyncStorage.removeItem('@userid')
+//                                             AsyncStorage.setItem('@userid', data.data.id);
+//                                             AsyncStorage.setItem('@roleid', "CUSTOMER");
+//                                             dispatch({"type": "login"})
+//                                             console.log("Login successfully: " + data.data.id)
+//                                         } catch (error) {
+//                                             Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
 //                                         }
+//                                     } else {
+//                                         Alert.alert("Thông Báo", "Lỗi đăng nhập", [{ text: "Đồng ý" }])
 //                                     }
-//                                 )
+//                                 })
+//                                 .catch((error) => console.log(error));
 //                             }
-//                         })
+//                         });
 //                     }
+//                 }
+//             )
+//         }
+//     })
+// }
 //                     onLogoutFinished={() => {
 //                         setModalVisible(!modalVisible)
 //                         setTimeout(() => {
 //                             setModalVisible(modalVisible)
 //                             navigation.navigate({
-//                                 name: 'AccountTab', 
+//                                 name: 'AccountTab',
 //                                 params: {userid: username},
 //                                 merge: true,
 //                             });
