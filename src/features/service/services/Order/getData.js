@@ -4,7 +4,7 @@ var host = variables.host;
 
 const getOrderByIdAndState = async (id, state) => {
     try {
-        const response = await fetch(`${host}/api/v1/orderservice/idservice/${id}?_state=${state}&_page=0&_size=2`);
+        const response = await fetch(`${host}/api/v1/orderservice/idservice/${id}?_state=${state}&_page=0&_size=10`);
 
         return response.json();
     } catch (error) {
@@ -15,7 +15,7 @@ const getOrderByIdAndState = async (id, state) => {
 const getOrderByIdAndStateForPage = async (id, state, page) => {
     try {
         const response = await fetch(
-            `${host}/api/v1/orderservice/idservice/${id}?_state=${state}&_page=${page}&_size=2`,
+            `${host}/api/v1/orderservice/idservice/${id}?_state=${state}&_page=${page}&_size=10`,
         );
 
         return response.json();
@@ -35,7 +35,7 @@ const getOrderByIdUserAndState = async (id, state) => {
 
 const getOrderByIdUserAndStateForPage = async (id, state, page) => {
     try {
-        const response = await fetch(`${host}/api/v1/orderservice/iduser/${id}?_state=${state}&${page}&_size=2`);
+        const response = await fetch(`${host}/api/v1/orderservice/iduser/${id}?_state=${state}&${page}&_size=10`);
 
         return response.json();
     } catch (error) {

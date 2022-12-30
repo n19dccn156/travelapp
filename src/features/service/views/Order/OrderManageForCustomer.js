@@ -22,13 +22,13 @@ function OrderManageForCustomer({ navigation, route }) {
     useEffect(() => {
         function check() {
             const userRole = AsyncStorage.getItem('@roleid');
+            const userId = AsyncStorage.getItem('@userid');
             // console.log(logined)
             // console.log(userRole)
 
-            if (logined === false) {
+            if (userId === null || userId === undefined) {
                 navigation.navigate('Login');
-            }
-            if (userRole !== 'CUSTOMER') {
+            } else if (userRole !== 'CUSTOMER') {
                 // console.log('login')
                 Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
                     {
