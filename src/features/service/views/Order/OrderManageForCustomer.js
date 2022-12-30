@@ -14,22 +14,18 @@ function OrderManageForCustomer({ navigation, route }) {
     });
     const dispatch = useDispatch();
     // const [idUser, setIdUser] = useState('7055dcb1-67ce-4c5f-bf51-03863f7e5778');
-    // const idUser = AsyncStorage.getItem('@userid');
+
     const reset = useSelector((state) => {
         return state.render;
     });
 
     useEffect(() => {
-        function check() {
-            const userRole = AsyncStorage.getItem('@roleid');
-            const userId = AsyncStorage.getItem('@userid');
-            // console.log(logined)
-            // console.log(userRole)
-
-            if (userId === null || userId === undefined) {
+        (async function check() {
+            const userRole = await AsyncStorage.getItem('@roleid');
+            if (logined === false) {
                 navigation.navigate('Login');
-            } else if (userRole !== 'CUSTOMER') {
-                // console.log('login')
+            }
+            if (userRole !== 'CUSTOMER') {
                 Alert.alert('Bạn không phải là khách hàng', 'Bạn có muốn đăng xuất ?', [
                     {
                         text: 'Hủy',
@@ -43,28 +39,27 @@ function OrderManageForCustomer({ navigation, route }) {
                         text: 'Đồng ý',
                         onPress: () => {
                             // setModalVisible(!modalVisible);
-                            AsyncStorage.removeItem('@userid');
-                            AsyncStorage.removeItem('@roleid');
-                            // setRole('');
-                            dispatch({ type: 'logout' });
-                            // dispatch({ type: 'reset' });
-                            setTimeout(() => {
-                                // setModalVisible(modalVisible);
-                                navigation.navigate({
-                                    name: 'Login',
-                                    params: { userid: '' },
-                                    merge: true,
-                                });
-                            }, 1000);
+                            Promise.all([AsyncStorage.removeItem('@userid'), AsyncStorage.removeItem('@roleid')])
+                                .then(() => {
+                                    dispatch({ type: 'login', payload: false });
+                                    setTimeout(() => {
+                                        navigation.navigate({
+                                            name: 'Login',
+                                            params: { userid: '' },
+                                            merge: true,
+                                        });
+                                    }, 1000);
+                                })
+                                .catch((err) => console.log(err));
                         },
                         style: 'default',
                     },
                 ]);
             }
             // setIdUser(userid)
-        }
-
-        check();
+        })()
+            .then()
+            .catch((err) => console.log(err));
     }, [reset]);
 
     const listState = ['XACNHAN', 'THANHCONG', 'DAHUY', 'HOANTHANH'];
