@@ -3,7 +3,7 @@ import { variables } from '../../../../common/constants/const';
 import moment from 'moment';
 var host = variables.host;
 import { useDispatch } from 'react-redux';
-const dispatch= useDispatch();
+
 const orderService = async (idUser, idSchedule, dateStart, number, phone, service) => {
     try {
         const response = await fetch(`${host}/api/v1/orderservice`, {
@@ -26,8 +26,7 @@ const orderService = async (idUser, idSchedule, dateStart, number, phone, servic
                 comment: '',
             }),
         });
-      
-       dispatch({type:'DELETE_LIST_ORDER'})
+    
         return response.json();
 
     } catch (error) {
