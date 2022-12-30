@@ -18,7 +18,7 @@ export const variables = {
     width: ScreenWidth,
     height: ScreenHeight,
 
-    host: 'http://192.168.1.17:8080',
-    host2: 'http://192.168.1.17:8080',
+    host: 'http://192.168.1.3:8080',
+    host2: 'http://192.168.1.3:8080',
 
 };
