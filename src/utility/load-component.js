@@ -7,7 +7,7 @@ export default function LoadComponent(props) {
       visible={props.visible}
       overlayColor="rgba(255,255,255,0.75)"
       animationStyle={styles.lottie}
-      speed={0.5}
+      speed={0.6}
       source={require("../animated/gray-loading-three-dots.json")}>
       <Text style={styles.textLoad} >Đang tải</Text>
     </AnimatedLoader>
